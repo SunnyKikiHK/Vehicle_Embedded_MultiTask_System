@@ -1,0 +1,478 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "shared_slot_schema",
+  "title": "Shared Slot Schema",
+  "description": "Normalized slot types shared across all 14 agents in the Car System Agent architecture.",
+  "version": "1.0.0",
+
+  "slot_definitions": {
+    "Position": {
+      "description": "Target zone or seat position in the vehicle",
+      "type": "string",
+      "enum": ["主驾", "副驾", "后排", "后排左侧", "后排右侧", "全部", "前排", "后座", "副驾后", "主驾后"],
+      "agents": ["Seat Agent", "HVAC Agent", "Vehicle Control Agent"]
+    },
+    "Number": {
+      "description": "Numeric value for adjustable settings (temperature, speed, brightness, etc.)",
+      "type": "number",
+      "examples": [18, 22, 30, 5, 10],
+      "agents": ["HVAC Agent", "Seat Agent", "Ambient Light Agent", "Vehicle Control Agent", "System Settings Agent"]
+    },
+    "Ratio": {
+      "description": "Relative adjustment ratio or level (increment/decrement step or percentage)",
+      "type": "string",
+      "enum": ["高", "中", "低", "最高", "最低", "高一点", "低一点", "再高", "再低", "一点", "一些", "很多", "稍微", "大幅", "小幅度"],
+      "agents": ["HVAC Agent", "Seat Agent", "Ambient Light Agent", "System Settings Agent"]
+    },
+    "Extreme": {
+      "description": "Extreme value flag for maximum/minimum setting operations",
+      "type": "string",
+      "enum": ["最高", "最低", "最大", "最小", "最热", "最冷", "最强", "最弱"],
+      "agents": ["HVAC Agent", "Seat Agent", "Ambient Light Agent"]
+    },
+    "Direction": {
+      "description": "Directional adjustment for seat, HUD, or airflow",
+      "type": "string",
+      "enum": ["上", "下", "左", "右", "前", "后", "左上", "右上", "左下", "右下", "前后", "上下", "左右"],
+      "agents": ["Seat Agent", "Ambient Light Agent", "HVAC Agent"]
+    },
+    "Color": {
+      "description": "Ambient light or display color",
+      "type": "string",
+      "enum": ["红", "绿", "蓝", "黄", "紫", "橙", "粉", "白", "暖白", "冷白", "青色", "棕色", "自定义"],
+      "agents": ["Ambient Light Agent"]
+    },
+    "Theme": {
+      "description": "Ambient light theme preset",
+      "type": "string",
+      "enum": ["浪漫", "激情", "清凉", "温暖", "科技", "自然", "星辰", "霓虹", "日落", "森林", "海洋"],
+      "agents": ["Ambient Light Agent"]
+    },
+    "Camera": {
+      "description": "Surround view camera position",
+      "type": "string",
+      "enum": ["前视", "后视", "左视", "右视", "3D", "全景", "俯视"],
+      "agents": ["Vehicle Control Agent"]
+    },
+    "Mode": {
+      "description": "Driving mode or operational mode",
+      "type": "string",
+      "enum": ["经济", "运动", "舒适", "标准", "雪地", "越野", "节能", "个性"],
+      "agents": ["Vehicle Control Agent", "System Settings Agent"]
+    },
+    "POI": {
+      "description": "Point of Interest for navigation search",
+      "type": "string",
+      "examples": ["餐厅", "加油站", "停车场", "酒店", "医院", "超市", "ATM", "厕所"],
+      "agents": ["Navigation Agent"]
+    },
+    "City": {
+      "description": "City name for weather queries or navigation",
+      "type": "string",
+      "examples": ["北京", "上海", "广州", "深圳", "杭州"],
+      "agents": ["Weather & Life Agent", "Navigation Agent", "Info Query Agent"]
+    },
+    "Target": {
+      "description": "Landmark or named destination for route planning",
+      "type": "string",
+      "examples": ["天安门", "故宫", "东方明珠", "小蛮腰"],
+      "agents": ["Navigation Agent"]
+    },
+    "index": {
+      "description": "Selection index from a numbered list or search results",
+      "type": "integer",
+      "minimum": 1,
+      "agents": ["Navigation Agent", "Media Agent", "Interaction Control Agent"]
+    },
+    "Media_Source": {
+      "description": "Media playback source",
+      "type": "string",
+      "enum": ["蓝牙", "USB", "在线", "本地", "FM", "AM", "AUX", "SD卡", "WiFi", "音乐", "广播"],
+      "agents": ["Media Agent"]
+    },
+    "Collect_Source": {
+      "description": "Favorites collection source type",
+      "type": "string",
+      "enum": ["收藏歌曲", "收藏歌手", "收藏专辑", "收藏电台", "收藏播放列表"],
+      "agents": ["Media Agent"]
+    },
+    "Sound_Source": {
+      "description": "Audio source for volume control",
+      "type": "string",
+      "enum": ["媒体", "导航", "通话", "语音助手", "警报", "提示音", "空调", "广播", "音乐", "全部"],
+      "agents": ["Media Agent", "System Settings Agent"]
+    },
+    "Time": {
+      "description": "Time duration or clock value",
+      "type": "string",
+      "examples": ["5分钟", "30秒", "10分钟", "1小时", "2小时"],
+      "agents": ["User Profile Agent", "Media Agent", "Navigation Agent", "Car Butler Agent"]
+    },
+    "date": {
+      "description": "Date specifier for weather or life queries",
+      "type": "string",
+      "enum": ["今天", "明天", "后天", "大后天", "昨天", "前天", "本周", "下周", "周末", "工作日"],
+      "agents": ["Weather & Life Agent", "Info Query Agent"]
+    },
+    "Sun_Rain_Snow_Fog": {
+      "description": "Weather condition descriptor",
+      "type": "string",
+      "enum": ["晴", "阴", "多云", "小雨", "中雨", "大雨", "暴雨", "小雪", "中雪", "大雪", "暴雪", "雾", "霾", "沙尘", "大风"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "PM25": {
+      "description": "Air quality / PM2.5 level",
+      "type": "string",
+      "enum": ["优", "良", "轻度污染", "中度污染", "重度污染", "严重污染"],
+      "agents": ["Weather & Life Agent", "Info Query Agent"]
+    },
+    "SMOG": {
+      "description": "Smog / haze severity",
+      "type": "string",
+      "enum": ["轻微", "轻度", "中度", "重度", "严重"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "Name": {
+      "description": "Radio station or media name",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Phone_Number": {
+      "description": "Phone number for dialing",
+      "type": "string",
+      "pattern": "^[0-9+\\-*#]+$",
+      "agents": ["Phone Agent"]
+    },
+    "Contact": {
+      "description": "Contact name from phone directory",
+      "type": "string",
+      "agents": ["Phone Agent"]
+    },
+    "Label": {
+      "description": "Phone number label (mobile, work, home, etc.)",
+      "type": "string",
+      "enum": ["手机", "移动", "工作", "公司", "家庭", "住宅", "商务"],
+      "agents": ["Phone Agent"]
+    },
+    "Emergency": {
+      "description": "Emergency service number",
+      "type": "string",
+      "enum": ["110", "120", "119", "122", "急救", "报警", "火警"],
+      "agents": ["Phone Agent"]
+    },
+    "Yellow": {
+      "description": "Yellow pages business name or category",
+      "type": "string",
+      "agents": ["Phone Agent"]
+    },
+    "SubStr": {
+      "description": "Phone number prefix substring for filtering",
+      "type": "string",
+      "agents": ["Phone Agent"]
+    },
+    "App": {
+      "description": "Non-media application name",
+      "type": "string",
+      "agents": ["System Settings Agent", "Car Butler Agent"]
+    },
+    "Mini_app": {
+      "description": "Mini app (lightweight application) name",
+      "type": "string",
+      "agents": ["System Settings Agent"]
+    },
+    "One_Level": {
+      "description": "Top-level system settings menu item",
+      "type": "string",
+      "enum": ["显示", "声音", "网络", "蓝牙", "通用", "关于", "更新", "账户", "存储", "通知", "隐私", "辅助功能"],
+      "agents": ["System Settings Agent"]
+    },
+    "Two_Level": {
+      "description": "Second-level system settings menu item",
+      "type": "string",
+      "enum": ["亮度", "护眼模式", "息屏时间", "壁纸", "分辨率", "音效", "音量", "均衡器", "WLAN", "移动数据", "热点"],
+      "agents": ["System Settings Agent"]
+    },
+    "Scene": {
+      "description": "Preset scene or scenario mode",
+      "type": "string",
+      "enum": ["回家", "离家", "上班", "下班", "露营", "浪漫", "休息", "儿童", "会议", "驾驶", "雨天", "雪天"],
+      "agents": ["System Settings Agent"]
+    },
+    "Desktop": {
+      "description": "Desktop layout or theme style",
+      "type": "string",
+      "enum": ["经典", "简洁", "卡片", "列表", "自定义"],
+      "agents": ["System Settings Agent"]
+    },
+    "Mode_System": {
+      "description": "System-wide mode (day/night, theme)",
+      "type": "string",
+      "enum": ["白天", "夜间", "自动", "深色", "浅色"],
+      "agents": ["System Settings Agent"]
+    },
+    "Voice": {
+      "description": "Voice / timbre preset name",
+      "type": "string",
+      "agents": ["User Profile Agent"]
+    },
+    "Style": {
+      "description": "Voice style or tone preference",
+      "type": "string",
+      "enum": ["活力", "沉稳", "温柔", "活泼", "正式", "自然"],
+      "agents": ["User Profile Agent"]
+    },
+    "Speed_TTS": {
+      "description": "Text-to-speech speed rate",
+      "type": "number",
+      "minimum": 0.5,
+      "maximum": 2.0,
+      "agents": ["User Profile Agent"]
+    },
+    "Wake": {
+      "description": "Custom wake word for voice assistant",
+      "type": "string",
+      "agents": ["User Profile Agent"]
+    },
+    "Response": {
+      "description": "Custom response phrase / answer word",
+      "type": "string",
+      "agents": ["User Profile Agent"]
+    },
+    "Tire": {
+      "description": "Tire pressure status",
+      "type": "string",
+      "enum": ["正常", "偏低", "过高", "异常"],
+      "agents": ["Car Butler Agent"]
+    },
+    "Gas": {
+      "description": "Fuel / gas level status",
+      "type": "string",
+      "enum": ["充足", "偏低", "需加油", "耗尽"],
+      "agents": ["Car Butler Agent"]
+    },
+    "Range": {
+      "description": "Electric range / remaining distance",
+      "type": "string",
+      "agents": ["Car Butler Agent"]
+    },
+    "Total": {
+      "description": "Total mileage or distance",
+      "type": "string",
+      "agents": ["Car Butler Agent"]
+    },
+    "Maintenance": {
+      "description": "Maintenance status or reminder",
+      "type": "string",
+      "enum": ["正常", "到期", "过期", "提醒"],
+      "agents": ["Car Butler Agent"]
+    },
+    "FM_AM": {
+      "description": "Radio frequency band and value",
+      "type": "string",
+      "pattern": "^(FM|AM)[0-9]{2,4}\\.[0-9]$",
+      "examples": ["FM 88.5", "AM 1000"],
+      "agents": ["Media Agent"]
+    },
+    "Song": {
+      "description": "Song or music track name",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Singer": {
+      "description": "Singer or artist name",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Album": {
+      "description": "Album name",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Genre": {
+      "description": "Music genre or style",
+      "type": "string",
+      "enum": ["流行", "摇滚", "古典", "爵士", "电子", "民谣", "嘻哈", "R&B", "轻音乐", "古典", "舞曲"],
+      "agents": ["Media Agent"]
+    },
+    "Charts": {
+      "description": "Music chart or ranking list",
+      "type": "string",
+      "enum": ["热歌榜", "新歌榜", "飙升榜", "原创榜", "销量榜"],
+      "agents": ["Media Agent"]
+    },
+    "Mood": {
+      "description": "Music mood or emotion",
+      "type": "string",
+      "enum": ["欢快", "抒情", "悲伤", "浪漫", "激情", "放松", "兴奋", "安静"],
+      "agents": ["Media Agent"]
+    },
+    "Scene_Music": {
+      "description": "Music scene or context",
+      "type": "string",
+      "enum": ["开车", "工作", "运动", "睡前", "早晨", "夜晚", "Party"],
+      "agents": ["Media Agent"]
+    },
+    "Language": {
+      "description": "Song language",
+      "type": "string",
+      "enum": ["中文", "英文", "日文", "韩文", "粤语", "闽南语", "其他"],
+      "agents": ["Media Agent"]
+    },
+    "Age": {
+      "description": "Song era / decade",
+      "type": "string",
+      "enum": ["70年代", "80年代", "90年代", "00后", "10后", "老歌", "新歌"],
+      "agents": ["Media Agent"]
+    },
+    "TV": {
+      "description": "TV show or drama name for OST search",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Variety_Show": {
+      "description": "Variety show name",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Quantity": {
+      "description": "Audio quality level",
+      "type": "string",
+      "enum": ["标准", "HQ", "SQ", "Hi-Fi", "无损"],
+      "agents": ["Media Agent"]
+    },
+    "Just": {
+      "description": "Query qualifier for current playback info",
+      "type": "string",
+      "enum": ["当前", "正在", "现在是"],
+      "agents": ["Media Agent"]
+    },
+    "Start_Time": {
+      "description": "Playback start time offset",
+      "type": "string",
+      "pattern": "^\\d{1,2}:\\d{2}(:\\d{2})?$",
+      "examples": ["1:30", "02:45", "0:05:30"],
+      "agents": ["Media Agent"]
+    },
+    "Via": {
+      "description": "Waypoint or intermediate stop for navigation",
+      "type": "string",
+      "agents": ["Navigation Agent"]
+    },
+    "Landmark": {
+      "description": "Named landmark or building for navigation",
+      "type": "string",
+      "agents": ["Navigation Agent"]
+    },
+    "License": {
+      "description": "Vehicle license plate number",
+      "type": "string",
+      "pattern": "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-Z0-9]{4,5}[A-Z0-9挂学警港澳]$",
+      "agents": ["Weather & Life Agent"]
+    },
+    "Dressing": {
+      "description": "Clothing recommendation type",
+      "type": "string",
+      "enum": ["薄外套", "厚外套", "T恤", "衬衫", "毛衣", "大衣", "羽绒服", "短裤", "长裤", "裙子"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "Scarf_Hat_Coat": {
+      "description": "Accessory or outerwear recommendation",
+      "type": "string",
+      "enum": ["围巾", "帽子", "手套", "口罩", "雨伞", "防晒霜"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "UVLevel": {
+      "description": "UV index level",
+      "type": "string",
+      "enum": ["弱", "中等", "强", "很强", "极强"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "Wind_Level": {
+      "description": "Wind speed level",
+      "type": "string",
+      "enum": ["微风", "和风", "大风", "狂风", "台风"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "Wind_Direction": {
+      "description": "Wind direction",
+      "type": "string",
+      "enum": ["东风", "西风", "南风", "北风", "东南风", "东北风", "西南风", "西北风"],
+      "agents": ["Weather & Life Agent"]
+    },
+    "Content": {
+      "description": "Child-specific content indicator",
+      "type": "string",
+      "enum": ["儿歌", "儿童故事", "动画片"],
+      "agents": ["Media Agent"]
+    },
+    "Keywords": {
+      "description": "Music search keywords",
+      "type": "string",
+      "agents": ["Media Agent"]
+    },
+    "Exclude": {
+      "description": "Exclusion keywords for music search",
+      "type": "string",
+      "agents": ["Media Agent"]
+    }
+  },
+
+  "agent_slot_coverage": {
+    "Navigation Agent": ["POI", "City", "Target", "index", "Via", "Landmark", "Time", "Media_Source"],
+    "Media Agent": ["Media_Source", "Sound_Source", "Collect_Source", "Time", "Start_Time", "Song", "Singer", "Album", "Genre", "Charts", "Mood", "Scene_Music", "Language", "Age", "TV", "Variety_Show", "Quantity", "Just", "Name", "Content", "Keywords", "Exclude", "FM_AM"],
+    "HVAC Agent": ["Position", "Number", "Ratio", "Extreme", "Direction", "City"],
+    "Seat Agent": ["Position", "Number", "Ratio", "Extreme", "Direction"],
+    "Ambient Light Agent": ["Color", "Theme", "Number", "Ratio", "Extreme", "Direction"],
+    "Vehicle Control Agent": ["Position", "Ratio", "Mode", "Camera", "Direction"],
+    "Phone Agent": ["Phone_Number", "Contact", "Label", "Emergency", "Yellow", "SubStr", "Time"],
+    "Weather & Life Agent": ["City", "date", "Sun_Rain_Snow_Fog", "PM25", "SMOG", "Dressing", "Scarf_Hat_Coat", "UVLevel", "Wind_Level", "Wind_Direction", "License", "Time"],
+    "User Profile Agent": ["Voice", "Style", "Speed_TTS", "Wake", "Response", "Time"],
+    "System Settings Agent": ["App", "Mini_app", "One_Level", "Two_Level", "Scene", "Desktop", "Mode_System", "Number", "Ratio", "Sound_Source"],
+    "Car Butler Agent": ["Tire", "Gas", "Range", "Total", "Maintenance", "Time"],
+    "Group Travel Agent": ["POI", "City", "Target"],
+    "Interaction Control Agent": ["index"],
+    "Info Query Agent": ["City", "date", "PM25"]
+  },
+
+  "shared_slot_types": {
+    "Number": {
+      "agents": ["HVAC Agent", "Seat Agent", "Ambient Light Agent", "System Settings Agent"],
+      "value_range": {"type": "number"},
+      "resolution": "Normalize to integer; infer unit from context (°C for temperature, % for brightness/speed)"
+    },
+    "Ratio": {
+      "agents": ["HVAC Agent", "Seat Agent", "Ambient Light Agent", "System Settings Agent", "Media Agent"],
+      "resolution": "Map relative descriptors to numeric steps: 高→+3, 中→0, 低→-3, 最高→max, 最低→min"
+    },
+    "Position": {
+      "agents": ["HVAC Agent", "Seat Agent", "Vehicle Control Agent"],
+      "resolution": "Resolve pronouns via coreference: '它'/'那个' → last mentioned Position from context"
+    },
+    "City": {
+      "agents": ["Weather & Life Agent", "Navigation Agent", "Info Query Agent"],
+      "resolution": "Default to current GPS location if not specified"
+    },
+    "Time": {
+      "agents": ["User Profile Agent", "Media Agent", "Navigation Agent", "Car Butler Agent"],
+      "resolution": "Parse natural language time expressions into seconds (e.g., '5分钟' → 300)"
+    },
+    "date": {
+      "agents": ["Weather & Life Agent", "Info Query Agent"],
+      "resolution": "Resolve relative dates: '明天' → +1 day, '周末' → next Saturday"
+    }
+  },
+
+  "coreference_resolution": {
+    "description": "Rules for resolving ambiguous slot references using last-turn context stored in Redis",
+    "redis_key_pattern": "voice:last_service:{sender_id}",
+    "redis_ttl_seconds": 40,
+    "value_format": "{AgentName}#{intent}#{slot_key}#{slot_value}",
+    "rules": [
+      {"pronoun": "它", "resolves_to": "last Position slot"},
+      {"pronoun": "那个", "resolves_to": "last referenced entity (POI, song, etc.)"},
+      {"pronoun": "继续", "resolves_to": "last incomplete intent with same slots"},
+      {"pronoun": "调高", "resolves_to": "last Number/Ratio slot from climate/seat/brightness"},
+      {"pronoun": "调低", "resolves_to": "last Number/Ratio slot from climate/seat/brightness"}
+    ]
+  }
+}
