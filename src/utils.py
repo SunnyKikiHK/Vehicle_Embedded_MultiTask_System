@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 
-from src.prompts import ROUTER_PROMPT
+from src.prompts import ROUTER_PROMPT, CLASSIFIER_PROMPT
 from src.db.redis_client import RedisClient
 from src.agent_schema.shared_slot_schema import SlotContext
 
@@ -123,3 +123,23 @@ def format_conversation_history(contexts: list, max_turns: int = 3) -> str:
 def get_skill_agent_count() -> int:
     """Return the number of agents loaded from skill files."""
     return len(get_skill_manifest())
+
+
+def build_classifier_prompt(
+    query: str,
+    conversation_history: str = "(无历史记录)",
+) -> str:
+    """
+    Build a query classification prompt.
+
+    Args:
+        query: The user query to classify.
+        conversation_history: Formatted string of recent conversation turns.
+
+    Returns:
+        A fully formatted prompt string ready to be sent to the LLM.
+    """
+    return CLASSIFIER_PROMPT.format(
+        query=query,
+        conversation_history=conversation_history,
+    )
