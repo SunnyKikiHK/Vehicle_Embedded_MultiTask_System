@@ -1,41 +1,41 @@
 # System Settings Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 40 | Open_System_Config | 打开系统设置 |
-| 48 | Close_System_Config | 关闭系统设置 |
-| 195 | Open_App | 打开应用 |
-| 80 | Close_App | 关闭应用 |
-| 275 | Open_App_List | 打开应用列表 |
-| 320 | Close_App_List | 关闭应用列表 |
-| 129 | Download_App | 下载应用 |
-| 218 | Open_APP_Store | 打开应用商城 |
-| 364 | Close_APP_Store | 关闭应用商城 |
-| 53 | Set_Desktop_Style | 设置桌面样式 |
-| 100 | Set_System_Theme_By_Mode | 关闭主题 |
-| 178 | Set_Card_Position | 切换卡片位置 |
-| 337 | Back_To_Home | 回到主页 |
-| 379 | Open_Screen | 打开屏幕 |
-| 244 | Close_Screen | 关闭屏幕 |
-| 392 | Open_ScreenCast | 打开投屏 |
-| 202 | Close_ScreenCast | 关闭投屏 |
-| 246 | Open_Long_Video | 打开长视频 |
-| 269 | Close_Long_Video | 关闭长视频 |
-| 124 | Open_Mini_App | 打开小程序应用 |
-| 19 | Close_Mini_App | 关闭小程序应用 |
-| 418 | Open_Mini_App_Center | 打开小程序中心 |
-| 7 | Close_Mini_App_Center | 关闭小程序中心 |
-| 334 | Open_Scene_Center | 打开情景模式 |
-| 272 | Close_Scene_Center | 关闭情景模式 |
-| 306 | Open_Preset_Scene | 打开指定场景 |
-| 271 | Close_Preset_Scene | 退出指定场景 |
-| 146 | Open_Snooze_Mode | 打开睡眠模式 |
-| 358 | Close_Snooze_Mode | 关闭睡眠模式 |
-| 167 | Open_Snooze_Mode_Fuzzy | 模糊表达打开睡眠模式 |
-| 347 | Close_Snooze_Mode_Fuzzy | 模糊表达关闭睡眠模式 |
-| 54 | Set_Desktop_Style | 设置桌面样式 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Open_System_Config | system_settings | `{}` | 打开系统设置 |
+|| Close_System_Config | system_settings | `{"action": "close"}` | 关闭系统设置 |
+|| Open_App | open_app | `{"name": "..."}` | 打开应用 |
+|| Close_App | close_app | `{"name": "..."}` | 关闭应用 |
+|| Open_App_List | app_list | `{}` | 打开应用列表 |
+|| Close_App_List | app_list | `{"action": "close"}` | 关闭应用列表 |
+|| Download_App | app_install | `{"name": "..."}` | 下载应用 |
+|| Open_APP_Store | open_app | `{"name": "应用商城"}` | 打开应用商城 |
+|| Close_APP_Store | close_app | `{"name": "应用商城"}` | 关闭应用商城 |
+|| Back_To_Home | system_settings | `{"action": "home"}` | 回到主页 |
+|| Open_Screen | system_settings | `{"action": "screen_on"}` | 打开屏幕 |
+|| Close_Screen | system_settings | `{"action": "screen_off"}` | 关闭屏幕 |
+|| Set_Desktop_Style | display_setting | `{"style": "..."}` | 设置桌面样式 |
+|| Set_System_Theme_By_Mode | display_setting | `{"mode": "..."}` | 设置主题模式 |
+|| Set_Card_Position | display_setting | `{"position": N}` | 切换卡片位置 |
+|| Open_ScreenCast | system_settings | `{"action": "screencast_on"}` | 打开投屏 |
+|| Close_ScreenCast | system_settings | `{"action": "screencast_off"}` | 关闭投屏 |
+|| Open_Long_Video | open_app | `{"name": "长视频"}` | 打开长视频 |
+|| Close_Long_Video | close_app | `{"name": "长视频"}` | 关闭长视频 |
+|| Open_Mini_App | open_app | `{"name": "..."}` | 打开小程序应用 |
+|| Close_Mini_App | close_app | `{"name": "..."}` | 关闭小程序应用 |
+|| Open_Mini_App_Center | open_app | `{"name": "小程序中心"}` | 打开小程序中心 |
+|| Close_Mini_App_Center | close_app | `{"name": "小程序中心"}` | 关闭小程序中心 |
+|| Open_Scene_Center | system_settings | `{"action": "scene_center"}` | 打开情景模式 |
+|| Close_Scene_Center | system_settings | `{"action": "scene_center_close"}` | 关闭情景模式 |
+|| Open_Preset_Scene | system_settings | `{"scene": "..."}` | 打开指定场景 |
+|| Close_Preset_Scene | system_settings | `{"scene": "off"}` | 退出指定场景 |
+|| Open_Snooze_Mode | system_settings | `{"timer": N}` | 打开睡眠模式 |
+|| Close_Snooze_Mode | system_settings | `{"timer": 0}` | 关闭睡眠模式 |
+|| Set_Desktop_Style | language_setting | `{"language": "..."}` | 语言设置 |
+|| Set_Desktop_Style | sound_setting | `{}` | 声音设置 |
+|| Set_Desktop_Style | reset_settings | `{}` | 恢复默认设置 |
 
 ## Shared Slot Type Definitions
 
@@ -81,7 +81,7 @@ agents: System Settings Agent
 
 ## Scene Preset Definitions
 
-| Scene | HVAC | Lighting | Media | Navigation |
+|| Scene | HVAC | Lighting | Media | Navigation |
 |-------|------|----------|-------|------------|
 | 回家 | 24°C, auto | Warm white, 60% | Resume playlist | Route home |
 | 上班 | 22°C, auto | Daylight, 80% | News | Route to office |

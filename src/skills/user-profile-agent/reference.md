@@ -1,42 +1,19 @@
 # User Profile Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 75 | Set_Timbre_Female | 设置为女声 |
-| 76 | Only_Main | 仅主驾可唤醒 |
-| 315 | Main_And_Vice | 主副驾可唤醒 |
-| 20 | Change_Timbre | 切换音色 |
-| 406 | Set_Timbre_Male | 设置为男声 |
-| 302 | Set_Timbre_Child | 设置为童声 |
-| 239 | Set_Timbre_Default | 设置为默认 |
-| 116 | Set_Voice | 设置为指定音色 |
-| 292 | Set_Voice_Style | 切换语音风格 |
-| 286 | Set_Speech_By_Speed | 设置语速 |
-| 129 | Set_Wakeup_Words | 修改为指定唤醒词 |
-| 216 | Ask_Wakeup_Words | 询问修改唤醒词 |
-| 362 | Delete_Wakeup_Words | 删除唤醒词 |
-| 349 | Open_Free_Wakeup | 开启免唤醒 |
-| 331 | Close_Free_Wakeup | 关闭免唤醒 |
-| 388 | Open_Continuous_Dialogue | 开启连续对话 |
-| 310 | Close_Continuous_Dialogue | 关闭连续对话 |
-| 391 | Set_Continuous_Dialogue | 设置对话时长 |
-| 415 | Open_Online_NLU | 打开在线语音 |
-| 333 | Close_Online_NLU | 关闭在线语音 |
-| 256 | Open_Sds_Config | 打开语音设置 |
-| 390 | Close_Sds_Config | 关闭语音设置 |
-| 41 | View_Learning_Content | 查看交互式学习 |
-| 254 | Open_Interactive_Learning | 打开交互学习 |
-| 361 | Close_Interactive_Learning | 关闭交互学习 |
-| 111 | Open_Training_Camp | 打开语音训练营 |
-| 224 | Close_Training_Cmap | 关闭语音训练营 |
-| 212 | Open_Skill_Instruction | 打开语音技能介绍 |
-| 218 | Close_Skill_Instruction | 关闭语音技能介绍 |
-| 420 | Open_Voice_Wakeup | 打开语音唤醒 |
-| 242 | Close_Voice_Wakeup | 关闭语音唤醒 |
-| 409 | Open_Safety_Alarm | 打开安全提醒 |
-| 77 | Close_Safety_Alarm | 关闭安全提醒 |
+**Note:** User Profile Agent intents primarily handle voice/TTS settings. Most of these don't map directly to MCP tools but are handled through the voice assistant configuration service. The examples below use `show_notification` as a placeholder - actual implementation would call voice-specific APIs.
+
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Set_Timbre_Female | show_notification | `{"title": "语音设置", "content": "已切换到女声"}` | 设置为女声 |
+|| Only_Main | show_notification | `{"title": "语音设置", "content": "已设置仅主驾可唤醒"}` | 仅主驾可唤醒 |
+|| Set_Voice | show_notification | `{"title": "语音设置", "content": "已切换音色"}` | 设置为指定音色 |
+|| Set_Speech_By_Speed | show_notification | `{"title": "语音设置", "content": "语速已调整"}` | 设置语速 |
+|| Open_Sds_Config | show_notification | `{"title": "设置", "content": "语音设置已打开"}` | 打开语音设置 |
+|| Close_Voice_Wakeup | show_notification | `{"title": "语音设置", "content": "语音唤醒已关闭"}` | 关闭语音唤醒 |
+|| Open_Continuous_Dialogue | show_notification | `{"title": "语音设置", "content": "连续对话已开启"}` | 开启连续对话 |
+|| Close_Continuous_Dialogue | show_notification | `{"title": "语音设置", "content": "连续对话已关闭"}` | 关闭连续对话 |
 
 ## Shared Slot Type Definitions
 
@@ -72,13 +49,13 @@ agents: User Profile Agent
 ```
 value_range: 1-30 minutes
 resolution: Continuous dialogue session duration in minutes. Default to 5.
-agents: User Profile Agent, User Profile Agent (continuous dialogue)
+agents: User Profile Agent
 ```
 
 ## Timbre Options
 
-| Timbre | Voice Pack | Gender | Character |
-|--------|-----------|--------|-----------|
+|| Timbre | Voice Pack | Gender | Character |
+|--------|-----------|--------|--------|
 | 女声 | 小晴, 小雅 | Female | Warm, gentle |
 | 男声 | 小德, 小宇 | Male | Deep, clear |
 | 童声 | 小萌 | Child | Playful, high pitch |

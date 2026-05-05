@@ -3,13 +3,12 @@
 ## Turn 1 — Call Contact by Name
 
 **User:** "给张三打个电话"
-**Matched Intent:** `Call_Phone_By_Contact`
-**Slots extracted:**
-- `Contact = 张三`
+**Matched Intent:** `dial_contact`
+**Arguments:** `{"name": "张三"}`
 
 **Reconstruction:** "拨打张三的电话"
 
-**Action:** Search contact "张三", get primary number (手机 label), initiate call.
+**Action:** Search contact "张三", get primary number, initiate call.
 **Response:** "正在拨打张三的手机。"
 
 ---
@@ -17,10 +16,8 @@
 ## Turn 2 — Call with Specific Label
 
 **User:** "给李四打公司电话"
-**Matched Intent:** `Call_Phone_By_Contact_Label`
-**Slots extracted:**
-- `Contact = 李四`
-- `label = 公司`
+**Matched Intent:** `dial_contact`
+**Arguments:** `{"name": "李四", "label": "公司"}`
 
 **Reconstruction:** "拨打李四的公司电话"
 
@@ -32,9 +29,8 @@
 ## Turn 3 — Dial a Number Directly
 
 **User:** "拨打 010-1234-5678"
-**Matched Intent:** `Call_Number`
-**Slots extracted:**
-- `Phone_Number = 01012345678`
+**Matched Intent:** `make_call`
+**Arguments:** `{"number": "01012345678"}`
 
 **Reconstruction:** "拨打 010-1234-5678"
 
@@ -47,8 +43,8 @@
 
 **User:** "接听"
 **History:** Incoming call from 王五
-**Matched Intent:** `Answer_Phone`
-**Slots extracted:** none
+**Matched Intent:** `answer_call`
+**Arguments:** `{}`
 
 **Reconstruction:** "接听来电"
 
@@ -61,8 +57,8 @@
 
 **User:** "拒接"
 **History:** Incoming call
-**Matched Intent:** `Reject_Phone`
-**Slots extracted:** none
+**Matched Intent:** `reject_call`
+**Arguments:** `{}`
 
 **Reconstruction:** "拒接来电"
 
@@ -75,8 +71,8 @@
 
 **User:** "挂断"
 **History:** Active call
-**Matched Intent:** `Quit_Phone`
-**Slots extracted:** none
+**Matched Intent:** `end_call`
+**Arguments:** `{}`
 
 **Reconstruction:** "结束通话"
 
@@ -89,8 +85,8 @@
 
 **User:** "回拨"
 **History:** Last missed call from 赵六
-**Matched Intent:** `Call_Back`
-**Slots extracted:** none
+**Matched Intent:** `make_call`
+**Arguments:** `{"type": "callback"}`
 
 **Reconstruction:** "回拨上一个未接来电"
 
@@ -99,25 +95,11 @@
 
 ---
 
-## Turn 8 — Emergency Call
-
-**User:** "拨打紧急电话"
-**Matched Intent:** `Call_Emergency`
-**Slots extracted:**
-- `Emergency` → defaults to `110` (police, most common vehicle emergency)
-
-**Reconstruction:** "拨打紧急电话"
-
-**Action:** Initiate emergency call. Note: user should confirm intent for safety.
-**Response:** "正在拨打紧急电话。"
-
----
-
-## Turn 9 — Toggle Bluetooth
+## Turn 8 — Toggle Bluetooth
 
 **User:** "开蓝牙"
-**Matched Intent:** `Open_Bluetooth`
-**Slots extracted:** none
+**Matched Intent:** `bluetooth_on`
+**Arguments:** `{}`
 
 **Reconstruction:** "开启蓝牙"
 
@@ -126,11 +108,11 @@
 
 ---
 
-## Turn 10 — Enable Hotspot
+## Turn 9 — Enable Hotspot
 
 **User:** "打开热点"
-**Matched Intent:** `Open_Spot`
-**Slots extracted:** none
+**Matched Intent:** `wifi_on`
+**Arguments:** `{"mode": "hotspot"}`
 
 **Reconstruction:** "开启WiFi热点"
 
@@ -139,11 +121,11 @@
 
 ---
 
-## Turn 11 — View Missed Calls
+## Turn 10 — View Missed Calls
 
 **User:** "看看谁打过电话"
-**Matched Intent:** `View_Not_Call`
-**Slots extracted:** none
+**Matched Intent:** `missed_calls`
+**Arguments:** `{}`
 
 **Reconstruction:** "查看未接来电"
 

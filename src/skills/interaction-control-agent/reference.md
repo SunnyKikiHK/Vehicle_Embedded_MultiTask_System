@@ -1,19 +1,14 @@
 # Interaction Control Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 428 | Confirm | 确定 |
-| 430 | Cancel | 取消 |
-| 429 | List_Select | 列表选择 |
-| 8 | Open_Two_Both | 同时打开 |
-| 267 | Close_Two_Both | 同时关闭 |
-| 398 | Open_Help | 打开帮助 |
-| 43 | Close_Help | 关闭帮助 |
-| 393 | Ask_Answer_Words | 询问修改应答词 |
-| 289 | Get_Answer | 修改为指定应答词 |
-| 417 | Delete_Answer_Words | 删除应答词 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Confirm | show_notification | `{"title": "确认", "content": "操作已确认"}` | 确定 |
+|| Cancel | show_notification | `{"title": "取消", "content": "操作已取消"}` | 取消 |
+|| List_Select | show_notification | `{"title": "选择", "content": "已选择第{index}项"}` | 列表选择 |
+|| Open_Help | show_notification | `{"title": "帮助", "content": "帮助中心已打开"}` | 打开帮助 |
+|| Close_Help | dismiss_notification | `{}` | 关闭帮助 |
 
 ## Shared Slot Type Definitions
 

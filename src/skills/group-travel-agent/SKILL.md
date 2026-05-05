@@ -8,69 +8,67 @@ description: Implements Group Travel Agent intents in the vehicle embedded multi
 ## Agent Overview
 
 **Handles:** Team/group travel features: route sharing, meetup coordination, and group member tracking.
-**Total intents: 7**
-**Shared slot types:** `location`, `POI`
+## Expected Output Format
+
+The LLM should return a JSON object with the following structure:
+
+```json
+{
+  "reasoning": "Brief explanation of why this tool was selected",
+  "tool_name": "actual_mcp_tool_name",
+  "arguments": {
+    "slot_name_1": "slot_value_1",
+    "slot_name_2": "slot_value_2",
+    ...
+  }
+}
+```
+
+If no arguments are needed, use an empty object `{}`.
 
 ## Core Intent Categories
 
 ### Group Management
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 加入组队 | Join_Group | — | Join a travel group |
-| 创建组队 | Build_Group | — | Create a new group |
-| 退出组队 | Quit_Group | — | Leave current group |
-| 打开组队 | Open_Group | — | Open group travel interface |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 加入组队 | join_group | `{}` | Join a travel group |
+| 创建组队 | build_group | `{}` | Create a new group |
+| 退出组队 | quit_group | `{}` | Leave current group |
+| 打开组队 | open_group | `{}` | Open group travel interface |
 
 ### Meetup
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 设置集结地 | Ask_Meeting_Place | — | Query group meetup location |
-| 去汇合地点 | Go_Meeting_Place | — | Navigate to meetup point |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 设置集结地 | ask_meeting_place | `{}` | Query group meetup location |
+| 去汇合地点 | go_meeting_place | `{}` | Navigate to meetup point |
 
 ### Location Sharing
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 查看成员位置 | Group_Member_Location | — | View locations of group members |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 查看成员位置 | group_member_location | `{}` | View locations of group members |
 
 ## Slot Resolution Rules
 
-- **location**: Meeting point or member location. Resolve to GPS coordinates.
-- **POI**: Named place for meetup.
-- When **creating a group**, the user becomes the group leader and can invite others.
-- When **joining a group**, the user needs a group code or NFC/QR invitation.
-- When **setting a meetup point**, the group leader nominates a location and all members are notified.
-- All location sharing requires explicit user consent.
+- **location**: Meeting point or member location. Resolve to GPS coordinates
+- **POI**: Named place for meetup
+- When **creating a group**, the user becomes the group leader
+- When **joining a group**, the user needs a group code or NFC/QR invitation
+- When **setting a meetup point**, the group leader nominates a location
+
+## Privacy & Safety Notes
+
+- Group location sharing requires opt-in from all members
+- Location data should not be shared with third parties
+- Real-time tracking should be disabled when group trip ends
 
 ## Implementation Checklist
 
 When implementing a new Group Travel intent:
 
-1. **Match the intent key** (e.g., `Build_Group`) to the skill function.
-2. **Execute the action** via the group travel service API.
-3. **Confirm** with a natural response (e.g., "车队已创建，请分享邀请码给队友").
-4. **Save SlotContext** to Redis with `agent=Group Travel Agent`, `intent=<matched_intent>`, and extracted slots.
-
-## Privacy & Safety Notes
-
-- Group location sharing requires opt-in from all members.
-- Location data should not be shared with third parties.
-- Real-time tracking should be disabled when group trip ends.
-
-## Response Templates
-
-```
-创建组队: "车队已创建，您的邀请码是{code}，请分享给队友。"
-加入组队: "已成功加入车队，当前车队共{member_count}人。"
-退出组队: "已退出车队，期待下次同行。"
-设置集结地: "已设置汇合地点为{location}，已通知所有队员。"
-去汇合点: "正在导航到汇合地点{location}，距离约{distance}公里。"
-查看位置: "车队成员位置：\n- 张三：距您{dist}公里，前方\n- 李四：距您{dist}公里，左后方"
-```
-
-## Additional Resources
-
-- Full intent table and intent ID map: [reference.md](reference.md)
-- Annotated conversation examples: [examples.md](examples.md)
+1. **Identify the intent** from the user's request
+2. **Extract slot values** — resolve location, POI for meetup
+3. **Validate** all slot values against the Slot Resolution Rules
+4. **Output** the JSON with reasoning, tool_name, and arguments

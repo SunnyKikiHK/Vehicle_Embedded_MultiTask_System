@@ -1,16 +1,16 @@
 # Info Query Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 354 | Ask_Where | 当前位置查询 |
-| 226 | Ask_Weekday | 查询星期 |
-| 324 | Ask_Date | 查看日期 |
-| 91 | Open_Weather | 打开天气 |
-| 26 | Ask_Air_Condition | 查询空气 |
-| 66 | Ask_Humidity | 查询湿度 |
-| 209 | Query_UV_Level | 查询紫外线 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Ask_Where | ask_where | `{}` | 当前位置查询 |
+|| Ask_Weekday | get_weather | `{"type": "weekday"}` | 查询星期 |
+|| Ask_Date | get_weather | `{"type": "date"}` | 查看日期 |
+|| Open_Weather | get_weather | `{}` | 打开天气 |
+|| Ask_Air_Condition | get_weather | `{"type": "air_quality"}` | 查询空气 |
+|| Ask_Humidity | get_weather | `{"type": "humidity"}` | 查询湿度 |
+|| Query_UV_Level | get_weather | `{"advisory": "uv_index"}` | 查询紫外线 |
 
 ## Shared Slot Type Definitions
 
@@ -28,7 +28,7 @@ agents: Info Query Agent, Weather & Life Agent
 
 ## Air Quality Grades
 
-| AQI Range | Grade | Color | Description |
+|| AQI Range | Grade | Color | Description |
 |-----------|-------|-------|-------------|
 | 0-50 | 优 | Green | Excellent, no restrictions |
 | 51-100 | 良 | Yellow | Good, suitable for outdoor |
@@ -39,7 +39,7 @@ agents: Info Query Agent, Weather & Life Agent
 
 ## Humidity Comfort Levels
 
-| Humidity Range | Feeling |
+|| Humidity Range | Feeling |
 |---------------|---------|
 | 30-60% | Comfortable |
 | < 30% | Dry — consider using humidifier |
@@ -48,7 +48,7 @@ agents: Info Query Agent, Weather & Life Agent
 
 ## UV Index Levels
 
-| UV Index | Level | Protection Recommendation |
+|| UV Index | Level | Protection Recommendation |
 |----------|-------|------------------------|
 | 0-2 | Low | No protection needed |
 | 3-5 | Moderate | Wear sunglasses, use SPF 30+ |

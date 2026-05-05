@@ -1,36 +1,22 @@
 # Car Butler Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 432 | Check_Car_Condition | 车况检查 |
-| 435 | Open_Bulter | 打开车辆管家 |
-| 436 | Close_Bulter | 关闭车辆管家 |
-| 437 | Reserve_Maintenance | 预约维保 |
-| 438 | Cancel_Reserve | 取消预约 |
-| 309 | Record_Face | 录入人脸识别 |
-| 220 | Open_Owner_Service | 打开车主服务 |
-| 239 | Close_Owner_Service | 关闭车主服务 |
-| 383 | Open_Personal_Center | 打开个人中心 |
-| 34 | Close_Personal_Center | 关闭个人中心 |
-| 381 | Complains_And_Suggestions | 投诉与建议 |
-| 107 | Open_Feedback | 打开反馈 |
-| 394 | Close_Feedback | 关闭反馈 |
-| 110 | View_Already_Order | 查看已完成订单 |
-| 235 | View_Unend_Order | 查看未完成订单 |
-| 414 | View_All_Order | 查看所有订单 |
-| 116 | Open_Order_Center | 打开订单中心 |
-| 134 | Close_Order_Center | 关闭订单中心 |
-| 108 | Open_Record_App | 打开途记软件 |
-| 295 | Close_Record_App | 关闭途记软件 |
-| 93 | Create_Trip_Record | 新建旅途记录 |
-| 92 | Open_Calendar | 打开日历 |
-| 10 | Close_Calendar | 关闭日历 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Check_Car_Condition | system_info | `{"type": "full"}` | 车况检查 |
+|| Check_Car_Condition | system_info | `{"type": "tire"}` | 检查轮胎 |
+|| Check_Car_Condition | system_info | `{"type": "fuel"}` | 检查油量 |
+|| Open_Calendar | system_settings | `{"action": "calendar"}` | 打开日历 |
+|| today_events | today_events | `{}` | 查看今日日程 |
+|| add_event | add_event | `{"title": "...", "time": "..."}` | 添加日程 |
+|| delete_event | delete_event | `{"event_id": "..."}` | 删除日程 |
+|| show_notification | show_notification | `{"title": "...", "content": "..."}` | 显示通知 |
+|| dismiss_notification | dismiss_notification | `{}` | 关闭通知 |
 
 ## Car Condition Check Items
 
-| Check Item | Normal Range | Warning Threshold | Critical Threshold |
+|| Check Item | Normal Range | Warning Threshold | Critical Threshold |
 |------------|-------------|-------------------|-------------------|
 | Tire Pressure | 2.2-2.5 bar | < 2.0 or > 2.7 | < 1.8 or > 3.0 |
 | Fuel Level | > 10% | < 10% | < 5% |
@@ -41,7 +27,7 @@
 
 ## Maintenance Schedule (Typical)
 
-| Item | Interval | Warning (Remaining) |
+|| Item | Interval | Warning (Remaining) |
 |------|----------|-------------------|
 | Oil Change | 10,000 km / 12 months | < 1,000 km or < 1 month |
 | Tire Rotation | 10,000 km | < 1,000 km |

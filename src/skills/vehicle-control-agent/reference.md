@@ -1,53 +1,45 @@
 # Vehicle Control Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 35 | Open_Window | 打开车窗 |
-| 62 | Close_Window | 关闭车窗 |
-| 61 | Set_Window | 设置车窗 |
-| 160 | Open_Window_Diagonal | 打开通风模式 |
-| 397 | Close_Window_Diagonal | 关闭通风模式 |
-| 97 | Close_Dormer | 关闭天窗 |
-| 304 | Open_Dormer | 打开天窗 |
-| 106 | Open_Sunshade | 打开遮阳帘 |
-| 201 | Close_Sunshade | 关闭遮阳帘 |
-| 135 | Open_Trunk | 打开后备箱 |
-| 410 | Close_Trunk | 关闭后备箱 |
-| 95 | Open_Wiper | 打开雨刷器 |
-| 368 | Close_Wiper | 关闭雨刷器 |
-| 254 | Open_Headlamp | 打开大灯 |
-| 182 | Close_Headlamp | 关闭大灯 |
-| 89 | Open_Low_Beam | 打开近光灯 |
-| 378 | Close_Low_Beam | 关闭近光灯 |
-| 67 | Open_High_Beam | 打开远光灯 |
-| 251 | Close_High_Beam | 关闭远光灯 |
-| 105 | Open_Front_Fog_Light | 打开前雾灯 |
-| 396 | Close_Front_Fog_Light | 关闭前雾灯 |
-| 118 | Open_Back_Fog_Light | 打开后雾灯 |
-| 29 | Close_Back_Fog_Light | 关闭后雾灯 |
-| 105 | Open_Fog_Light | 打开雾灯 |
-| 185 | Close_Fog_Light | 关闭雾灯 |
-| 381 | Open_Marker_Light | 打开示宽灯 |
-| 425 | Close_Marker_Light | 关闭示宽灯 |
-| 164 | Open_ADAPTIVE_HEAPLAMP | 打开自动大灯 |
-| 345 | Close_ADAPTIVE_HEAPLAMP | 关闭自动大灯 |
-| 343 | Open_Surround_View | 打开环绕摄像 |
-| 109 | Close_Surround_View | 关闭环绕摄像 |
-| 243 | Set_Surround_View | 打开指定摄像头 |
-| 200 | Open_DashCam | 打开行车记录仪 |
-| 156 | Close_DashCam | 关闭行车记录仪 |
-| 6 | Record_Audio | 开始录音 |
-| 318 | Stop_Audio | 停止录音 |
-| 13 | Record_Video | 开始录像 |
-| 343 | Stop_Video | 停止录像 |
-| 293 | Take_Photo | 拍照 |
-| 52 | Set_Driving_Mode | 设置驾驶模式 |
-| 232 | Open_AutoHold | 打开自动驻车 |
-| 405 | Close_AutoHold | 关闭自动驻车 |
-| 278 | Open_Engine_AutoStop | 打开自动启停 |
-| 408 | Close_Engine_AutoStop | 关闭自动启停 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Open_Window | open_window | `{"position": "..."}` | 打开车窗 |
+|| Close_Window | close_window | `{"position": "..."}` | 关闭车窗 |
+|| Set_Window | window_down | `{"position": "...", "level": N}` | 设置车窗 |
+|| Open_Window_Diagonal | open_window | `{"mode": "diagonal"}` | 打开通风模式 |
+|| Close_Window_Diagonal | close_window | `{"mode": "normal"}` | 关闭通风模式 |
+|| Open_Dormer | flash_lights | `{"action": "sunroof_open"}` | 打开天窗 |
+|| Close_Dormer | flash_lights | `{"action": "sunroof_close"}` | 关闭天窗 |
+|| Open_Trunk | flash_lights | `{"action": "trunk_open"}` | 打开后备箱 |
+|| Close_Trunk | flash_lights | `{"action": "trunk_close"}` | 关闭后备箱 |
+|| Open_Wiper | flash_lights | `{"action": "wiper_on"}` | 打开雨刷器 |
+|| Close_Wiper | flash_lights | `{"action": "wiper_off"}` | 关闭雨刷器 |
+|| Open_Headlamp | set_headlights | `{"mode": "on"}` | 打开大灯 |
+|| Close_Headlamp | set_headlights | `{"mode": "off"}` | 关闭大灯 |
+|| Open_Low_Beam | set_headlights | `{"mode": "low_beam"}` | 打开近光灯 |
+|| Close_Low_Beam | set_headlights | `{"mode": "off"}` | 关闭近光灯 |
+|| Open_High_Beam | set_headlights | `{"mode": "high_beam"}` | 打开远光灯 |
+|| Close_High_Beam | set_headlights | `{"mode": "low_beam"}` | 关闭远光灯 |
+|| Open_Fog_Light | set_headlights | `{"mode": "fog_on"}` | 打开雾灯 |
+|| Close_Fog_Light | set_headlights | `{"mode": "fog_off"}` | 关闭雾灯 |
+|| Open_Surround_View | open_camera | `{"type": "surround_view"}` | 打开环绕摄像 |
+|| Close_Surround_View | close_camera | `{"type": "surround_view"}` | 关闭环绕摄像 |
+|| Set_Surround_View | open_camera | `{"type": "..."}` | 打开指定摄像头 |
+|| Open_DashCam | dashcam_view | `{"action": "start"}` | 打开行车记录仪 |
+|| Close_DashCam | dashcam_view | `{"action": "stop"}` | 关闭行车记录仪 |
+|| Take_Photo | screenshot | `{"type": "camera"}` | 拍照 |
+|| Record_Video | record_video | `{"action": "start"}` | 开始录像 |
+|| Stop_Video | record_video | `{"action": "stop"}` | 停止录像 |
+|| Record_Audio | record_video | `{"action": "audio_start"}` | 开始录音 |
+|| Stop_Audio | record_video | `{"action": "audio_stop"}` | 停止录音 |
+|| Set_Driving_Mode | lock_doors | `{"mode": "..."}` | 设置驾驶模式 |
+|| Open_AutoHold | lock_doors | `{"action": "auto_hold_on"}` | 打开自动驻车 |
+|| Close_AutoHold | lock_doors | `{"action": "auto_hold_off"}` | 关闭自动驻车 |
+|| Open_Engine_AutoStop | start_engine | `{"mode": "auto_start_stop"}` | 打开自动启停 |
+|| Close_Engine_AutoStop | start_engine | `{"mode": "auto_start_stop_off"}` | 关闭自动启停 |
+|| Open_Engine | start_engine | `{}` | 打开引擎 |
+|| Close_Engine | stop_engine | `{}` | 关闭引擎 |
 
 ## Shared Slot Type Definitions
 
@@ -74,7 +66,7 @@ agents: Vehicle Control Agent
 
 ## Window Position Mapping
 
-| Position | Windows Affected |
+|| Position | Windows Affected |
 |----------|-----------------|
 | 主驾 | Driver side front window |
 | 副驾 | Passenger side front window |
@@ -84,14 +76,14 @@ agents: Vehicle Control Agent
 
 ## Diagonal Ventilation Mode
 
-| Pattern | Open Windows |
+|| Pattern | Open Windows |
 |---------|--------------|
 | Left diagonal | Front-left + Rear-right |
 | Right diagonal | Front-right + Rear-left |
 
 ## Driving Mode Characteristics
 
-| Mode | Engine Response | Transmission | Fuel Efficiency | Notes |
+|| Mode | Engine Response | Transmission | Fuel Efficiency | Notes |
 |------|----------------|--------------|-----------------|-------|
 | 经济 | Gentle | Early upshift | Best | Eco driving |
 | 舒适 | Normal | Normal | Normal | Default |
@@ -101,7 +93,7 @@ agents: Vehicle Control Agent
 
 ## Camera Views
 
-| Camera | Description |
+|| Camera | Description |
 |--------|-------------|
 | 前视 | Front bumper camera |
 | 后视 | Rear camera |

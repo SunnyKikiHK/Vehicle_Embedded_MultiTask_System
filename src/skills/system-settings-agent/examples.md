@@ -3,9 +3,8 @@
 ## Turn 1 — Open an App
 
 **User:** "打开音乐App"
-**Matched Intent:** `Open_App`
-**Slots extracted:**
-- `app = 音乐`
+**Matched Intent:** `open_app`
+**Arguments:** `{"name": "音乐"}`
 
 **Reconstruction:** "打开音乐应用"
 
@@ -14,80 +13,24 @@
 
 ---
 
-## Turn 2 — Set Desktop Style
+## Turn 2 — Close an App
 
-**User:** "切换到卡片式桌面"
-**Matched Intent:** `Set_Desktop_Style`
-**Slots extracted:**
-- `Desktop = 卡片式`
+**User:** "关闭这个应用"
+**Matched Intent:** `close_app`
+**Arguments:** `{"name": "当前应用"}`
 
-**Reconstruction:** "切换桌面样式为卡片式"
+**Reconstruction:** "关闭当前应用"
 
-**Action:** Apply "卡片式" desktop layout preset.
-**Response:** "桌面样式已切换为卡片式。"
-
----
-
-## Turn 3 — Open Scene Mode
-
-**User:** "打开回家模式"
-**Matched Intent:** `Open_Preset_Scene`
-**Slots extracted:**
-- `Scene = 回家`
-
-**Reconstruction:** "开启回家情景模式"
-
-**Action:** Apply the "回家" preset: HVAC to 24°C, ambient light to warm white 60%, resume media, start navigation home.
-**Response:** "已开启回家情景模式。空调已调到24度，正在为您导航回家。"
+**Action:** Close the current foreground application.
+**Response:** "已关闭当前应用。"
 
 ---
 
-## Turn 4 — Set Sleep Timer
-
-**User:** "30分钟后睡觉"
-**Matched Intent:** `Open_Snooze_Mode`
-**Slots extracted:**
-- `Minute = 30`
-
-**Reconstruction:** "设置30分钟睡眠定时器"
-
-**Action:** Start a 30-minute sleep timer that will dim the screen and mute media.
-**Response:** "好的，已设置30分钟后进入睡眠模式。"
-
----
-
-## Turn 5 — Cancel Sleep Timer
-
-**User:** "取消睡眠模式"
-**History:** Sleep timer active
-**Matched Intent:** `Close_Snooze_Mode`
-**Slots extracted:** none
-
-**Reconstruction:** "取消睡眠定时器"
-
-**Action:** Cancel the active sleep timer.
-**Response:** "睡眠定时器已取消。"
-
----
-
-## Turn 6 — Enable Screen Casting
-
-**User:** "打开投屏"
-**Matched Intent:** `Open_ScreenCast`
-**Slots extracted:** none
-
-**Reconstruction:** "开启手机投屏"
-
-**Action:** Enable screen casting mode, start searching for nearby devices.
-**Response:** "投屏已开启，正在搜索设备。请在手机上选择投屏到车载系统。"
-
----
-
-## Turn 7 — Back to Home Screen
+## Turn 3 — Back to Home Screen
 
 **User:** "回主页"
-**Matched Intent:** `Back_To_Home`
-**Slots extracted:** none
+**Matched Intent:** `system_settings`
+**Arguments:** `{"action": "home"}`
 
 **Reconstruction:** "返回主页"
 
@@ -96,40 +39,92 @@
 
 ---
 
-## Turn 8 — Close All Apps and Set Scene
+## Turn 4 — Take Screenshot
 
-**User:** "开启影院模式"
-**Matched Intent:** `Open_Preset_Scene`
-**Slots extracted:**
-- `Scene = 影院`
+**User:** "截屏"
+**Matched Intent:** `screenshot_screen`
+**Arguments:** `{}`
 
-**Reconstruction:** "开启影院情景模式"
+**Reconstruction:** "截取屏幕"
 
-**Action:** Apply the "影院" preset: HVAC to 25°C quiet mode, lights off, open video app, dim screen.
-**Response:** "已开启影院模式。空调已调至静音，氛围灯已关闭，正在打开视频应用。"
-
----
-
-## Turn 9 — Open Mini App
-
-**User:** "打开小程序"
-**Matched Intent:** `Open_Mini_App_Center`
-**Slots extracted:** none
-
-**Reconstruction:** "打开小程序中心"
-
-**Action:** Launch the mini app center.
-**Response:** "小程序中心已打开。"
+**Action:** Capture current screen and save to gallery.
+**Response:** "截屏已保存。"
 
 ---
 
-## Turn 10 — Turn Off Screen
+## Turn 5 — Show Notification
 
-**User:** "关掉屏幕"
-**Matched Intent:** `Close_Screen`
-**Slots extracted:** none
+**User:** (system notification)
+**Matched Intent:** `show_notification`
+**Arguments:** `{"title": "提醒", "content": "您的预约保养时间到了"}`
 
-**Reconstruction:** "关闭屏幕"
+**Reconstruction:** 显示通知
 
-**Action:** Turn off the display (system stays running in background).
-**Response:** "屏幕已关闭。"
+**Action:** Display a notification to the user.
+**Response:** (notification appears on screen)
+
+---
+
+## Turn 6 — Dismiss Notification
+
+**User:** "知道了"
+**History:** Notification displayed
+**Matched Intent:** `dismiss_notification`
+**Arguments:** `{}`
+
+**Reconstruction:** "关闭通知"
+
+**Action:** Dismiss the current notification.
+**Response:** (notification dismissed)
+
+---
+
+## Turn 7 — Language Setting
+
+**User:** "把语言改成英文"
+**Matched Intent:** `language_setting`
+**Arguments:** `{"language": "英文"}`
+
+**Reconstruction:** "设置系统语言为英文"
+
+**Action:** Change system language to English.
+**Response:** "系统语言已切换为英文。"
+
+---
+
+## Turn 8 — Open System Settings
+
+**User:** "打开系统设置"
+**Matched Intent:** `system_settings`
+**Arguments:** `{}`
+
+**Reconstruction:** "打开系统设置"
+
+**Action:** Open the system settings panel.
+**Response:** "已打开系统设置。"
+
+---
+
+## Turn 9 — Sound Settings
+
+**User:** "打开声音设置"
+**Matched Intent:** `sound_setting`
+**Arguments:** `{}`
+
+**Reconstruction:** "打开声音设置"
+
+**Action:** Open sound settings panel.
+**Response:** "已打开声音设置。"
+
+---
+
+## Turn 10 — Reset Settings
+
+**User:** "恢复默认设置"
+**Matched Intent:** `reset_settings`
+**Arguments:** `{}`
+
+**Reconstruction:** "恢复系统默认设置"
+
+**Action:** Reset all settings to factory defaults.
+**Response:** "已恢复默认设置。"

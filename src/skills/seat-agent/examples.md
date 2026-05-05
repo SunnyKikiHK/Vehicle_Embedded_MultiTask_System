@@ -3,9 +3,8 @@
 ## Turn 1 — Turn On Seat Heating
 
 **User:** "打开主驾座椅加热"
-**Matched Intent:** `Open_Heated_Seat`
-**Slots extracted:**
-- `Position = 主驾`
+**Matched Intent:** `seat_heating`
+**Arguments:** `{"switch": "on", "position": "主驾"}`
 
 **Reconstruction:** "打开主驾座椅加热"
 
@@ -18,10 +17,8 @@
 
 **User:** "副驾通风再高一点"
 **History:** 副驾 ventilation at level 1
-**Matched Intent:** `Inc_Seat_Ventilation`
-**Slots extracted:**
-- `Position = 副驾`
-- `Ratio = 高一点` → +1 step from level 1 → level 2
+**Matched Intent:** `seat_ventilation`
+**Arguments:** `{"level": 2, "direction": "up", "position": "副驾"}`
 
 **Reconstruction:** "把副驾座椅通风调高一点"
 
@@ -34,10 +31,8 @@
 
 **User:** "座椅往前一点"
 **History:** Default position
-**Matched Intent:** `Adjust_Seat_Long`
-**Slots extracted:**
-- `Position = 主驾` (default)
-- `Direction = 前`
+**Matched Intent:** `adjust_seat`
+**Arguments:** `{"direction": "forward", "position": "主驾"}`
 
 **Reconstruction:** "把主驾座椅向前调整"
 
@@ -49,8 +44,8 @@
 ## Turn 4 — Turn Off Steering Wheel Heating
 
 **User:** "关掉方向盘加热"
-**Matched Intent:** `Close_Heated_Steer`
-**Slots extracted:** none (implicit)
+**Matched Intent:** `seat_heating`
+**Arguments:** `{"switch": "off", "target": "steering_wheel"}`
 
 **Reconstruction:** "关闭方向盘加热"
 
@@ -62,8 +57,8 @@
 ## Turn 5 — Fold Mirrors
 
 **User:** "把后视镜收起来"
-**Matched Intent:** `Close_Rearview_Mirror`
-**Slots extracted:** none
+**Matched Intent:** `adjust_seat`
+**Arguments:** `{"target": "mirror", "action": "fold"}`
 
 **Reconstruction:** "折叠后视镜"
 
@@ -76,9 +71,8 @@
 
 **User:** "开个按摩吧"
 **History:** Driver seat currently active
-**Matched Intent:** `Open_Seat_Massage`
-**Slots extracted:**
-- `Position = 主驾` (default from context)
+**Matched Intent:** `seat_massage`
+**Arguments:** `{"switch": "on", "position": "主驾"}`
 
 **Reconstruction:** "打开主驾座椅按摩"
 
@@ -91,10 +85,8 @@
 
 **User:** "座椅温度调高一点"
 **History:** 主驾 seat heating at level 1
-**Matched Intent:** `Inc_Seat_Temperature`
-**Slots extracted:**
-- `Position = 主驾` (default)
-- `Ratio = 高一点` → +1 from level 1 → level 2
+**Matched Intent:** `seat_heating`
+**Arguments:** `{"level": 2, "direction": "up", "position": "主驾"}`
 
 **Reconstruction:** "把主驾座椅温度调高一点"
 
@@ -106,8 +98,8 @@
 ## Turn 8 — Open Mirror Heating
 
 **User:** "后视镜起雾了"
-**Matched Intent:** `Open_Rearview_Mirror_Heating`
-**Slots extracted:** none
+**Matched Intent:** `seat_heating`
+**Arguments:** `{"switch": "on", "target": "mirror"}`
 
 **Reconstruction:** "开启后视镜加热"
 
@@ -119,10 +111,8 @@
 ## Turn 9 — Set Seat Ventilation Level
 
 **User:** "副驾通风调到最大"
-**Matched Intent:** `Set_Seat_Ventilation`
-**Slots extracted:**
-- `Position = 副驾`
-- `Extreme = 最高` → level 3
+**Matched Intent:** `seat_ventilation`
+**Arguments:** `{"level": 3, "position": "副驾"}`
 
 **Reconstruction:** "把副驾座椅通风调到最高档"
 
@@ -134,9 +124,8 @@
 ## Turn 10 — Turn On Rear Heated Seat
 
 **User:** "打开后排座椅加热"
-**Matched Intent:** `Open_Heated_Seat`
-**Slots extracted:**
-- `Position = 后排`
+**Matched Intent:** `seat_heating`
+**Arguments:** `{"switch": "on", "position": "后排"}`
 
 **Reconstruction:** "打开后排座椅加热"
 

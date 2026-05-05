@@ -6,25 +6,12 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from src.constants import AGENT_MAPPING
+
 _SKILL_MANIFEST: dict[str, SkillManifest] | None = None
 
 # Known exact mappings for all 14 agents
-_KNOWN = {
-    "hvac-agent": "HVAC Agent",
-    "navigation-agent": "Navigation Agent",
-    "media-agent": "Media Agent",
-    "seat-agent": "Seat Agent",
-    "ambient-light-agent": "Ambient Light Agent",
-    "vehicle-control-agent": "Vehicle Control Agent",
-    "phone-agent": "Phone Agent",
-    "weather-life-agent": "Weather & Life Agent",
-    "user-profile-agent": "User Profile Agent",
-    "system-settings-agent": "System Settings Agent",
-    "car-butler-agent": "Car Butler Agent",
-    "group-travel-agent": "Group Travel Agent",
-    "interaction-control-agent": "Interaction Control Agent",
-    "info-query-agent": "Info Query Agent",
-}
+_KNOWN = AGENT_MAPPING
 
 
 def get_skill_manifest() -> dict[str, SkillManifest]:

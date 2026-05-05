@@ -1,36 +1,31 @@
 # Weather & Life Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 194 | Query_Weather | 天气查询 |
-| 200 | Query_Weather | 天气查询 (duplicate ID) |
-| 120 | Query_Timely_Weather | 实时查询天气 |
-| 402 | Open_Weather | 打开天气 |
-| 187 | Close_Weather | 关闭天气 |
-| 154 | Ask_Clothes | 查询穿衣 |
-| 173 | Ask_Makeup | 查询化妆 |
-| 157 | Ask_Fishing | 查询钓鱼 |
-| 212 | Ask_Sport | 查询运动 |
-| 231 | Ask_Travel | 查询旅游 |
-| 303 | Ask_Transport | 查询交通 |
-| 127 | Ask_Cold_Index | 查询感冒 |
-| 191 | Ask_Car_Wash | 查询洗车 |
-| 372 | Ask_Allergy | 查询过敏 |
-| 181 | Query_Body_Temperature | 查询体感温度 |
-| 209 | Query_UV_Level | 查询紫外线 |
-| 197 | Query_Date | 查询哪天限行 |
-| 259 | Query_Restrictions | 查询是否限行 |
-| 226 | Ask_Weekday | 查询星期 |
-| 324 | Ask_Date | 查看日期 |
-| 225 | Display_Remaining_Flow | 剩余流量 |
-| 187 | Open_Flow | 打开流量 |
-| 203 | Close_Flow | 关闭流量 |
-| 358 | Open_Flow_Center | 打开流量中心 |
-| 283 | Close_Flow_Center | 关闭流量中心 |
-| 242 | Open_APP_Rank | 查看流量排名 |
-| 226 | Close_APP_Rank | 退出流量排名 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Query_Weather | get_weather | `{"location": "...", "date": "..."}` | 天气查询 |
+|| Query_Timely_Weather | get_weather | `{"location": "..."}` | 实时查询天气 |
+|| Open_Weather | get_weather | `{}` | 打开天气 |
+|| Ask_Clothes | get_weather | `{"advisory": "clothing"}` | 查询穿衣 |
+|| Ask_Makeup | get_weather | `{"advisory": "makeup"}` | 查询化妆 |
+|| Ask_Fishing | get_weather | `{"advisory": "fishing"}` | 查询钓鱼 |
+|| Ask_Sport | get_weather | `{"advisory": "sport"}` | 查询运动 |
+|| Ask_Travel | get_weather | `{"advisory": "travel"}` | 查询旅游 |
+|| Ask_Transport | get_weather | `{"advisory": "transport"}` | 查询交通 |
+|| Ask_Cold_Index | get_weather | `{"advisory": "cold_index"}` | 查询感冒 |
+|| Ask_Car_Wash | get_weather | `{"advisory": "car_wash"}` | 查询洗车 |
+|| Ask_Allergy | get_weather | `{"advisory": "allergy"}` | 查询过敏 |
+|| Query_Body_Temperature | get_weather | `{"advisory": "feels_like"}` | 查询体感温度 |
+|| Query_UV_Level | get_weather | `{"advisory": "uv_index"}` | 查询紫外线 |
+|| Query_Weather | get_forecast | `{"date": "..."}` | 天气预报 |
+|| Query_Date | get_weather | `{"type": "oil_price"}` | 油价查询 |
+|| Query_Date | get_weather | `{"type": "restriction", "city": "...", "plate": "..."}` | 查询哪天限行 |
+|| Query_Restrictions | get_weather | `{"type": "restriction_check"}` | 查询是否限行 |
+|| Ask_Weekday | get_weather | `{"type": "weekday"}` | 查询星期 |
+|| Ask_Date | get_weather | `{"type": "date"}` | 查看日期 |
+|| Display_Remaining_Flow | get_weather | `{"type": "data_remaining"}` | 剩余流量 |
+|| Query_Date | get_weather | `{"type": "weather_alert"}` | 天气预警 |
 
 ## Shared Slot Type Definitions
 
@@ -62,7 +57,7 @@ agents: Weather & Life Agent
 
 ## Date Offset Resolution
 
-| User Expression | Resolved Date |
+|| User Expression | Resolved Date |
 |----------------|---------------|
 | 今天 | Today |
 | 明天 | Tomorrow |
@@ -73,7 +68,7 @@ agents: Weather & Life Agent
 
 ## Weather Condition Mapping
 
-| Weather | Icon | Advisory |
+|| Weather | Icon | Advisory |
 |---------|------|----------|
 | 晴 | ☀️ | Good for outdoor activities |
 | 多云 | ⛅ | Normal conditions |
@@ -86,7 +81,7 @@ agents: Weather & Life Agent
 
 ## License Plate Restriction Rules (Beijing Example)
 
-| Last Digit | Restricted Day |
+|| Last Digit | Restricted Day |
 |------------|----------------|
 | 0, 5 | Monday |
 | 1, 6 | Tuesday |

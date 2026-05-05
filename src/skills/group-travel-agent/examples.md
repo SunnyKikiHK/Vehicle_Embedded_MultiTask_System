@@ -3,8 +3,8 @@
 ## Turn 1 — Create a Group
 
 **User:** "创建车队"
-**Matched Intent:** `Build_Group`
-**Slots extracted:** none
+**Matched Intent:** `build_group`
+**Arguments:** `{}`
 
 **Reconstruction:** "创建新的组队"
 
@@ -16,8 +16,8 @@
 ## Turn 2 — Join a Group
 
 **User:** "加入车队AB12CD"
-**Matched Intent:** `Join_Group`
-**Slots extracted:** none (code extracted from query)
+**Matched Intent:** `join_group`
+**Arguments:** `{"code": "AB12CD"}`
 
 **Reconstruction:** "加入车队AB12CD"
 
@@ -30,9 +30,8 @@
 
 **User:** "在前面的服务区集合"
 **History:** Active group trip
-**Matched Intent:** `Ask_Meeting_Place`
-**Slots extracted:**
-- `location` → 服务区 (nearest service area along route)
+**Matched Intent:** `ask_meeting_place`
+**Arguments:** `{"location": "服务区"}`
 
 **Reconstruction:** "设置前方服务区为汇合地点"
 
@@ -45,8 +44,8 @@
 
 **User:** "导航到汇合点"
 **History:** Meetup point set
-**Matched Intent:** `Go_Meeting_Place`
-**Slots extracted:** none (resolve from group state)
+**Matched Intent:** `go_meeting_place`
+**Arguments:** `{}`
 
 **Reconstruction:** "导航到已设置的汇合地点"
 
@@ -59,14 +58,16 @@
 
 **User:** "看看队友都在哪？"
 **History:** Active group with 4 members
-**Matched Intent:** `Group_Member_Location`
-**Slots extracted:** none
+**Matched Intent:** `group_member_location`
+**Arguments:** `{}`
 
 **Reconstruction:** "查看车队成员当前位置"
 
 **Action:** Query location of all group members, compute relative positions.
-**Response:** "车队成员位置：\n- 张三：距您8公里，前方高速\n- 李四：距您12公里，前方\n- 王五：距您5公里，左后方服务区"
-```
+**Response:** "车队成员位置：
+- 张三：距您8公里，前方高速
+- 李四：距您12公里，前方
+- 王五：距您5公里，左后方服务区"
 
 ---
 
@@ -74,8 +75,8 @@
 
 **User:** "退出车队"
 **History:** Active group membership
-**Matched Intent:** `Quit_Group`
-**Slots extracted:** none
+**Matched Intent:** `quit_group`
+**Arguments:** `{}`
 
 **Reconstruction:** "退出当前车队"
 

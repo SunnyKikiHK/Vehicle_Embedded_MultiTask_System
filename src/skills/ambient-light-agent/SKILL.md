@@ -8,101 +8,83 @@ description: Implements Ambient Light Agent intents in the vehicle embedded mult
 ## Agent Overview
 
 **Handles:** All lighting inside the cabin: ambient lights, dashboard brightness, HUD, reading lights, and general screen brightness.
-**Total intents: 30**
-**Shared slot types:** `Color`, `Theme`, `Number`, `Ratio`, `Extreme`, `Direction`, `level`
+## Expected Output Format
+
+The LLM should return a JSON object with the following structure:
+
+```json
+{
+  "reasoning": "Brief explanation of why this tool was selected",
+  "tool_name": "actual_mcp_tool_name",
+  "arguments": {
+    "slot_name_1": "slot_value_1",
+    "slot_name_2": "slot_value_2",
+    ...
+  }
+}
+```
+
+If no arguments are needed, use an empty object `{}`.
 
 ## Core Intent Categories
 
 ### Ambient Lights
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开氛围灯 | Open_Env_Light | — | Turn on ambient lighting |
-| 关闭氛围灯 | Close_Env_Light | — | Turn off ambient lighting |
-| 设置氛围灯颜色 | Set_Env_Light_Color | Color | Set ambient light color |
-| 调节氛围灯主题 | Set_Env_Light_Theme | Theme | Set ambient light theme |
-| 调低氛围灯亮度 | Dec_Env_Light_Brightness | Number, Ratio | Decrease ambient brightness |
-| 调高氛围灯亮度 | Inc_Env_Light_Brightness | Number, Ratio | Increase ambient brightness |
-| 设置氛围灯亮度 | Set_Env_Light_Brightness | Number, Ratio, Extreme | Set ambient brightness |
-| 氛围灯自动模式 | Open_Env_Light_Auto_Mode | — | Enable auto ambient lighting |
-| 关闭氛围灯自动模式 | Close_Env_Light_Auto_Mode | — | Disable auto ambient lighting |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开氛围灯 | set_interior_lights | `{"switch": "on"}` | Turn on ambient lighting |
+| 关闭氛围灯 | set_interior_lights | `{"switch": "off"}` | Turn off ambient lighting |
+| 设置氛围灯颜色 | set_interior_lights | `{"color": "<Color>"}` | Set ambient light color |
+| 调节氛围灯主题 | set_interior_lights | `{"theme": "<Theme>"}` | Set ambient light theme |
+| 调低氛围灯亮度 | set_interior_lights | `{"level": "<Number>", "direction": "down"}` | Decrease ambient brightness |
+| 调高氛围灯亮度 | set_interior_lights | `{"level": "<Number>", "direction": "up"}` | Increase ambient brightness |
+| 设置氛围灯亮度 | set_interior_lights | `{"level": "<Number>"}` | Set ambient brightness (0-100) |
+| 氛围灯自动模式 | set_interior_lights | `{"mode": "auto"}` | Enable auto ambient lighting |
+| 关闭氛围灯自动模式 | set_interior_lights | `{"mode": "manual"}` | Disable auto ambient lighting |
 
 ### Dashboard
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 调暗仪表盘 | Dec_DashBoard_Brightness | Number, Ratio | Dim dashboard |
-| 调亮仪表盘 | Inc_DashBoard_Brightness | Number, Ratio | Brighten dashboard |
-| 仪表盘调到最暗 | Set_DashBoard_Brightness_Min | — | Minimum dashboard brightness |
-| 仪表盘调到最亮 | Set_DashBoard_Brightness_Max | — | Maximum dashboard brightness |
-| 设置仪表盘亮度 | Set_DashBoard_Brightness | Number, Ratio | Set dashboard brightness level |
-
-### Screen Brightness
-
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 亮度调低 | Dec_Brightness | Number, Ratio | Decrease screen brightness |
-| 亮度调高 | Inc_Brightness | Number, Ratio | Increase screen brightness |
-| 亮度调到最低 | Set_Brightness_Min | — | Minimum screen brightness |
-| 亮度调到最高 | Set_Brightness_Max | — | Maximum screen brightness |
-| 设置亮度 | Set_Brightness | Number, Ratio | Set screen brightness |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 调暗仪表盘 | set_interior_lights | `{"target": "dashboard", "level": "<Number>", "direction": "down"}` | Dim dashboard |
+| 调亮仪表盘 | set_interior_lights | `{"target": "dashboard", "level": "<Number>", "direction": "up"}` | Brighten dashboard |
+| 仪表盘调到最暗 | set_interior_lights | `{"target": "dashboard", "level": 0}` | Minimum dashboard brightness |
+| 仪表盘调到最亮 | set_interior_lights | `{"target": "dashboard", "level": 100}` | Maximum dashboard brightness |
+| 设置仪表盘亮度 | set_interior_lights | `{"target": "dashboard", "level": "<Number>"}` | Set dashboard brightness (0-100) |
 
 ### HUD
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开HUD | Open_HUD | — | Turn on HUD display |
-| 关闭HUD | Close_HUD | — | Turn off HUD display |
-| HUD亮度调到指定值 | Adjust_Hud_Brightness | level | Set HUD brightness level |
-| 调高HUD亮度 | Inc_HUD_Brightness | — | Increase HUD brightness |
-| 调低HUD亮度 | Dec_HUD_Brightness | — | Decrease HUD brightness |
-| 上下调节HUD位置 | Adjust_HUD_Vert | Direction | Adjust HUD vertical position |
-| 左右调节HUD位置 | Adjust_HUD_Horizon | Direction | Adjust HUD horizontal position |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开HUD | hud_on | `{}` | Turn on HUD display |
+| 关闭HUD | hud_off | `{}` | Turn off HUD display |
+| HUD亮度调到指定值 | hud_brightness | `{"level": "<level>"}` | Set HUD brightness (1-5) |
+| 调高HUD亮度 | hud_brightness | `{"direction": "up"}` | Increase HUD brightness |
+| 调低HUD亮度 | hud_brightness | `{"direction": "down"}` | Decrease HUD brightness |
+| 上下调节HUD位置 | hud_mode | `{"direction": "vertical", "position": "<Direction>"}` | Adjust HUD vertical position |
+| 左右调节HUD位置 | hud_mode | `{"direction": "horizontal", "position": "<Direction>"}` | Adjust HUD horizontal position |
 
 ### Reading Lights
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开阅读灯 | Open_Reading_Light | — | Turn on reading light |
-| 关闭阅读灯 | Close_Reading_Light | — | Turn off reading light |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开阅读灯 | set_reading_light | `{"switch": "on"}` | Turn on reading light |
+| 关闭阅读灯 | set_reading_light | `{"switch": "off"}` | Turn off reading light |
 
 ## Slot Resolution Rules
 
-- **Color**: Resolve to one of the predefined ambient light colors. Common: `红色`, `蓝色`, `绿色`, `紫色`, `橙色`, `白色`, `暖白`, `多色`.
-- **Theme**: Resolve to a named ambient light theme preset. Common: `浪漫`, `科技`, `自然`, `运动`, `音乐随动`, `呼吸`.
-- **Number**: Brightness level 1–100 (normalized). Default to 50.
-- **Ratio**: Relative adjustment. Map `高` → +20%, `低` → -20%, `最高/最低` → 100/0.
-- **Extreme**: `最高` → 100%, `最低` → 0%.
-- **level**: HUD brightness as integer 1–5.
-- **Direction**: For HUD position adjustment: `上/下` (vertical), `左/右` (horizontal).
-- When **Color is omitted** with color intent, present a color picker or apply default color.
+- **Color**: One of: `红`, `绿`, `蓝`, `黄`, `紫`, `橙`, `粉`, `白`, `暖白`, `冷白`, `青色`, `棕色`, `自定义`
+- **Theme**: One of: `浪漫`, `激情`, `清凉`, `温暖`, `科技`, `自然`, `星辰`, `霓虹`, `日落`, `森林`, `海洋`
+- **Number**: Brightness level 0–100. Default to 50.
+- **level (HUD)**: Integer 1–5
+- **Direction**: One of: `上`, `下`, `左`, `右`, `前`, `后`, `左上`, `右上`, `左下`, `右下`
+- When **Color is omitted**, apply default color or present a color picker.
 
 ## Implementation Checklist
 
 When implementing a new Ambient Light intent:
 
-1. **Match the intent key** (e.g., `Set_Env_Light_Color`) to the skill function.
-2. **Resolve slot values** — normalize Color/Theme to system values, brightness to percentage.
-3. **Execute the action** via the vehicle lighting API.
-4. **Confirm** with a natural response (e.g., "氛围灯已切换到蓝色" or "HUD亮度已调高").
-5. **Save SlotContext** to Redis with `agent=Ambient Light Agent`, `intent=<matched_intent>`, and extracted slots.
-
-## Response Templates
-
-```
-氛围灯开: "氛围灯已开启，当前颜色{color}。"
-氛围灯关: "氛围灯已关闭。"
-氛围灯颜色: "氛围灯已切换到{color}。"
-氛围灯主题: "氛围灯主题已切换到{theme}。"
-亮度调高: "亮度已调高，当前为{level}%。"
-亮度调低: "亮度已调低，当前为{level}%。"
-HUD开: "HUD已开启。"
-HUD关: "HUD已关闭。"
-阅读灯开: "阅读灯已开启。"
-阅读灯关: "阅读灯已关闭。"
-```
-
-## Additional Resources
-
-- Full intent table and intent ID map: [reference.md](reference.md)
-- Annotated conversation examples: [examples.md](examples.md)
+1. **Identify the intent** from the user's request
+2. **Extract slot values** — normalize Color/Theme to valid values, brightness to 0-100, Direction
+3. **Validate** all slot values against the Slot Resolution Rules
+4. **Output** the JSON with reasoning, tool_name, and arguments

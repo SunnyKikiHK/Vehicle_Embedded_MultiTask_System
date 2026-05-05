@@ -1,16 +1,16 @@
 # Group Travel Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 87 | Join_Group | 加入组队 |
-| 241 | Build_Group | 创建组队 |
-| 297 | Quit_Group | 退出组队 |
-| 383 | Open_Group | 打开组队 |
-| 84 | Ask_Meeting_Place | 设置集结地 |
-| 374 | Go_Meeting_Place | 去汇合地点 |
-| 381 | Group_Member_Location | 查看成员位置 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Join_Group | join_group | `{"code": "..."}` | 加入组队 |
+|| Build_Group | build_group | `{}` | 创建组队 |
+|| Quit_Group | quit_group | `{}` | 退出组队 |
+|| Open_Group | open_group | `{}` | 打开组队 |
+|| Ask_Meeting_Place | ask_meeting_place | `{"location": "..."}` | 设置集结地 |
+|| Go_Meeting_Place | go_meeting_place | `{}` | 去汇合地点 |
+|| Group_Member_Location | group_member_location | `{}` | 查看成员位置 |
 
 ## Shared Slot Type Definitions
 
@@ -28,7 +28,7 @@ agents: Group Travel Agent, Navigation Agent
 
 ## Group Capacity
 
-| Parameter | Limit |
+|| Parameter | Limit |
 |-----------|-------|
 | Max group size | 10 members |
 | Group code length | 6 alphanumeric characters |
@@ -37,7 +37,7 @@ agents: Group Travel Agent, Navigation Agent
 
 ## Group States
 
-| State | Description |
+|| State | Description |
 |-------|-------------|
 | ACTIVE | Group trip in progress, all features enabled |
 | PAUSED | Group paused, location sharing paused |
@@ -45,7 +45,7 @@ agents: Group Travel Agent, Navigation Agent
 
 ## Invite Methods
 
-| Method | Description |
+|| Method | Description |
 |--------|-------------|
 | 邀请码 | 6-character alphanumeric code |
 | QR Code | Scannable QR from group leader's app |

@@ -1,42 +1,34 @@
 # Phone Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 270 | Open_Phone | 打开电话 |
-| 405 | Call_Phone | 拨打电话 |
-| 31 | Call_Number | 拨打指定电话 |
-| 172 | Call_Phone_By_Contact | 拨打指定人号码 |
-| 424 | Call_Phone_By_Contact_Label | 按联系人和标签拨打 |
-| 325 | Call_Yellow_Page | 拨打黄页 |
-| 351 | Call_Select_SubStr | 按号码段选择号码 |
-| 214 | Call_Emergency | 拨打紧急电话 |
-| 313 | Answer_Phone | 接听电话 |
-| 341 | Reject_Phone | 拒接电话 |
-| 320 | Silent_Phone | 来电静音 |
-| 263 | Quit_Phone | 退出电话 |
-| 403 | Call_Back | 回拨 |
-| 264 | View_Call_Record | 查看通话记录 |
-| 105 | View_Send_Record | 查看拨打记录 |
-| 161 | View_Already_Call | 查看已接来电 |
-| 387 | View_Not_Call | 查看未接来电 |
-| 346 | Get_Contact | 查看联系人 |
-| 93 | Sync_Contact | 同步联系人 |
-| 314 | Open_Message | 打开消息 |
-| 100 | Close_Message | 关闭消息 |
-| 419 | View_Unread_Message | 查看未读消息 |
-| 160 | View_All_Message | 查看所有消息 |
-| 39 | Close_Phone_Connection | 断开手机连接 |
-| 153 | Open_Phone_Connection | 打开手机连接 |
-| 228 | Open_Bluetooth | 打开蓝牙 |
-| 285 | Close_Bluetooth | 关闭蓝牙 |
-| 412 | Open_Spot | 打开热点 |
-| 352 | Close_Spot | 关闭热点 |
-| 326 | Open_WIFI | 打开WIFI |
-| 233 | Close_WIFI | 关闭WIFI |
-| 115 | Open_Wireless_Charge | 打开无线充电 |
-| 114 | Close_Wireless_Charge | 关闭无线充电 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Call_Phone | make_call | `{}` | 拨打电话 |
+|| Call_Number | make_call | `{"number": "..."}` | 拨打指定电话 |
+|| Call_Phone_By_Contact | dial_contact | `{"name": "..."}` | 拨打指定人号码 |
+|| Call_Phone_By_Contact_Label | dial_contact | `{"name": "...", "label": "..."}` | 按联系人和标签拨打 |
+|| Call_Emergency | make_call | `{"type": "emergency", "number": "..."}` | 拨打紧急电话 |
+|| Answer_Phone | answer_call | `{}` | 接听电话 |
+|| Reject_Phone | reject_call | `{}` | 拒接电话 |
+|| Quit_Phone | end_call | `{}` | 退出电话 |
+|| Call_Back | make_call | `{"type": "callback"}` | 回拨 |
+|| View_Not_Call | missed_calls | `{}` | 查看未接来电 |
+|| View_Call_Record | recent_calls | `{}` | 查看通话记录 |
+|| View_Already_Call | recent_calls | `{}` | 查看已接来电 |
+|| View_Send_Record | recent_calls | `{}` | 查看拨打记录 |
+|| Get_Contact | recent_calls | `{}` | 查看联系人 |
+|| Sync_Contact | recent_calls | `{"action": "sync"}` | 同步联系人 |
+|| View_Unread_Message | unread_messages | `{}` | 查看未读消息 |
+|| View_All_Message | read_messages | `{}` | 查看所有消息 |
+|| Open_Bluetooth | bluetooth_on | `{}` | 打开蓝牙 |
+|| Close_Bluetooth | bluetooth_off | `{}` | 关闭蓝牙 |
+|| Open_WIFI | wifi_on | `{}` | 打开WIFI |
+|| Close_WIFI | wifi_off | `{}` | 关闭WIFI |
+|| Open_Spot | wifi_on | `{"mode": "hotspot"}` | 打开热点 |
+|| Close_Spot | wifi_off | `{"mode": "hotspot"}` | 关闭热点 |
+|| Open_Phone_Connection | connect_bluetooth | `{}` | 打开手机连接 |
+|| Close_Phone_Connection | disconnect_bluetooth | `{}` | 断开手机连接 |
 
 ## Shared Slot Type Definitions
 
@@ -73,7 +65,7 @@ When a contact has multiple phone numbers, the default label priority for callin
 
 ## Yellow Page Categories
 
-| Category | Example Queries |
+|| Category | Example Queries |
 |----------|---------------|
 | 出租车 | 打车, 叫出租 |
 | 拖车 | 抛锚, 事故, 救援 |

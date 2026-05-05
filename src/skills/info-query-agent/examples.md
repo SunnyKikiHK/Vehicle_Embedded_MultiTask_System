@@ -3,8 +3,8 @@
 ## Turn 1 — Query Current Location
 
 **User:** "我现在在哪？"
-**Matched Intent:** `Ask_Where`
-**Slots extracted:** none
+**Matched Intent:** `ask_where`
+**Arguments:** `{}`
 
 **Reconstruction:** "查询当前位置"
 
@@ -16,8 +16,8 @@
 ## Turn 2 — Query Weekday
 
 **User:** "今天星期几？"
-**Matched Intent:** `Ask_Weekday`
-**Slots extracted:** none
+**Matched Intent:** `get_weather`
+**Arguments:** `{"type": "weekday"}`
 
 **Reconstruction:** "查询今天是星期几"
 
@@ -29,8 +29,8 @@
 ## Turn 3 — Query Date
 
 **User:** "今天几号？"
-**Matched Intent:** `Ask_Date`
-**Slots extracted:** none
+**Matched Intent:** `get_weather`
+**Arguments:** `{"type": "date"}`
 
 **Reconstruction:** "查询今日日期"
 
@@ -42,9 +42,8 @@
 ## Turn 4 — Query Air Quality
 
 **User:** "外面空气质量怎么样？"
-**Matched Intent:** `Ask_Air_Condition`
-**Slots extracted:**
-- `location` → current GPS location
+**Matched Intent:** `get_weather`
+**Arguments:** `{"type": "air_quality"}`
 
 **Reconstruction:** "查询当前空气质量"
 
@@ -56,9 +55,8 @@
 ## Turn 5 — Query Humidity
 
 **User:** "湿度多少？"
-**Matched Intent:** `Ask_Humidity`
-**Slots extracted:**
-- `location` → current GPS location
+**Matched Intent:** `get_weather`
+**Arguments:** `{"type": "humidity"}`
 
 **Reconstruction:** "查询当前湿度"
 
@@ -67,26 +65,33 @@
 
 ---
 
-## Turn 6 — Open Weather Widget
+## Turn 6 — Get Current Weather
 
 **User:** "看一下天气"
-**Matched Intent:** `Open_Weather`
-**Slots extracted:** none
+**Matched Intent:** `get_weather`
+**Arguments:** `{}`
 
-**Reconstruction:** "打开天气应用"
+**Reconstruction:** "查看当前天气"
 
-**Action:** Launch the weather widget/app.
-**Response:** "天气已打开。"
+**Action:** Query current weather for location.
+**Response:** "当前北京晴，25度，适合出行。"
 
 ---
 
 ## Turn 7 — Fallback for Vague Query
 
 **User:** "有什么能帮我的？"
-**Matched Intent:** `Info Query` (fallback)
-**Slots extracted:** none
+**Matched Intent:** (fallback)
+**Arguments:** `{}`
 
 **Reconstruction:** "查询可用功能"
 
 **Action:** Return a helpful summary of available voice commands across all agents.
-**Response:** "我可以帮您：\n- 导航：说'导航到某地'\n- 空调：说'打开空调'或'调温度'\n- 音乐：说'播放歌曲'\n- 电话：说'打电话给某人'\n- 天气：说'今天天气怎么样'\n\n请问有什么需要帮助的吗？"
+**Response:** "我可以帮您：
+- 导航：说'导航到某地'
+- 空调：说'打开空调'或'调温度'
+- 音乐：说'播放歌曲'
+- 电话：说'打电话给某人'
+- 天气：说'今天天气怎么样'
+
+请问有什么需要帮助的吗？"

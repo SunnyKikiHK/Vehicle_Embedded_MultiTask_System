@@ -100,30 +100,29 @@ description: Implements User Profile Agent intents in the vehicle embedded multi
 - **Time**: For continuous dialogue session duration: in minutes. Range 1–30 min. Default to 5 min.
 - When **user changes timbre**, confirm the new voice by speaking a sample phrase.
 
+## Expected Output Format
+
+The LLM should return a JSON object with the following structure:
+
+```json
+{
+  "reasoning": "Brief explanation of why this tool was selected",
+  "tool_name": "actual_mcp_tool_name",
+  "arguments": {
+    "slot_name_1": "slot_value_1",
+    "slot_name_2": "slot_value_2",
+    ...
+  }
+}
+```
+
+If no arguments are needed, use an empty object `{}`.
+
 ## Implementation Checklist
 
 When implementing a new User Profile intent:
 
-1. **Match the intent key** (e.g., `Set_Timbre_Female`) to the skill function.
-2. **Execute the setting change** via the voice assistant config API.
-3. **Confirm the change** with a natural response, optionally speaking a sample phrase.
-4. **Save SlotContext** to Redis with `agent=User Profile Agent`, `intent=<matched_intent>`, and extracted slots.
-5. **Persist the setting** in the user profile for session persistence.
-
-## Response Templates
-
-```
-女声: "已切换到女声。"
-男声: "已切换到男声。"
-童声: "已切换到童声。"
-自定义音色: "已切换到{voice}音色。"
-语速: "语速已调整为{speed}。"
-免唤醒开: "免唤醒已开启，无需说唤醒词即可对话。"
-连续对话开: "连续对话已开启，可连续对话{time}分钟。"
-唤醒词设置: "唤醒词已设置为{wake}。"
-```
-
-## Additional Resources
-
-- Full intent table and intent ID map: [reference.md](reference.md)
-- Annotated conversation examples: [examples.md](examples.md)
+1. **Identify the intent** from the user's request
+2. **Extract slot values** — resolve Voice, Style, Speed, Time
+3. **Validate** all slot values against the Slot Resolution Rules
+4. **Output** the JSON with reasoning, tool_name, and arguments

@@ -1,48 +1,39 @@
 # HVAC Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 14 | Close_Air_Condition | 关闭空调 |
-| 88 | Open_Air_Condition | 打开空调 |
-| 12 | Open_Air_Condition_Auto_Mode | 打开空调自动模式 |
-| 140 | Close_Air_Condition_Auto_Mode | 关闭空调自动模式 |
-| 161 | Open_Air_Condition_Sync | 打开空调同步模式 |
-| 279 | Close_Air_Condition_Sync | 关闭空调同步模式 |
-| 162 | Open_Cooling | 打开空调制冷 |
-| 290 | Close_Cooling | 关闭空调制冷 |
-| 193 | Open_Heating | 打开空调制热 |
-| 371 | Close_Heating | 关闭制热模式 |
-| 50 | Open_Air_Condition_Defog | 打开除雾 |
-| 195 | Close_Air_Condition_Defog | 关闭除雾 |
-| 16 | Dec_Air_Condition_Temperature | 降低空调温度 |
-| 136 | Inc_Air_Condition_Temperature | 调高空调温度 |
-| 15 | Set_Air_Condition_Temperature | 设置空调温度 |
-| 17 | Dec_Air_Condition_Wind | 降低空调风力 |
-| 45 | Inc_Air_Condition_Wind | 调高空调风力 |
-| 83 | Set_Air_Condition_Wind | 设置空调风力 |
-| 183 | Set_Wind_Direction | 设置空调风向 |
-| 266 | Cancel_Wind_Direction | 取消空调风向 |
-| 283 | Open_Wind_Auto_Mode | 打开自动风向 |
-| 395 | Close_Wind_Auto_Mode | 关闭自动风向 |
-| 71 | Open_AC | 打开AC |
-| 70 | Close_AC | 关闭AC |
-| 139 | Close_Cooling_Instant | 关闭一键降温 |
-| 319 | Open_Cooling_Instant | 一键降温 |
-| 360 | Open_Heating_Instant | 快速升温 |
-| 26 | Ask_Air_Condition | 查询空气 |
-| 66 | Ask_Humidity | 查询湿度 |
-| 260 | Ask_Wind | 查询风力 |
-| 211 | Open_Air_Cleaner | 打开空气净化器 |
-| 94 | Close_Air_Cleaner | 关闭空气净化器 |
-| 280 | Open_Internal_Circulation | 打开内循环 |
-| 253 | Close_Internal_Circulation | 关闭内循环 |
-| 389 | Open_External_Circulation | 打开外循环 |
-| 401 | Close_External_Circulation | 关闭外循环 |
-| 327 | Open_Air_Condition_APP | 打开空调应用 |
-| 188 | Close_Air_Condition_APP | 关闭空调应用 |
-| 375 | Temp_Compare | 温度比较 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Close_Air_Condition | ac_off | `{}` | 关闭空调 |
+|| Open_Air_Condition | ac_on | `{}` | 打开空调 |
+|| Open_Air_Condition_Auto_Mode | ac_auto | `{}` | 打开空调自动模式 |
+|| Close_Air_Condition_Auto_Mode | ac_auto | `{"mode": "manual"}` | 关闭空调自动模式 |
+|| Open_Air_Condition_Sync | sync_ac | `{"mode": "sync"}` | 打开空调同步模式 |
+|| Close_Air_Condition_Sync | sync_ac | `{"mode": "unsync"}` | 关闭空调同步模式 |
+|| Open_Cooling | set_ac_mode | `{"mode": "cooling"}` | 打开空调制冷 |
+|| Close_Cooling | set_ac_mode | `{"mode": "off"}` | 关闭空调制冷 |
+|| Open_Heating | set_ac_mode | `{"mode": "heating"}` | 打开空调制热 |
+|| Close_Heating | set_ac_mode | `{"mode": "off"}` | 关闭制热模式 |
+|| Open_Air_Condition_Defog | defrost | `{"mode": "defog"}` | 打开除雾 |
+|| Close_Air_Condition_Defog | defrost | `{"mode": "off"}` | 关闭除雾 |
+|| Dec_Air_Condition_Temperature | set_temperature | `{"direction": "down"}` | 降低空调温度 |
+|| Inc_Air_Condition_Temperature | set_temperature | `{"direction": "up"}` | 调高空调温度 |
+|| Set_Air_Condition_Temperature | set_temperature | `{"temperature": N}` | 设置空调温度 |
+|| Dec_Air_Condition_Wind | set_fan_speed | `{"direction": "down"}` | 降低空调风力 |
+|| Inc_Air_Condition_Wind | set_fan_speed | `{"direction": "up"}` | 调高空调风力 |
+|| Set_Air_Condition_Wind | set_fan_speed | `{"level": N}` | 设置空调风力 |
+|| Set_Wind_Direction | set_ac_mode | `{"direction": "..."}` | 设置空调风向 |
+|| Cancel_Wind_Direction | set_ac_mode | `{"direction": "auto"}` | 取消空调风向 |
+|| Open_Wind_Auto_Mode | set_ac_mode | `{"direction": "auto"}` | 打开自动风向 |
+|| Close_Wind_Auto_Mode | set_ac_mode | `{"direction": "manual"}` | 关闭自动风向 |
+|| Open_AC | ac_on | `{}` | 打开AC |
+|| Close_AC | ac_off | `{}` | 关闭AC |
+|| Open_Cooling_Instant | ac_on | `{"mode": "max_cool"}` | 一键降温 |
+|| Open_Heating_Instant | ac_on | `{"mode": "max_heat"}` | 快速升温 |
+|| Ask_Air_Condition | get_weather | `{"type": "air_quality"}` | 查询空气 |
+|| Ask_Humidity | get_weather | `{"type": "humidity"}` | 查询湿度 |
+|| Ask_Wind | get_weather | `{"type": "wind"}` | 查询风力 |
+|| Temp_Compare | get_weather | `{"type": "compare", "cities": [...]}` | 温度比较 |
 
 ## Shared Slot Type Definitions
 
@@ -80,7 +71,7 @@ agents: Seat Agent, Ambient Light Agent, HVAC Agent
 
 ## Temperature Ranges
 
-| Zone | Min | Max | Default |
+|| Zone | Min | Max | Default |
 |------|-----|-----|---------|
 | 主驾 | 16°C | 32°C | 24°C |
 | 副驾 | 16°C | 32°C | 24°C |
@@ -91,7 +82,7 @@ agents: Seat Agent, Ambient Light Agent, HVAC Agent
 
 Levels 1–7 (auto mode maps 0–7 internally).
 
-| Ratio Term | Step Delta |
+|| Ratio Term | Step Delta |
 |-----------|-----------|
 | 低 / 低一点 | -2 |
 | 中 | 0 (centered) |
@@ -101,7 +92,7 @@ Levels 1–7 (auto mode maps 0–7 internally).
 
 ## Airflow Direction Mapping
 
-| Direction Slot | Airflow Target |
+|| Direction Slot | Airflow Target |
 |---------------|---------------|
 | 上 | Face (upper vents) |
 | 下 | Body (lower vents) |

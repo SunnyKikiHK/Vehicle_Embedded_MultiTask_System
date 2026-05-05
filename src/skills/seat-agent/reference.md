@@ -1,41 +1,36 @@
 # Seat Agent — Reference
 
-## Intent ID Map
+## Intent to MCP Tool Mapping
 
-| Intent ID | Intent Key | Intent Name (CN) |
-|-----------|-----------|-----------------|
-| 21 | Adjust_Seat_Long | 座椅前后调整 |
-| 245 | Adjust_Seat_Vert | 座椅水平调整 |
-| 192 | Open_Heated_Seat | 打开座椅加热 |
-| 206 | Close_Heated_Seat | 关闭座椅加热 |
-| 123 | Dec_Seat_Temperature | 调低座椅温度 |
-| 63 | Inc_Seat_Temperature | 调高座椅温度 |
-| 30 | Set_Seat_Temperature | 设置座椅温度 |
-| 165 | Open_Seat_Ventilation | 打开座椅通风 |
-| 141 | Close_Seat_Ventilation | 关闭座椅通风 |
-| 96 | Dec_Seat_Ventilation | 调低座椅通风 |
-| 79 | Inc_Seat_Ventilation | 调大座椅通风 |
-| 37 | Set_Seat_Ventilation | 设置座椅通风 |
-| 234 | Open_Seat_Massage | 打开座椅按摩 |
-| 78 | Close_Seat_Massage | 关闭座椅按摩 |
-| 71 | Dec_Seat_Massage | 调低座椅按摩 |
-| 151 | Inc_Seat_Massage | 调大座椅按摩 |
-| 47 | Set_Seat_Massage | 设置座椅按摩 |
-| 28 | Set_Steer_Temperature | 设置方向盘温度 |
-| 98 | Dec_Steer_Temperature | 调低方向盘温度 |
-| 261 | Inc_Steer_Temperature | 调高方向盘温度 |
-| 205 | Open_Heated_Steer | 打开方向盘加热 |
-| 204 | Close_Heated_Steer | 关闭方向盘加热 |
-| 153 | Open_Rearview_Mirror_Heating | 打开后视镜加热 |
-| 377 | Close_Rearview_Mirror_Heating | 关闭后视镜加热 |
-| 236 | Open_Rearview_Mirror | 展开后视镜 |
-| 351 | Close_Rearview_Mirror | 折叠后视镜 |
+|| Intent Key | Tool Name | Arguments | Intent Name (CN) |
+||-----------|-----------|-----------|-----------------|
+|| Adjust_Seat_Long | adjust_seat | `{"direction": "forward/backward", "position": "..."}` | 座椅前后调整 |
+|| Adjust_Seat_Vert | adjust_seat | `{"direction": "up/down", "position": "..."}` | 座椅水平调整 |
+|| Open_Heated_Seat | seat_heating | `{"switch": "on", "position": "..."}` | 打开座椅加热 |
+|| Close_Heated_Seat | seat_heating | `{"switch": "off", "position": "..."}` | 关闭座椅加热 |
+|| Dec_Seat_Temperature | seat_heating | `{"level": N, "direction": "down", "position": "..."}` | 调低座椅温度 |
+|| Inc_Seat_Temperature | seat_heating | `{"level": N, "direction": "up", "position": "..."}` | 调高座椅温度 |
+|| Set_Seat_Temperature | seat_heating | `{"level": N, "position": "..."}` | 设置座椅温度 |
+|| Open_Seat_Ventilation | seat_ventilation | `{"switch": "on", "position": "..."}` | 打开座椅通风 |
+|| Close_Seat_Ventilation | seat_ventilation | `{"switch": "off", "position": "..."}` | 关闭座椅通风 |
+|| Dec_Seat_Ventilation | seat_ventilation | `{"level": N, "direction": "down", "position": "..."}` | 调低座椅通风 |
+|| Inc_Seat_Ventilation | seat_ventilation | `{"level": N, "direction": "up", "position": "..."}` | 调大座椅通风 |
+|| Set_Seat_Ventilation | seat_ventilation | `{"level": N, "position": "..."}` | 设置座椅通风 |
+|| Open_Seat_Massage | seat_massage | `{"switch": "on", "position": "..."}` | 打开座椅按摩 |
+|| Close_Seat_Massage | seat_massage | `{"switch": "off", "position": "..."}` | 关闭座椅按摩 |
+|| Dec_Seat_Massage | seat_massage | `{"level": N, "direction": "down", "position": "..."}` | 调低座椅按摩 |
+|| Inc_Seat_Massage | seat_massage | `{"level": N, "direction": "up", "position": "..."}` | 调大座椅按摩 |
+|| Set_Seat_Massage | seat_massage | `{"level": N, "position": "..."}` | 设置座椅按摩 |
+|| Open_Heated_Steer | seat_heating | `{"switch": "on", "target": "steering_wheel"}` | 打开方向盘加热 |
+|| Close_Heated_Steer | seat_heating | `{"switch": "off", "target": "steering_wheel"}` | 关闭方向盘加热 |
+|| Open_Rearview_Mirror | adjust_seat | `{"target": "mirror", "action": "unfold"}` | 展开后视镜 |
+|| Close_Rearview_Mirror | adjust_seat | `{"target": "mirror", "action": "fold"}` | 折叠后视镜 |
 
 ## Seat Comfort Levels
 
 All comfort features (heating, ventilation, massage) use levels 1–3.
 
-| Level | Heating Effect | Ventilation Effect | Massage Effect |
+|| Level | Heating Effect | Ventilation Effect | Massage Effect |
 |-------|---------------|-------------------|----------------|
 | 1 | Low warmth | Low airflow | Gentle |
 | 2 | Medium warmth | Medium airflow | Moderate |
@@ -43,7 +38,7 @@ All comfort features (heating, ventilation, massage) use levels 1–3.
 
 ## Relative Adjustment Mapping
 
-| Ratio Term | Delta from Current |
+|| Ratio Term | Delta from Current |
 |-----------|-------------------|
 | 低 / 低一点 / 再低点 | -1 |
 | 高 / 高一点 / 再高点 | +1 |
@@ -52,7 +47,7 @@ All comfort features (heating, ventilation, massage) use levels 1–3.
 
 ## Position Mapping
 
-| User Expression | Resolved Position |
+|| User Expression | Resolved Position |
 |----------------|------------------|
 | 主驾 / 驾驶位 | 主驾 |
 | 副驾 / 副驾驶 | 副驾 |
@@ -68,6 +63,6 @@ Steering wheel heating operates on the same 1–3 level system as seat heating.
 
 ## Mirror Folding Behavior
 
-- `Open_Rearview_Mirror`: Unfold both side mirrors simultaneously.
-- `Close_Rearview_Mirror`: Fold both side mirrors simultaneously.
+- `unfold`: Unfold both side mirrors simultaneously.
+- `fold`: Fold both side mirrors simultaneously.
 - If mirrors are already in desired state, respond with current state (no error).

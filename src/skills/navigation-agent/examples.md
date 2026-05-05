@@ -3,11 +3,9 @@
 ## Turn 1 — Basic POI Navigation
 
 **User:** "导航到最近的加油站"
-**Matched Intent:** `Go_POI`
-**Slots extracted:**
-- `POI = 加油站`
-- `City` → inferred from GPS (current city)
-- `index = 1` (nearest result)
+**Matched Intent:** `go_poi`
+**Arguments:** `{"poi": "加油站"}`
+**City:** inferred from GPS (current city)
 
 **Reconstruction:** "导航到最近的加油站"
 
@@ -19,8 +17,8 @@
 ## Turn 2 — Navigate Home with Implicit Destination
 
 **User:** "回家"
-**Matched Intent:** `Go_Home`
-**Slots extracted:** none (home is resolved from user profile)
+**Matched Intent:** `go_home`
+**Arguments:** `{}`
 
 **Reconstruction:** "导航回家"
 
@@ -33,8 +31,8 @@
 
 **User:** "重新算路"
 **History:** Active navigation to a POI
-**Matched Intent:** `Flush_Route`
-**Slots extracted:** none
+**Matched Intent:** `flush_route`
+**Arguments:** `{}`
 
 **Reconstruction:** "重新计算路线"
 
@@ -46,8 +44,8 @@
 ## Turn 4 — Zoom Map
 
 **User:** "放大地图"
-**Matched Intent:** `Map_Zoom_In`
-**Slots extracted:** none
+**Matched Intent:** `nav_zoom_in`
+**Arguments:** `{}`
 
 **Reconstruction:** "放大地图"
 
@@ -60,8 +58,8 @@
 
 **User:** "不走高速"
 **History:** Active route
-**Matched Intent:** `Avoid_High_Way`
-**Slots extracted:** none
+**Matched Intent:** `avoid_high_way`
+**Arguments:** `{}`
 
 **Reconstruction:** "切换到不走高速模式"
 
@@ -74,9 +72,8 @@
 
 **User:** "中途去一趟超市"
 **History:** Active navigation to destination
-**Matched Intent:** `Add_Via`
-**Slots extracted:**
-- `POI = 超市` (nearest along current route)
+**Matched Intent:** `add_via`
+**Arguments:** `{"poi": "超市"}`
 
 **Reconstruction:** "在途中添加途经点：超市"
 
@@ -88,8 +85,8 @@
 ## Turn 7 — Save Current Location
 
 **User:** "把当前位置收藏"
-**Matched Intent:** `Collect_Current_Location`
-**Slots extracted:** none
+**Matched Intent:** `collect_current_location`
+**Arguments:** `{}`
 
 **Reconstruction:** "收藏当前地址"
 
@@ -102,8 +99,8 @@
 
 **User:** "回家路上堵吗？"
 **History:** User's home address is known
-**Matched Intent:** `Home_Condition`
-**Slots extracted:** none (home is resolved from profile)
+**Matched Intent:** `home_condition`
+**Arguments:** `{}`
 
 **Reconstruction:** "查询回家路线的交通状况"
 
@@ -115,8 +112,8 @@
 ## Turn 9 — Switch to 3D View
 
 **User:** "切换到3D视图"
-**Matched Intent:** `3D_Map`
-**Slots extracted:** none
+**Matched Intent:** `set_3d_map`
+**Arguments:** `{}`
 
 **Reconstruction:** "切换地图为3D视图"
 

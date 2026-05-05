@@ -8,163 +8,169 @@ description: Implements Navigation Agent intents in the vehicle embedded multi-t
 ## Agent Overview
 
 **Handles:** Map display, route planning, POI search, navigation guidance, traffic conditions, and saved addresses.
-**Total intents: 74**
-**Shared slot types:** `POI`, `City`, `Target`, `index`, `Via`, `date`
+## Expected Output Format
+
+The LLM should return a JSON object with the following structure:
+
+```json
+{
+  "reasoning": "Brief explanation of why this tool was selected",
+  "tool_name": "actual_mcp_tool_name",
+  "arguments": {
+    "slot_name_1": "slot_value_1",
+    "slot_name_2": "slot_value_2",
+    ...
+  }
+}
+```
+
+If no arguments are needed, use an empty object `{}`.
 
 ## Core Intent Categories
 
 ### POI Search & Navigation
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 导航搜索 | Go_POI | POI, City, Target, index | Search and navigate to a POI |
-| 打开导航 | Open_Nav | — | Open navigation app |
-| 关闭导航 | Close_Nav | — | Close navigation |
-| 查看沿途路况 | Ahead_Condition | POI | Check traffic along route |
-| 目的地路况 | Target_Condition | — | Check traffic at destination |
-| 家路况 | Home_Condition | — | Check traffic on route home |
-| 公司路况 | Company_Condition | — | Check traffic on route to company |
-| POI路况 | POI_Condition | POI | Check traffic at specific POI |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 导航搜索 | go_poi | `{"poi": "<POI>", "city": "<City>"}` | Search and navigate to a POI |
+| 打开导航 | open_nav | `{}` | Open navigation app |
+| 关闭导航 | close_nav | `{}` | Close navigation |
+| 查看沿途路况 | ahead_condition | `{"poi": "<POI>"}` | Check traffic along route |
+| 目的地路况 | target_condition | `{}` | Check traffic at destination |
+| 家路况 | home_condition | `{}` | Check traffic on route home |
+| 公司路况 | company_condition | `{}` | Check traffic on route to company |
+| POI路况 | poi_condition | `{"poi": "<POI>"}` | Check traffic at specific POI |
 
 ### Route Planning
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 导航回家 | Go_Home | — | Navigate to saved home address |
-| 导航公司 | Go_Company | — | Navigate to saved company |
-| 设置家地址 | Nav_Set_Home | 家POI, index | Set or update home address |
-| 设置公司地址 | Nav_Set_Company | 公司POI, index | Set or update company address |
-| 添加途经点 | Add_Via | POI, Via, index | Add waypoint to route |
-| 删除途经点 | Delete_Via | — | Remove waypoint |
-| 重新算路 | Flush_Route | — | Recalculate route |
-| 切换路线 | Change_Route | — | Switch to alternate route |
-| 打开路线信息 | Get_Route_Information | Target | Get detailed route info |
-| 打开路线全览 | Open_Full_Map | — | Show full route overview |
-| 关闭路线全览 | Close_Full_Map | — | Hide route overview |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 导航回家 | go_home | `{}` | Navigate to saved home address |
+| 导航公司 | go_company | `{}` | Navigate to saved company |
+| 设置家地址 | nav_set_home | `{"poi": "<POI>"}` | Set or update home address |
+| 设置公司地址 | nav_set_company | `{"poi": "<POI>"}` | Set or update company address |
+| 添加途经点 | add_via | `{"poi": "<POI>"}` | Add waypoint to route |
+| 删除途经点 | delete_via | `{}` | Remove waypoint |
+| 重新算路 | flush_route | `{}` | Recalculate route |
+| 切换路线 | change_route | `{}` | Switch to alternate route |
+| 打开路线信息 | get_route_information | `{}` | Get detailed route info |
+| 打开路线全览 | open_full_map | `{}` | Show full route overview |
+| 关闭路线全览 | close_full_map | `{}` | Hide route overview |
 
 ### Map Display Control
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 放大地图 | Nav_Zoom_In | — | Zoom in map |
-| 缩小地图 | Nav_Zoom_Out | — | Zoom out map |
-| 地图最大 | Nav_Zoom_In_Max | — | Maximize map zoom |
-| 地图最小 | Nav_Zoom_Out_Min | — | Minimize map zoom |
-| 回到自车位 | Back_Center | — | Return to current GPS position |
-| 查看小地图 | View_Small_Map | — | Show mini-map |
-| 关闭小地图 | Close_Small_Map | — | Hide mini-map |
-| 设置地图方向 | Set_Map | — | Set map orientation |
-| 3D视图 | 3D_Map | — | Switch to 3D map view |
-| 2D视图 | 2D_Map | — | Switch to 2D map view |
-| 北朝上 | North_Up | — | North-up map orientation |
-| 车头朝上 | Head_Up | — | Heading-up orientation |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 放大地图 | nav_zoom_in | `{}` | Zoom in map |
+| 缩小地图 | nav_zoom_out | `{}` | Zoom out map |
+| 地图最大 | nav_zoom_in_max | `{}` | Maximize map zoom |
+| 地图最小 | nav_zoom_out_min | `{}` | Minimize map zoom |
+| 回到自车位 | back_to_center | `{}` | Return to current GPS position |
+| 查看小地图 | view_small_map | `{}` | Show mini-map |
+| 关闭小地图 | close_small_map | `{}` | Hide mini-map |
+| 设置地图方向 | set_head_up | `{}` | Set map orientation |
+| 3D视图 | set_3d_map | `{}` | Switch to 3D map view |
+| 2D视图 | set_2d_map | `{}` | Switch to 2D map view |
+| 北朝上 | set_north_up | `{}` | North-up map orientation |
+| 车头朝上 | set_head_up | `{}` | Heading-up orientation |
 
 ### Route Preferences
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 切换到主路 | Switch_Main_Route | — | Prefer main road |
-| 切换到辅路 | Switch_Side_Route | — | Prefer side road |
-| 打开速度最快 | Speed_Fast | — | Enable fastest route mode |
-| 关闭速度最快 | Cancel_Speed_Fast | — | Disable fastest route |
-| 打开高速优先 | High_Way_First | — | Prefer highways |
-| 打开智能路线推荐 | Smart_Recommend | — | Enable smart route recommendation |
-| 取消智能路线推荐 | Cancel_Smart_Recommend | — | Disable smart recommendation |
-| 打开大路优先 | Main_Route_First | — | Prefer main roads |
-| 关闭大路优先 | Cancel_Main_First | — | Cancel main road preference |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 切换到主路 | switch_main_route | `{}` | Prefer main road |
+| 切换到辅路 | switch_side_route | `{}` | Prefer side road |
+| 打开速度最快 | speed_fast | `{}` | Enable fastest route mode |
+| 关闭速度最快 | cancel_speed_fast | `{}` | Disable fastest route |
+| 打开高速优先 | highway_first | `{}` | Prefer highways |
+| 打开智能路线推荐 | smart_recommend | `{}` | Enable smart route recommendation |
+| 取消智能路线推荐 | cancel_smart_recommend | `{}` | Disable smart recommendation |
+| 打开大路优先 | main_route_first | `{}` | Prefer main roads |
+| 关闭大路优先 | cancel_main_first | `{}` | Cancel main road preference |
 
 ### Traffic Avoidance
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开躲避拥堵 | Avoid_Congestion | — | Enable congestion avoidance |
-| 关闭躲避拥堵 | Cancel_Avoid_Congestion | — | Disable congestion avoidance |
-| 打开不走高速 | Avoid_High_Way | — | Avoid highways |
-| 关闭不走高速 | Cancel_Avoid_High_Way | — | Cancel avoid highway |
-| 打开避开限行 | Avoid_Limit_Line | — | Avoid restricted zones |
-| 关闭避开限行 | Cancel_Avoid_Limit_Line | — | Cancel avoid restricted zones |
-| 打开避免收费 | Open_Avoid_Fee | — | Enable toll avoidance |
-| 关闭避免收费 | Cancel_Avoid_Fee | — | Disable toll avoidance |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开躲避拥堵 | avoid_congestion | `{}` | Enable congestion avoidance |
+| 关闭躲避拥堵 | cancel_avoid_congestion | `{}` | Disable congestion avoidance |
+| 打开不走高速 | avoid_high_way | `{}` | Avoid highways |
+| 关闭不走高速 | cancel_avoid_high_way | `{}` | Cancel avoid highway |
+| 打开避开限行 | avoid_limit_line | `{}` | Avoid restricted zones |
+| 关闭避开限行 | cancel_avoid_limit_line | `{}` | Cancel avoid restricted zones |
+| 打开避免收费 | open_avoid_fee | `{}` | Enable toll avoidance |
+| 关闭避免收费 | cancel_avoid_fee | `{}` | Disable toll avoidance |
 
 ### Safety & Guidance Display
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开电子眼 | Open_Electronic_Eye | — | Show speed cameras |
-| 关闭电子眼 | Close_Electronic_Eye | — | Hide speed cameras |
-| 打开路况信息 | Open_Cruise_Information | — | Enable traffic info overlay |
-| 关闭路况信息 | Close_Cruise_Information | — | Disable traffic info |
-| 打开AR导航 | Open_AR_Nav | — | Enable AR navigation |
-| 关闭AR导航 | Close_AR_Nav | — | Disable AR navigation |
-| 前方路线引导 | Front_Line_Detail | — | Show upcoming route guidance |
-| 查看交通事件 | Traffic_Incidents | — | View traffic incidents |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开电子眼 | open_electronic_eye | `{}` | Show speed cameras |
+| 关闭电子眼 | close_electronic_eye | `{}` | Hide speed cameras |
+| 打开路况信息 | open_cruise_information | `{}` | Enable traffic info overlay |
+| 关闭路况信息 | close_cruise_information | `{}` | Disable traffic info |
+| 打开AR导航 | open_ar_nav | `{}` | Enable AR navigation |
+| 关闭AR导航 | close_ar_nav | `{}` | Disable AR navigation |
+| 前方路线引导 | front_line_detail | `{}` | Show upcoming route guidance |
+| 查看交通事件 | traffic_incidents | `{}` | View traffic incidents |
 
 ### Navigation Broadcast
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开导航播报 | Open_Nav_Broadcast | — | Enable navigation TTS |
-| 关闭导航播报 | Close_Nav_Broadcast | — | Disable navigation TTS |
-| 重播广播 | Replay_Broadcast | — | Repeat last navigation prompt |
-| 放慢播报 | Slow_Speed | — | Slow down TTS speed |
-| 加速播报 | Accelerate_Speed | — | Speed up TTS |
-| 打开简洁播报 | Open_Simple_Broadcast | — | Enable concise prompts |
-| 关闭简洁播报 | Close_Simple_Broadcast | — | Disable concise prompts |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开导航播报 | open_nav_broadcast | `{}` | Enable navigation TTS |
+| 关闭导航播报 | close_nav_broadcast | `{}` | Disable navigation TTS |
+| 重播广播 | replay_broadcast | `{}` | Repeat last navigation prompt |
+| 放慢播报 | slow_broadcast_speed | `{}` | Slow down TTS speed |
+| 加速播报 | accelerate_broadcast_speed | `{}` | Speed up TTS |
+| 打开简洁播报 | open_simple_broadcast | `{}` | Enable concise prompts |
+| 关闭简洁播报 | close_simple_broadcast | `{}` | Disable concise prompts |
 
 ### Commute & Saved Places
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 打开通勤导航 | Open_Commute_Nav | — | Enable commute navigation |
-| 关闭通勤导航 | Close_Commute_Nav | — | Disable commute navigation |
-| 打开导航收藏夹 | Open_Nav_Collections | — | Open saved locations |
-| 关闭导航收藏夹 | Close_Nav_Collections | — | Close saved locations |
-| 去收藏地址 | Nav_To_Collection | — | Navigate to saved location |
-| 收藏目的地 | Collect_Target_Location | — | Save destination |
-| 收藏当前地址 | Collect_Current_Location | — | Save current location |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 打开通勤导航 | open_commute_nav | `{}` | Enable commute navigation |
+| 关闭通勤导航 | close_commute_nav | `{}` | Disable commute navigation |
+| 打开导航收藏夹 | open_nav_collections | `{}` | Open saved locations |
+| 关闭导航收藏夹 | close_nav_collections | `{}` | Close saved locations |
+| 去收藏地址 | nav_to_collection | `{}` | Navigate to saved location |
+| 收藏目的地 | collect_target_location | `{}` | Save destination |
+| 收藏当前地址 | collect_current_location | `{}` | Save current location |
 
 ### Position & Settings
 
-| Intent | Key | Slots | Description |
-|--------|-----|-------|-------------|
-| 当前位置查询 | Ask_Where | — | Query current GPS location |
-| 打开地图设置 | Open_Map_Setting | — | Open map settings |
-| 关闭地图设置 | Close_Map_Setting | — | Close map settings |
-| 切换导航标志 | Change_Nav_Sign | — | Change navigation sign style |
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 当前位置查询 | ask_where | `{}` | Query current GPS location |
+| 打开地图设置 | open_map_setting | `{}` | Open map settings |
+| 关闭地图设置 | close_map_setting | `{}` | Close map settings |
+| 切换导航标志 | change_nav_sign | `{}` | Change navigation sign style |
+
+### Group Travel
+
+| Intent | Tool Name | Arguments | Description |
+|--------|-----------|-----------|-------------|
+| 加入组队 | join_group | `{}` | Join a travel group |
+| 创建组队 | build_group | `{}` | Create a new group |
+| 退出组队 | quit_group | `{}` | Leave current group |
+| 打开组队 | open_group | `{}` | Open group travel interface |
+| 设置集结地 | ask_meeting_place | `{}` | Query group meetup location |
+| 去汇合地点 | go_meeting_place | `{}` | Navigate to meetup point |
+| 查看成员位置 | group_member_location | `{}` | View locations of group members |
 
 ## Slot Resolution Rules
 
-- **POI**: Match against local database. If ambiguous, present ranked list with `index` slot for disambiguation.
-- **City**: Normalize to standard city name. If omitted, use current GPS city.
-- **Target**: The destination POI. Can be implicit (e.g., "回家" → home address).
-- **Via**: Intermediate waypoint before reaching Target.
-- **index**: When presenting a list, the user selects by number. Default to index 1 if not specified.
-- When **user says a location name** without "导航", treat it as `Go_POI` intent.
-- When **user says a category** (e.g., "找个加油站") without POI name, trigger POI search with category as keyword.
+- **POI**: Match against local database. If ambiguous, present ranked list with index for disambiguation
+- **City**: Normalize to standard city name. If omitted, use current GPS city
+- When **user says a location name** without "导航", treat it as `go_poi` intent
+- When **user says a category** (e.g., "找个加油站") without POI name, trigger POI search with category as keyword
 
 ## Implementation Checklist
 
 When implementing a new Navigation intent:
 
-1. **Match the intent key** (e.g., `Go_Home`) to the skill function.
-2. **Resolve POI/address** via the map service API.
-3. **Check current route state** — if a route is active, apply changes to it; otherwise start a new route.
-4. **Execute the action** via the navigation service.
-5. **Confirm** with a natural response (e.g., "已为您导航回家，预计30分钟" or "路线已重新规划").
-6. **Save SlotContext** to Redis with `agent=Navigation Agent`, `intent=<matched_intent>`, and extracted slots.
-
-## Response Templates
-
-```
-开始导航: "已为您规划路线，目的地{poi}，预计{time}到达。"
-回家: "好的，正在导航回{home_address}，预计{time}。"
-回公司: "好的，正在导航到公司，预计{time}。"
-路况: "当前路线{status}，预计比平时{delta}。"
-收藏地址: "已将{location}收藏到{saved_category}。"
-放大/缩小: "地图已{放大/缩小}。"
-```
-
-## Additional Resources
-
-- Full intent table and intent ID map: [reference.md](reference.md)
-- Annotated conversation examples: [examples.md](examples.md)
+1. **Identify the intent** from the user's request
+2. **Extract slot values** — resolve POI, City
+3. **Validate** all slot values against the Slot Resolution Rules
+4. **Output** the JSON with reasoning, tool_name, and arguments
