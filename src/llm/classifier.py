@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Protocol
+from typing import Any
 
 from src.prompts import CLASSIFIER_PROMPT
 from src.schema.classifier_output import ClassifierOutput, QueryType
@@ -41,7 +41,7 @@ class QueryClassifier:
         """
         self._llm = structured_llm
 
-    def classify(
+    async def classify(
         self,
         query: str,
         conversation_history: list[SlotContext] | None = None,
@@ -59,7 +59,7 @@ class QueryClassifier:
         prompt = self._build_prompt(query, conversation_history)
 
         try:
-            output: ClassifierOutput = self._llm.invoke(prompt)
+            output: ClassifierOutput = await self._llm.ainvoke(prompt)
             return output
         except Exception as exc:
             logger.warning("[QueryClassifier] LLM call failed: %s", exc)
@@ -69,7 +69,7 @@ class QueryClassifier:
                 reasoning="LLM调用失败，默认返回任务指令类型。",
             )
 
-    def is_chill_chat(self, query: str, conversation_history: list[SlotContext] | None = None) -> bool:
+    async def is_chill_chat(self, query: str, conversation_history: list[SlotContext] | None = None) -> bool:
         """
         Convenience method to check if query is chill_chat (type 1).
 
@@ -80,10 +80,10 @@ class QueryClassifier:
         Returns:
             True if query_type is 1 (chill_chat), False otherwise.
         """
-        result = self.classify(query, conversation_history)
+        result = await self.classify(query, conversation_history)
         return result.query_type == QueryType.CHILL_CHAT
 
-    def is_task_specific(self, query: str, conversation_history: list[SlotContext] | None = None) -> bool:
+    async def is_task_specific(self, query: str, conversation_history: list[SlotContext] | None = None) -> bool:
         """
         Convenience method to check if query is task_specific (type 2).
 
@@ -94,10 +94,10 @@ class QueryClassifier:
         Returns:
             True if query_type is 2 (task_specific), False otherwise.
         """
-        result = self.classify(query, conversation_history)
+        result = await self.classify(query, conversation_history)
         return result.query_type == QueryType.TASK_SPECIFIC
 
-    def is_meaningless(self, query: str, conversation_history: list[SlotContext] | None = None) -> bool:
+    async def is_meaningless(self, query: str, conversation_history: list[SlotContext] | None = None) -> bool:
         """
         Convenience method to check if query is meaningless (type 3).
 
@@ -108,7 +108,7 @@ class QueryClassifier:
         Returns:
             True if query_type is 3 (meaningless), False otherwise.
         """
-        result = self.classify(query, conversation_history)
+        result = await self.classify(query, conversation_history)
         return result.query_type == QueryType.MEANINGLESS
 
     def _build_prompt(

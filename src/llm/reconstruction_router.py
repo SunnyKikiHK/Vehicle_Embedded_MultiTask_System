@@ -60,7 +60,7 @@ class ReconstructionRouter:
         self._llm = structured_llm
         self._redis = redis_client
 
-    def route(
+    async def route(
         self,
         current_query: str,
         sender_id: str,
@@ -83,7 +83,7 @@ class ReconstructionRouter:
         prompt = self._build_prompt(current_query, conversation_history)
 
         try:
-            output: RouterOutput = self._llm.invoke(prompt)
+            output: RouterOutput = await self._llm.ainvoke(prompt)
             return output
         except Exception as exc:
             logger.warning("[ReconstructionRouter] LLM call failed: %s", exc)
