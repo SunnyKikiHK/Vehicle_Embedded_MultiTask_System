@@ -57,27 +57,43 @@ def go_poi(poi: str, city: Optional[str] = None, index: int = 1) -> Dict[str, An
 
 
 @mcp.tool()
-def open_nav() -> str:
+def open_nav() -> Dict[str, Any]:
     """打开导航 - Open the navigation app"""
-    return "导航已打开"
+    return {
+        "status": "success",
+        "action": "open_nav",
+        "message": "导航已打开"
+    }
 
 
 @mcp.tool()
-def close_nav() -> str:
+def close_nav() -> Dict[str, Any]:
     """关闭导航 - Close navigation"""
-    return "导航已关闭"
+    return {
+        "status": "success",
+        "action": "close_nav",
+        "message": "导航已关闭"
+    }
 
 
 @mcp.tool()
-def go_home() -> str:
+def go_home() -> Dict[str, Any]:
     """导航回家 - Navigate to saved home address"""
-    return "正在导航回家"
+    return {
+        "status": "success",
+        "action": "go_home",
+        "message": "正在导航回家"
+    }
 
 
 @mcp.tool()
-def go_company() -> str:
+def go_company() -> Dict[str, Any]:
     """导航公司 - Navigate to saved company address"""
-    return "正在导航到公司"
+    return {
+        "status": "success",
+        "action": "go_company",
+        "message": "正在导航到公司"
+    }
 
 
 @mcp.tool()
@@ -130,21 +146,33 @@ def add_via(poi: str, via_index: int = 1) -> Dict[str, Any]:
 
 
 @mcp.tool()
-def delete_via() -> str:
+def delete_via() -> Dict[str, Any]:
     """删除途经点 - Remove waypoint"""
-    return "已删除途经点"
+    return {
+        "status": "success",
+        "action": "delete_via",
+        "message": "已删除途经点"
+    }
 
 
 @mcp.tool()
-def flush_route() -> str:
+def flush_route() -> Dict[str, Any]:
     """重新算路 - Recalculate route"""
-    return "路线已重新规划"
+    return {
+        "status": "success",
+        "action": "flush_route",
+        "message": "路线已重新规划"
+    }
 
 
 @mcp.tool()
-def change_route() -> str:
+def change_route() -> Dict[str, Any]:
     """切换路线 - Switch to alternate route"""
-    return "已切换到备选路线"
+    return {
+        "status": "success",
+        "action": "change_route",
+        "message": "已切换到备选路线"
+    }
 
 
 @mcp.tool()
@@ -154,121 +182,197 @@ def get_route_information() -> Dict[str, Any]:
 
 
 @mcp.tool()
-def open_full_map() -> str:
+def open_full_map() -> Dict[str, Any]:
     """打开路线全览 - Show full route overview"""
-    return "路线全览已打开"
+    return {
+        "status": "success",
+        "action": "open_full_map",
+        "message": "路线全览已打开"
+    }
 
 
 @mcp.tool()
-def close_full_map() -> str:
+def close_full_map() -> Dict[str, Any]:
     """关闭路线全览 - Hide route overview"""
-    return "路线全览已关闭"
+    return {
+        "status": "success",
+        "action": "close_full_map",
+        "message": "路线全览已关闭"
+    }
 
 
 #  Route Preferences 
 
 @mcp.tool()
-def switch_main_route() -> str:
+def switch_main_route() -> Dict[str, Any]:
     """切换到主路 - Prefer main road"""
-    return "已切换到主路优先"
+    return {
+        "status": "success",
+        "action": "switch_main_route",
+        "message": "已切换到主路优先"
+    }
 
 
 @mcp.tool()
-def switch_side_route() -> str:
+def switch_side_route() -> Dict[str, Any]:
     """切换到辅路 - Prefer side road"""
-    return "已切换到辅路优先"
+    return {
+        "status": "success",
+        "action": "switch_side_route",
+        "message": "已切换到辅路优先"
+    }
 
 
 @mcp.tool()
-def speed_fast() -> str:
+def speed_fast() -> Dict[str, Any]:
     """打开速度最快 - Enable fastest route mode"""
-    return "已开启速度最快模式"
+    return {
+        "status": "success",
+        "action": "speed_fast",
+        "message": "已开启速度最快模式"
+    }
 
 
 @mcp.tool()
-def cancel_speed_fast() -> str:
+def cancel_speed_fast() -> Dict[str, Any]:
     """关闭速度最快 - Disable fastest route"""
-    return "已关闭速度最快模式"
+    return {
+        "status": "success",
+        "action": "cancel_speed_fast",
+        "message": "已关闭速度最快模式"
+    }
 
 
 @mcp.tool()
-def highway_first() -> str:
+def highway_first() -> Dict[str, Any]:
     """打开高速优先 - Prefer highways"""
-    return "已开启高速优先"
+    return {
+        "status": "success",
+        "action": "highway_first",
+        "message": "已开启高速优先"
+    }
 
 
 @mcp.tool()
-def smart_recommend() -> str:
+def smart_recommend() -> Dict[str, Any]:
     """打开智能路线推荐 - Enable smart route recommendation"""
-    return "已开启智能路线推荐"
+    return {
+        "status": "success",
+        "action": "smart_recommend",
+        "message": "已开启智能路线推荐"
+    }
 
 
 @mcp.tool()
-def cancel_smart_recommend() -> str:
+def cancel_smart_recommend() -> Dict[str, Any]:
     """取消智能路线推荐 - Disable smart recommendation"""
-    return "已关闭智能路线推荐"
+    return {
+        "status": "success",
+        "action": "cancel_smart_recommend",
+        "message": "已关闭智能路线推荐"
+    }
 
 
 @mcp.tool()
-def main_route_first() -> str:
+def main_route_first() -> Dict[str, Any]:
     """打开大路优先 - Prefer main roads"""
-    return "已开启大路优先"
+    return {
+        "status": "success",
+        "action": "main_route_first",
+        "message": "已开启大路优先"
+    }
 
 
 @mcp.tool()
-def cancel_main_first() -> str:
+def cancel_main_first() -> Dict[str, Any]:
     """关闭大路优先 - Cancel main road preference"""
-    return "已关闭大路优先"
+    return {
+        "status": "success",
+        "action": "cancel_main_first",
+        "message": "已关闭大路优先"
+    }
 
 
 #  Traffic Avoidance 
 
 @mcp.tool()
-def avoid_congestion() -> str:
+def avoid_congestion() -> Dict[str, Any]:
     """打开躲避拥堵 - Enable congestion avoidance"""
-    return "已开启躲避拥堵"
+    return {
+        "status": "success",
+        "action": "avoid_congestion",
+        "message": "已开启躲避拥堵"
+    }
 
 
 @mcp.tool()
-def cancel_avoid_congestion() -> str:
+def cancel_avoid_congestion() -> Dict[str, Any]:
     """关闭躲避拥堵 - Disable congestion avoidance"""
-    return "已关闭躲避拥堵"
+    return {
+        "status": "success",
+        "action": "cancel_avoid_congestion",
+        "message": "已关闭躲避拥堵"
+    }
 
 
 @mcp.tool()
-def avoid_high_way() -> str:
+def avoid_high_way() -> Dict[str, Any]:
     """打开不走高速 - Avoid highways"""
-    return "已开启不走高速模式"
+    return {
+        "status": "success",
+        "action": "avoid_high_way",
+        "message": "已开启不走高速模式"
+    }
 
 
 @mcp.tool()
-def cancel_avoid_high_way() -> str:
+def cancel_avoid_high_way() -> Dict[str, Any]:
     """关闭不走高速 - Cancel avoid highway"""
-    return "已关闭不走高速模式"
+    return {
+        "status": "success",
+        "action": "cancel_avoid_high_way",
+        "message": "已关闭不走高速模式"
+    }
 
 
 @mcp.tool()
-def avoid_limit_line() -> str:
+def avoid_limit_line() -> Dict[str, Any]:
     """打开避开限行 - Avoid restricted zones"""
-    return "已开启避开限行"
+    return {
+        "status": "success",
+        "action": "avoid_limit_line",
+        "message": "已开启避开限行"
+    }
 
 
 @mcp.tool()
-def cancel_avoid_limit_line() -> str:
+def cancel_avoid_limit_line() -> Dict[str, Any]:
     """关闭避开限行 - Cancel avoid restricted zones"""
-    return "已关闭避开限行"
+    return {
+        "status": "success",
+        "action": "cancel_avoid_limit_line",
+        "message": "已关闭避开限行"
+    }
 
 
 @mcp.tool()
-def open_avoid_fee() -> str:
+def open_avoid_fee() -> Dict[str, Any]:
     """打开避免收费 - Enable toll avoidance"""
-    return "已开启避免收费"
+    return {
+        "status": "success",
+        "action": "open_avoid_fee",
+        "message": "已开启避免收费"
+    }
 
 
 @mcp.tool()
-def cancel_avoid_fee() -> str:
+def cancel_avoid_fee() -> Dict[str, Any]:
     """关闭避免收费 - Disable toll avoidance"""
-    return "已关闭避免收费"
+    return {
+        "status": "success",
+        "action": "cancel_avoid_fee",
+        "message": "已关闭避免收费"
+    }
 
 
 #  Traffic Information 
@@ -444,131 +548,211 @@ def traffic_incidents(city: Optional[str] = None) -> Dict[str, Any]:
 
 
 @mcp.tool()
-def open_electronic_eye() -> str:
+def open_electronic_eye() -> Dict[str, Any]:
     """打开电子眼 - Show speed cameras"""
-    return "电子眼已开启"
+    return {
+        "status": "success",
+        "action": "open_electronic_eye",
+        "message": "电子眼已开启"
+    }
 
 
 @mcp.tool()
-def close_electronic_eye() -> str:
+def close_electronic_eye() -> Dict[str, Any]:
     """关闭电子眼 - Hide speed cameras"""
-    return "电子眼已关闭"
+    return {
+        "status": "success",
+        "action": "close_electronic_eye",
+        "message": "电子眼已关闭"
+    }
 
 
 @mcp.tool()
-def open_cruise_information() -> str:
+def open_cruise_information() -> Dict[str, Any]:
     """打开路况信息 - Enable traffic info overlay"""
-    return "路况信息已开启"
+    return {
+        "status": "success",
+        "action": "open_cruise_information",
+        "message": "路况信息已开启"
+    }
 
 
 @mcp.tool()
-def close_cruise_information() -> str:
+def close_cruise_information() -> Dict[str, Any]:
     """关闭路况信息 - Disable traffic info"""
-    return "路况信息已关闭"
+    return {
+        "status": "success",
+        "action": "close_cruise_information",
+        "message": "路况信息已关闭"
+    }
 
 
 #  AR Navigation 
 
 @mcp.tool()
-def open_ar_nav() -> str:
+def open_ar_nav() -> Dict[str, Any]:
     """打开AR导航 - Enable AR navigation"""
-    return "AR导航已开启"
+    return {
+        "status": "success",
+        "action": "open_ar_nav",
+        "message": "AR导航已开启"
+    }
 
 
 @mcp.tool()
-def close_ar_nav() -> str:
+def close_ar_nav() -> Dict[str, Any]:
     """关闭AR导航 - Disable AR navigation"""
-    return "AR导航已关闭"
+    return {
+        "status": "success",
+        "action": "close_ar_nav",
+        "message": "AR导航已关闭"
+    }
 
 
 @mcp.tool()
-def front_line_detail() -> str:
+def front_line_detail() -> Dict[str, Any]:
     """前方路线引导 - Show upcoming route guidance"""
-    return "前方直行500米，左转进入XX路"
+    return {
+        "status": "success",
+        "action": "front_line_detail",
+        "message": "前方直行500米，左转进入XX路"
+    }
 
 
 #  Navigation Broadcast 
 
 @mcp.tool()
-def open_nav_broadcast() -> str:
+def open_nav_broadcast() -> Dict[str, Any]:
     """打开导航播报 - Enable navigation TTS"""
-    return "导航播报已开启"
+    return {
+        "status": "success",
+        "action": "open_nav_broadcast",
+        "message": "导航播报已开启"
+    }
 
 
 @mcp.tool()
-def close_nav_broadcast() -> str:
+def close_nav_broadcast() -> Dict[str, Any]:
     """关闭导航播报 - Disable navigation TTS"""
-    return "导航播报已关闭"
+    return {
+        "status": "success",
+        "action": "close_nav_broadcast",
+        "message": "导航播报已关闭"
+    }
 
 
 @mcp.tool()
-def replay_broadcast() -> str:
+def replay_broadcast() -> Dict[str, Any]:
     """重播广播 - Repeat last navigation prompt"""
-    return "前方直行500米，左转"
+    return {
+        "status": "success",
+        "action": "replay_broadcast",
+        "message": "前方直行500米，左转"
+    }
 
 
 @mcp.tool()
-def slow_broadcast_speed() -> str:
+def slow_broadcast_speed() -> Dict[str, Any]:
     """放慢播报 - Slow down TTS speed"""
-    return "已放慢播报速度"
+    return {
+        "status": "success",
+        "action": "slow_broadcast_speed",
+        "message": "已放慢播报速度"
+    }
 
 
 @mcp.tool()
-def accelerate_broadcast_speed() -> str:
+def accelerate_broadcast_speed() -> Dict[str, Any]:
     """加速播报 - Speed up TTS"""
-    return "已加速播报速度"
+    return {
+        "status": "success",
+        "action": "accelerate_broadcast_speed",
+        "message": "已加速播报速度"
+    }
 
 
 @mcp.tool()
-def open_simple_broadcast() -> str:
+def open_simple_broadcast() -> Dict[str, Any]:
     """打开简洁播报 - Enable concise prompts"""
-    return "已开启简洁播报模式"
+    return {
+        "status": "success",
+        "action": "open_simple_broadcast",
+        "message": "已开启简洁播报模式"
+    }
 
 
 @mcp.tool()
-def close_simple_broadcast() -> str:
+def close_simple_broadcast() -> Dict[str, Any]:
     """关闭简洁播报 - Disable concise prompts"""
-    return "已关闭简洁播报模式"
+    return {
+        "status": "success",
+        "action": "close_simple_broadcast",
+        "message": "已关闭简洁播报模式"
+    }
 
 
 #  Commute Navigation 
 
 @mcp.tool()
-def open_commute_nav() -> str:
+def open_commute_nav() -> Dict[str, Any]:
     """打开通勤导航 - Enable commute navigation"""
-    return "通勤导航已开启"
+    return {
+        "status": "success",
+        "action": "open_commute_nav",
+        "message": "通勤导航已开启"
+    }
 
 
 @mcp.tool()
-def close_commute_nav() -> str:
+def close_commute_nav() -> Dict[str, Any]:
     """关闭通勤导航 - Disable commute navigation"""
-    return "通勤导航已关闭"
+    return {
+        "status": "success",
+        "action": "close_commute_nav",
+        "message": "通勤导航已关闭"
+    }
 
 
 #  Collections 
 
 @mcp.tool()
-def open_nav_collections() -> str:
+def open_nav_collections() -> Dict[str, Any]:
     """打开导航收藏夹 - Open saved locations"""
-    return "收藏夹已打开"
+    return {
+        "status": "success",
+        "action": "open_nav_collections",
+        "message": "收藏夹已打开"
+    }
 
 
 @mcp.tool()
-def close_nav_collections() -> str:
+def close_nav_collections() -> Dict[str, Any]:
     """关闭导航收藏夹 - Close saved locations"""
-    return "收藏夹已关闭"
+    return {
+        "status": "success",
+        "action": "close_nav_collections",
+        "message": "收藏夹已关闭"
+    }
 
 
 @mcp.tool()
-def nav_to_collection() -> str:
+def nav_to_collection() -> Dict[str, Any]:
     """去收藏地址 - Navigate to saved location"""
-    return "请选择要导航的收藏地址"
+    return {
+        "status": "info",
+        "action": "nav_to_collection",
+        "message": "请选择要导航的收藏地址"
+    }
 
 
 @mcp.tool()
-def collect_target_location() -> str:
+def collect_target_location() -> Dict[str, Any]:
     """收藏目的地 - Save destination"""
-    return "请先开始导航再收藏目的地"
+    return {
+        "status": "info",
+        "action": "collect_target_location",
+        "message": "请先开始导航再收藏目的地"
+    }
 
 
 @mcp.tool()
@@ -602,59 +786,96 @@ def ask_where() -> Dict[str, Any]:
 
 
 @mcp.tool()
-def open_map_setting() -> str:
+def open_map_setting() -> Dict[str, Any]:
     """打开地图设置 - Open map settings"""
-    return "地图设置已打开"
+    return {
+        "status": "success",
+        "action": "open_map_setting",
+        "message": "地图设置已打开"
+    }
 
 
 @mcp.tool()
-def close_map_setting() -> str:
+def close_map_setting() -> Dict[str, Any]:
     """关闭地图设置 - Close map settings"""
-    return "地图设置已关闭"
+    return {
+        "status": "success",
+        "action": "close_map_setting",
+        "message": "地图设置已关闭"
+    }
 
 
 @mcp.tool()
-def change_nav_sign() -> str:
+def change_nav_sign() -> Dict[str, Any]:
     """切换导航标志 - Change navigation sign style"""
-    return "已切换导航标志样式"
+    return {
+        "status": "success",
+        "action": "change_nav_sign",
+        "message": "已切换导航标志样式"
+    }
 
 
 #  Group Travel 
 
 @mcp.tool()
-def join_group() -> str:
+def join_group() -> Dict[str, Any]:
     """加入组队 - Join a travel group"""
-    return "请提供组队邀请码"
+    return {
+        "status": "info",
+        "action": "join_group",
+        "message": "请提供组队邀请码"
+    }
 
 
 @mcp.tool()
 def build_group() -> Dict[str, Any]:
     """创建组队 - Create a new group"""
-    return {"status": "success", "message": "车队已创建", "invite_code": "ABC123"}
+    return {
+        "status": "success",
+        "action": "build_group",
+        "message": "车队已创建",
+        "invite_code": "ABC123"
+    }
 
 
 @mcp.tool()
-def quit_group() -> str:
+def quit_group() -> Dict[str, Any]:
     """退出组队 - Leave current group"""
-    return "已退出车队"
+    return {
+        "status": "success",
+        "action": "quit_group",
+        "message": "已退出车队"
+    }
 
 
 @mcp.tool()
-def open_group() -> str:
+def open_group() -> Dict[str, Any]:
     """打开组队 - Open group travel interface"""
-    return "组队界面已打开"
+    return {
+        "status": "success",
+        "action": "open_group",
+        "message": "组队界面已打开"
+    }
 
 
 @mcp.tool()
-def ask_meeting_place() -> str:
+def ask_meeting_place() -> Dict[str, Any]:
     """设置集结地 - Query group meetup location"""
-    return "请设置集结地点"
+    return {
+        "status": "info",
+        "action": "ask_meeting_place",
+        "message": "请设置集结地点"
+    }
 
 
 @mcp.tool()
-def go_meeting_place() -> str:
+def go_meeting_place() -> Dict[str, Any]:
     """去汇合地点 - Navigate to meetup point"""
-    return "正在导航到汇合地点"
+    return {
+        "status": "success",
+        "action": "go_meeting_place",
+        "message": "正在导航到汇合地点"
+    }
 
 
 @mcp.tool()
