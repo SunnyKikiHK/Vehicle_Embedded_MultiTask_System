@@ -1,16 +1,16 @@
-"""Redis client with connection pooling and basic operations."""
+"""Redis client with connection pooling and async operations."""
 
 from __future__ import annotations
 
 import json
-import redis
+import redis.asyncio as aioredis
 from typing import Any
 
 
 class RedisClient:
-    """Redis client wrapper with connection pooling support."""
+    """Async Redis client wrapper with connection pooling support."""
 
-    _pool: redis.ConnectionPool | None = None
+    _pool: aioredis.ConnectionPool | None = None
 
     def __init__(self, host: str = "localhost", port: int = 6379, db: int = 0, password: str | None = None) -> None:
         """
@@ -26,17 +26,17 @@ class RedisClient:
         self._port = port
         self._db = db
         self._password = password
-        self._client: redis.Redis | None = None
+        self._client: aioredis.Redis | None = None
 
     @classmethod
-    def create_pool(
+    async def create_pool(
         cls,
         host: str = "localhost",
         port: int = 6379,
         db: int = 0,
         password: str | None = None,
         max_connections: int | None = None,
-    ) -> redis.ConnectionPool:
+    ) -> aioredis.ConnectionPool:
         """
         Create and store a shared Redis connection pool.
 
@@ -50,33 +50,35 @@ class RedisClient:
         Returns:
             The created ConnectionPool instance.
         """
-        cls._pool = redis.ConnectionPool(
+        cls._pool = aioredis.ConnectionPool(
             host=host,
             port=port,
             db=db,
             password=password,
             max_connections=max_connections,
+            decode_responses=False,
         )
         return cls._pool
 
     @property
-    def client(self) -> redis.Redis:
+    def client(self) -> aioredis.Redis:
         """Get or create a Redis client instance."""
         if self._client is not None:
             return self._client
 
         if self._pool is not None:
-            self._client = redis.Redis(connection_pool=self._pool)
+            self._client = aioredis.Redis(connection_pool=self._pool)
         else:
-            self._client = redis.Redis(
+            self._client = aioredis.Redis(
                 host=self._host,
                 port=self._port,
                 db=self._db,
                 password=self._password,
+                decode_responses=False,
             )
         return self._client
 
-    def get(self, key: str) -> Any | None:
+    async def get(self, key: str) -> Any | None:
         """
         Get a value from Redis.
 
@@ -86,7 +88,7 @@ class RedisClient:
         Returns:
             The stored value, or None if the key does not exist.
         """
-        value = self.client.get(key)
+        value = await self.client.get(key)
         if value is None:
             return None
         try:
@@ -94,7 +96,7 @@ class RedisClient:
         except (json.JSONDecodeError, TypeError):
             return value.decode("utf-8") if isinstance(value, bytes) else value
 
-    def set(
+    async def set(
         self,
         key: str,
         value: Any,
@@ -119,10 +121,10 @@ class RedisClient:
         """
         if not isinstance(value, (str, bytes, int, float)):
             value = json.dumps(value)
-        return bool(self.client.set(key, value, ex=ex, px=px, nx=nx, xx=xx))
+        return bool(await self.client.set(key, value, ex=ex, px=px, nx=nx, xx=xx))
 
-    def close(self) -> None:
+    async def close(self) -> None:
         """Close the Redis client connection."""
         if self._client is not None:
-            self._client.close()
+            await self._client.aclose()
             self._client = None
