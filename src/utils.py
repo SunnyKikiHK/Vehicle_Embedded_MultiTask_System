@@ -5,18 +5,18 @@ from src.prompts import ROUTER_PROMPT, CLASSIFIER_PROMPT
 from src.db.redis_client import RedisClient
 from src.agent_schema.shared_slot_schema import SlotContext
 
-from src.skills.skill_loader import (  
-    format_skill_descriptions, # re-exported for reconstruction_router.py
-    get_agent_names_from_skills,
-    get_skill_manifest
-)
+from src.skills.skill_loader import get_skill_manifest
 
 
-def get_llm(base_url: str, api_key: str, structured_output: BaseModel) -> ChatOpenAI:
-    return ChatOpenAI(
+def get_llm(base_url: str, api_key: str, structured_output: BaseModel | None = None):
+    """Get a LangChain LLM instance."""
+    llm = ChatOpenAI(
         base_url=base_url,
         api_key=api_key,
-    ).with_structured_output(structured_output)
+    )
+    if structured_output:
+        return llm.with_structured_output(structured_output)
+    return llm
 
 
 def load_history(sender_id: str, redis_client: RedisClient=None, max_history_turn=3) -> list[SlotContext]:
