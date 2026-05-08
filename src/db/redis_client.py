@@ -88,7 +88,7 @@ class RedisClient:
         Returns:
             The stored value, or None if the key does not exist.
         """
-        value = await self.client.get(key)
+        value = await self.client.get(key) # the connection release back to pool after the operation
         if value is None:
             return None
         try:
@@ -121,10 +121,17 @@ class RedisClient:
         """
         if not isinstance(value, (str, bytes, int, float)):
             value = json.dumps(value)
-        return bool(await self.client.set(key, value, ex=ex, px=px, nx=nx, xx=xx))
+        return bool(await self.client.set(key, value, ex=ex, px=px, nx=nx, xx=xx)) # the connection release back to pool after the operation
 
     async def close(self) -> None:
         """Close the Redis client connection."""
         if self._client is not None:
             await self._client.aclose()
             self._client = None
+    
+    @classmethod
+    async def close_pool(cls) -> None:
+        """Close the Redis connection pool."""
+        if cls._pool is not None:
+            await cls._pool.aclose()
+            cls._pool = None
