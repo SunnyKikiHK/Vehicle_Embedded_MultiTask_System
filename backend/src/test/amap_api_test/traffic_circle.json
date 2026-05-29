@@ -1,0 +1,16 @@
+{
+    "status": "1",
+    "info": "OK",
+    "infocode": "10000",
+    "trafficinfo": {
+        "description": "机场高速：从将台路桥到大山桥严重拥堵，从新源街到香河园路行驶缓慢；京密路：从万红西街到花家地街行驶缓慢；花家地南街：从阜通东大街到望花路行驶缓慢。",
+        "evaluation": {
+            "expedite": "86.96%",
+            "congested": "10.87%",
+            "blocked": "2.17%",
+            "unknown": "0.00%",
+            "status": "2",
+            "description": "轻度拥堵"
+        }
+    }
+}

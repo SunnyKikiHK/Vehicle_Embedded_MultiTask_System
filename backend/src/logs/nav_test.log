@@ -1,0 +1,238 @@
+2026-05-28 15:47:59 - INFO - ======================================================================
+2026-05-28 15:47:59 - INFO - AMap Test Suite Started - 2026-05-28 15:47:59
+2026-05-28 15:47:59 - INFO - ======================================================================
+2026-05-28 15:48:08 - INFO - ======================================================================
+2026-05-28 15:48:08 - INFO - AMap Test Suite Started - 2026-05-28 15:48:08
+2026-05-28 15:48:08 - INFO - ======================================================================
+2026-05-28 15:48:08 - INFO - ======================================================================
+2026-05-28 15:48:08 - INFO - Starting AMap Test Suite Execution
+2026-05-28 15:48:08 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - AMap Test Suite Started - 2026-05-28 15:48:09
+2026-05-28 15:48:09 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - AMap Test Suite Results Summary
+2026-05-28 15:48:09 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - Total tests: 94
+2026-05-28 15:48:09 - INFO - Passed: 93
+2026-05-28 15:48:09 - INFO - Failed: 1
+2026-05-28 15:48:09 - INFO - Skipped: 0
+2026-05-28 15:48:09 - INFO - Execution time: 0:00:01.142079
+2026-05-28 15:48:09 - INFO - --------------------------------------------------
+2026-05-28 15:48:09 - INFO - PASSED:
+2026-05-28 15:48:09 - INFO -   [OK] [TestGoPoi] test_city_search
+2026-05-28 15:48:09 - INFO -   [OK] [TestGoPoi] test_nearby_search
+2026-05-28 15:48:09 - INFO -   [OK] [TestGoPoi] test_search_with_type
+2026-05-28 15:48:09 - INFO -   [OK] [TestGoPoi] test_search_not_found
+2026-05-28 15:48:09 - INFO -   [OK] [TestGoPoi] test_search_empty_distance
+2026-05-28 15:48:09 - INFO -   [OK] [TestSetFrequentLocation] test_set_home_with_poi
+2026-05-28 15:48:09 - INFO -   [OK] [TestSetFrequentLocation] test_set_company_with_poi
+2026-05-28 15:48:09 - INFO -   [OK] [TestSetFrequentLocation] test_set_home_with_gps
+2026-05-28 15:48:09 - INFO -   [OK] [TestSetFrequentLocation] test_set_company_with_gps
+2026-05-28 15:48:09 - INFO -   [OK] [TestSetFrequentLocation] test_invalid_location_type
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollectLocation] test_collect_with_poi
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollectLocation] test_collect_with_current_gps
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollectLocation] test_collect_poi_not_found
+2026-05-28 15:48:09 - INFO -   [OK] [TestAskWhereAmI] test_get_current_location
+2026-05-28 15:48:09 - INFO -   [OK] [TestAskWhereAmI] test_location_with_city_array
+2026-05-28 15:48:09 - INFO -   [OK] [TestAskWhereAmI] test_location_failure
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckAreaTraffic] test_area_traffic_with_poi
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckAreaTraffic] test_area_traffic_around_me
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckAreaTraffic] test_area_traffic_poi_not_found
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_with_destination
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_with_origin_and_destination
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_no_destination
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_destination_not_found
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckCityTrafficOverview] test_beijing_traffic
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckCityTrafficOverview] test_shanghai_traffic
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckCityTrafficOverview] test_guangzhou_traffic
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckCityTrafficOverview] test_shenzhen_traffic
+2026-05-28 15:48:09 - INFO -   [OK] [TestCheckCityTrafficOverview] test_unsupported_city
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_open_nav
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_close_nav
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_go_home
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_go_company
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_add_via
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_delete_via
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_flush_route
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_change_route
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_get_route_information
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_open_full_map
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavigationControl] test_close_full_map
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_switch_main_route
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_switch_side_route
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_speed_fast
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_cancel_speed_fast
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_highway_first
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_smart_recommend
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_cancel_smart_recommend
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_main_route_first
+2026-05-28 15:48:09 - INFO -   [OK] [TestRoutePreferences] test_cancel_main_first
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_avoid_congestion
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_congestion
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_avoid_high_way
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_high_way
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_avoid_limit_line
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_limit_line
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_open_avoid_fee
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_fee
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficInformation] test_home_condition
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficInformation] test_company_condition
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficInformation] test_open_electronic_eye
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficInformation] test_close_electronic_eye
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficInformation] test_open_cruise_information
+2026-05-28 15:48:09 - INFO -   [OK] [TestTrafficInformation] test_close_cruise_information
+2026-05-28 15:48:09 - INFO -   [OK] [TestARNavigation] test_open_ar_nav
+2026-05-28 15:48:09 - INFO -   [OK] [TestARNavigation] test_close_ar_nav
+2026-05-28 15:48:09 - INFO -   [OK] [TestARNavigation] test_front_line_detail
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_open_nav_broadcast
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_close_nav_broadcast
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_replay_broadcast
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_slow_broadcast_speed
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_accelerate_broadcast_speed
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_open_simple_broadcast
+2026-05-28 15:48:09 - INFO -   [OK] [TestNavBroadcast] test_close_simple_broadcast
+2026-05-28 15:48:09 - INFO -   [OK] [TestCommuteNavigation] test_open_commute_nav
+2026-05-28 15:48:09 - INFO -   [OK] [TestCommuteNavigation] test_close_commute_nav
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollections] test_open_nav_collections
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollections] test_close_nav_collections
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollections] test_nav_to_collection
+2026-05-28 15:48:09 - INFO -   [OK] [TestCollections] test_collect_target_location
+2026-05-28 15:48:09 - INFO -   [OK] [TestMapSettings] test_open_map_setting
+2026-05-28 15:48:09 - INFO -   [OK] [TestMapSettings] test_close_map_setting
+2026-05-28 15:48:09 - INFO -   [OK] [TestMapSettings] test_change_nav_sign
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_join_group
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_build_group
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_quit_group
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_open_group
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_ask_meeting_place
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_go_meeting_place
+2026-05-28 15:48:09 - INFO -   [OK] [TestGroupTravel] test_group_member_location
+2026-05-28 15:48:09 - INFO -   [OK] [TestIntegration] test_full_navigation_workflow
+2026-05-28 15:48:09 - INFO -   [OK] [TestIntegration] test_collect_and_navigate_workflow
+2026-05-28 15:48:09 - INFO -   [OK] [TestEdgeCases] test_api_key_not_configured
+2026-05-28 15:48:09 - INFO -   [OK] [TestEdgeCases] test_empty_response
+2026-05-28 15:48:09 - INFO -   [OK] [TestEdgeCases] test_vehicle_gps_fallback
+2026-05-28 15:48:09 - ERROR - --------------------------------------------------
+2026-05-28 15:48:09 - ERROR - FAILED:
+2026-05-28 15:48:09 - ERROR -   [FAIL] [TestEdgeCases] test_network_error
+2026-05-28 15:48:09 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - Completed - 2026-05-28 15:48:09
+2026-05-28 15:48:09 - INFO - ======================================================================
+2026-05-28 15:48:09 - INFO - Pytest exit code: 1
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - AMap Test Suite Started - 2026-05-28 15:52:57
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - Starting AMap Test Suite Execution
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - AMap Test Suite Started - 2026-05-28 15:52:57
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - AMap Test Suite Results Summary
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - Total tests: 93
+2026-05-28 15:52:57 - INFO - Passed: 93
+2026-05-28 15:52:57 - INFO - Failed: 0
+2026-05-28 15:52:57 - INFO - Skipped: 0
+2026-05-28 15:52:57 - INFO - Execution time: 0:00:00.577845
+2026-05-28 15:52:57 - INFO - --------------------------------------------------
+2026-05-28 15:52:57 - INFO - PASSED:
+2026-05-28 15:52:57 - INFO -   [OK] [TestGoPoi] test_city_search
+2026-05-28 15:52:57 - INFO -   [OK] [TestGoPoi] test_nearby_search
+2026-05-28 15:52:57 - INFO -   [OK] [TestGoPoi] test_search_with_type
+2026-05-28 15:52:57 - INFO -   [OK] [TestGoPoi] test_search_not_found
+2026-05-28 15:52:57 - INFO -   [OK] [TestGoPoi] test_search_empty_distance
+2026-05-28 15:52:57 - INFO -   [OK] [TestSetFrequentLocation] test_set_home_with_poi
+2026-05-28 15:52:57 - INFO -   [OK] [TestSetFrequentLocation] test_set_company_with_poi
+2026-05-28 15:52:57 - INFO -   [OK] [TestSetFrequentLocation] test_set_home_with_gps
+2026-05-28 15:52:57 - INFO -   [OK] [TestSetFrequentLocation] test_set_company_with_gps
+2026-05-28 15:52:57 - INFO -   [OK] [TestSetFrequentLocation] test_invalid_location_type
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollectLocation] test_collect_with_poi
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollectLocation] test_collect_with_current_gps
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollectLocation] test_collect_poi_not_found
+2026-05-28 15:52:57 - INFO -   [OK] [TestAskWhereAmI] test_get_current_location
+2026-05-28 15:52:57 - INFO -   [OK] [TestAskWhereAmI] test_location_with_city_array
+2026-05-28 15:52:57 - INFO -   [OK] [TestAskWhereAmI] test_location_failure
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckAreaTraffic] test_area_traffic_with_poi
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckAreaTraffic] test_area_traffic_around_me
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckAreaTraffic] test_area_traffic_poi_not_found
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_with_destination
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_with_origin_and_destination
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_no_destination
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckRouteTraffic] test_route_traffic_destination_not_found
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckCityTrafficOverview] test_beijing_traffic
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckCityTrafficOverview] test_shanghai_traffic
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckCityTrafficOverview] test_guangzhou_traffic
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckCityTrafficOverview] test_shenzhen_traffic
+2026-05-28 15:52:57 - INFO -   [OK] [TestCheckCityTrafficOverview] test_unsupported_city
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_open_nav
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_close_nav
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_go_home
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_go_company
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_add_via
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_delete_via
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_flush_route
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_change_route
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_get_route_information
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_open_full_map
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavigationControl] test_close_full_map
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_switch_main_route
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_switch_side_route
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_speed_fast
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_cancel_speed_fast
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_highway_first
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_smart_recommend
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_cancel_smart_recommend
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_main_route_first
+2026-05-28 15:52:57 - INFO -   [OK] [TestRoutePreferences] test_cancel_main_first
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_avoid_congestion
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_congestion
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_avoid_high_way
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_high_way
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_avoid_limit_line
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_limit_line
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_open_avoid_fee
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficAvoidance] test_cancel_avoid_fee
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficInformation] test_home_condition
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficInformation] test_company_condition
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficInformation] test_open_electronic_eye
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficInformation] test_close_electronic_eye
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficInformation] test_open_cruise_information
+2026-05-28 15:52:57 - INFO -   [OK] [TestTrafficInformation] test_close_cruise_information
+2026-05-28 15:52:57 - INFO -   [OK] [TestARNavigation] test_open_ar_nav
+2026-05-28 15:52:57 - INFO -   [OK] [TestARNavigation] test_close_ar_nav
+2026-05-28 15:52:57 - INFO -   [OK] [TestARNavigation] test_front_line_detail
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_open_nav_broadcast
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_close_nav_broadcast
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_replay_broadcast
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_slow_broadcast_speed
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_accelerate_broadcast_speed
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_open_simple_broadcast
+2026-05-28 15:52:57 - INFO -   [OK] [TestNavBroadcast] test_close_simple_broadcast
+2026-05-28 15:52:57 - INFO -   [OK] [TestCommuteNavigation] test_open_commute_nav
+2026-05-28 15:52:57 - INFO -   [OK] [TestCommuteNavigation] test_close_commute_nav
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollections] test_open_nav_collections
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollections] test_close_nav_collections
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollections] test_nav_to_collection
+2026-05-28 15:52:57 - INFO -   [OK] [TestCollections] test_collect_target_location
+2026-05-28 15:52:57 - INFO -   [OK] [TestMapSettings] test_open_map_setting
+2026-05-28 15:52:57 - INFO -   [OK] [TestMapSettings] test_close_map_setting
+2026-05-28 15:52:57 - INFO -   [OK] [TestMapSettings] test_change_nav_sign
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_join_group
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_build_group
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_quit_group
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_open_group
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_ask_meeting_place
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_go_meeting_place
+2026-05-28 15:52:57 - INFO -   [OK] [TestGroupTravel] test_group_member_location
+2026-05-28 15:52:57 - INFO -   [OK] [TestIntegration] test_full_navigation_workflow
+2026-05-28 15:52:57 - INFO -   [OK] [TestIntegration] test_collect_and_navigate_workflow
+2026-05-28 15:52:57 - INFO -   [OK] [TestEdgeCases] test_api_key_not_configured
+2026-05-28 15:52:57 - INFO -   [OK] [TestEdgeCases] test_empty_response
+2026-05-28 15:52:57 - INFO -   [OK] [TestEdgeCases] test_vehicle_gps_fallback
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:57 - INFO - Completed - 2026-05-28 15:52:57
+2026-05-28 15:52:57 - INFO - ======================================================================
+2026-05-28 15:52:58 - INFO - Pytest exit code: 0

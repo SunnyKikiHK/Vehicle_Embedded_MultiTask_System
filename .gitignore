@@ -1,0 +1,11 @@
+
+__pycache__/
+
+backend/redis-7.0.0/
+backend/config.bat
+backend/server.bat
+backend/dump.rdb
+backend/AGENTS.md
+
+frontend/node_modules/
+frontend/dist/

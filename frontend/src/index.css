@@ -1,0 +1,448 @@
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+  --bg: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #334155;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #475569;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--primary), #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header p {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+}
+
+.panel-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge.disconnected {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--error);
+}
+
+.status-badge.connecting {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+}
+
+.status-badge.connected {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.375rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-size: 0.875rem;
+  transition: border-color 0.15s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  width: 100%;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  background: var(--error);
+  color: white;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.query-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.15s;
+}
+
+.query-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.query-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.response-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.response-placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
+
+.response-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  animation: fadeIn 0.3s ease;
+}
+
+.response-item:last-child {
+  border-bottom: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.response-query {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.response-status {
+  font-size: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.response-status.success {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.response-status.error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--error);
+}
+
+.response-status.processing {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+}
+
+.response-body {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.response-content {
+  background: var(--bg);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.8125rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.logs-section {
+  margin-top: 1.5rem;
+}
+
+.logs-container {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.75rem;
+}
+
+.log-entry {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-entry .timestamp {
+  color: var(--text-muted);
+  margin-right: 0.5rem;
+}
+
+.log-entry .log-info { color: #60a5fa; }
+.log-entry .log-success { color: var(--success); }
+.log-entry .log-error { color: var(--error); }
+.log-entry .log-warning { color: var(--warning); }
+
+.gps-panel {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+  border-color: #2563eb;
+}
+
+.gps-panel h2 {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.gps-panel .panel-hint {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.gps-panel label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.gps-panel input {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
+}
+
+.gps-panel input:disabled {
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(30, 41, 59, 0.5);
+  cursor: not-allowed;
+}
+
+.gps-panel .btn-primary {
+  background: #22c55e;
+  color: white;
+}
+
+.gps-panel .btn-primary:hover:not(:disabled) {
+  background: #16a34a;
+}
+
+.gps-panel .btn-secondary {
+  background: var(--error);
+  color: white;
+}
+
+.gps-panel .btn-secondary:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.gps-panel .btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.gps-panel .btn-outline:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.gps-panel .button-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.gps-panel .button-row .btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.gps-panel .gps-status-container {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.gps-panel .gps-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.gps-panel .gps-status.inactive {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.gps-panel .gps-status.active {
+  color: #22c55e;
+}
+
+.gps-panel .gps-status .status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.gps-panel .gps-status.active .status-dot {
+  animation: pulse 1.5s infinite;
+}
+
+.gps-panel .status-message {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gps-panel .status-message.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}

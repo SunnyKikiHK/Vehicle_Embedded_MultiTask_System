@@ -1,0 +1,264 @@
+2026-05-29 16:57:11,265 - __main__ - INFO - [App] Starting Vehicle Voice Assistant Server...
+2026-05-29 16:57:11,266 - __main__ - INFO - [App] Redis pool and client created: localhost:6379
+2026-05-29 16:57:11,421 - src.db.postgres_client - INFO - [FrequentLocationStore] Pool initialized
+2026-05-29 16:57:11,500 - src.db.postgres_client - INFO - [CollectedLocationStore] Pool initialized
+2026-05-29 16:57:11,501 - __main__ - INFO - [App] PostgreSQL pools and stores initialized
+2026-05-29 16:57:11,501 - src.context.location_provider - INFO - [LocationProvider] Initialized
+2026-05-29 16:57:11,502 - __main__ - INFO - [App] LocationProvider initialized
+2026-05-29 16:57:11,502 - __main__ - INFO - [App] MCP Executor initialized
+2026-05-29 16:57:11,503 - __main__ - INFO - [App] Server ready
+2026-05-29 16:58:39,847 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet OPEN data {'sid': 'lK6XiazuRtwNcbx1AAAA', 'upgrades': [], 'pingTimeout': 60000, 'pingInterval': 25000, 'maxPayload': 1000000}
+2026-05-29 16:58:39,849 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received request to upgrade to websocket
+2026-05-29 16:58:39,852 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Upgrade to websocket successful
+2026-05-29 16:58:39,866 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet MESSAGE data 0{"vehicle_id":"test-vehicle-001","user_id":"test-user-001"}
+2026-05-29 16:58:39,868 - __main__ - INFO - [SocketIO] on_connect called: sid=gY7CvXzc_7IzxdhrAAAB, auth={'vehicle_id': 'test-vehicle-001', 'user_id': 'test-user-001'}
+2026-05-29 16:58:39,869 - __main__ - INFO - [SocketIO] Request headers: {}
+2026-05-29 16:58:39,870 - __main__ - INFO - [SocketIO] vehicle_id=test-vehicle-001, user_id=test-user-001
+2026-05-29 16:58:39,884 - socketio.server - INFO - emitting event "connected" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:58:39,885 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["connected",{"status":"connected","session_id":"gY7CvXzc_7IzxdhrAAAB","user_id":"test-user-001"}]
+2026-05-29 16:58:39,886 - __main__ - INFO - [SocketIO] Emitted 'connected' event to sid=gY7CvXzc_7IzxdhrAAAB
+2026-05-29 16:58:39,886 - __main__ - INFO - [SocketIO] Vehicle connected successfully: sid=gY7CvXzc_7IzxdhrAAAB, vehicle_id=test-vehicle-001, user_id=test-user-001
+2026-05-29 16:58:39,887 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 0{"sid":"gY7CvXzc_7IzxdhrAAAB"}
+2026-05-29 16:58:57,609 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet MESSAGE data 2["voice_query",{"query":"把我家地址设为望京 SOHO","stream":true}]
+2026-05-29 16:58:57,613 - socketio.server - INFO - received event "voice_query" from gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:58:57,616 - __main__ - INFO - [SocketIO] Voice query received: sid=gY7CvXzc_7IzxdhrAAAB, query=把我家地址设为望京 SOHO...
+2026-05-29 16:58:57,622 - __main__ - INFO - [SocketIO] Voice query session_data: {'vehicle_id': 'test-vehicle-001', 'user_id': 'test-user-001', 'sid': 'gY7CvXzc_7IzxdhrAAAB', 'connected': True}
+2026-05-29 16:58:57,623 - socketio.server - INFO - emitting event "processing" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:58:57,624 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["processing",{"status":"processing"}]
+2026-05-29 16:58:57,628 - __main__ - INFO - [SocketIO] Voice query history: [{'query': '关闭车辆当前正在进行的导航', 'intent': 'close_nav', 'slots': {}, 'response': '好的，导航已关闭', 'metadata': {'vehicle_id': 'test-vehicle-001'}}, {'query': '查看北京现在的路况如何', 'intent': 'check_city_traffic_overview', 'slots': {'city': '北京'}, 'response': '好的，已经帮你查询到北京核心区域的路况啦，整体畅通，畅通占比达到95.73%，拥堵和严重拥堵路段都很少。', 'metadata': {'vehicle_id': 'test-vehicle-001'}}, {'query': '查看前往机场的路上的路况，判断是否堵车', 'intent': 'check_route_traffic', 'slots': {'origin': '当前位置', 'destination': '机场', 'metadata': {'vehicle_id': 'test-vehicle-001'}}, 'response': '好的，已经帮你查询了前往北京大兴国际机场的路况，全程58.5公里，预计行驶51.5分钟，当前选择的是躲避拥堵的路线策略哦。', 'metadata': {'vehicle_id': 'test-vehicle-001'}}, {'query': '查看故宫周边的路况，判断是否拥堵', 'intent': 'check_area_traffic', 'slots': {'poi': '故宫', 'radius': 1000, 'metadata': {'vehicle_id': 'test-vehicle-001'}}, 'response': '好的，我已经帮你查看了故宫周边1000米范围内的路况啦，整体十分畅通，畅通率达到了96.67%。', 'metadata': {'vehicle_id': 'test-vehicle-001'}}]
+2026-05-29 16:58:57,643 - workflow - INFO - [Workflow] Starting workflow for query: 把我家地址设为望京 SOHO, stream_mode: True
+2026-05-29 16:58:57,648 - workflow - INFO - [Timing] format_history_task: 3.61ms
+2026-05-29 16:59:00,396 - httpx - INFO - HTTP Request: POST https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions "HTTP/1.1 200 OK"
+2026-05-29 16:59:00,421 - httpx - INFO - HTTP Request: POST https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions "HTTP/1.1 200 OK"
+2026-05-29 16:59:00,428 - workflow - INFO - [Timing] classifier + reconstructor (parallel): 2778.78ms
+2026-05-29 16:59:00,429 - workflow - INFO - [Workflow] Classifier result: {'query_type': <QueryType.TASK_SPECIFIC: 2>, 'confidence': 0.98, 'reasoning': '该查询有明确的设置家庭地址的操作意图，属于车辆相关的任务指令类操作，符合任务指令的分类定义。'}
+2026-05-29 16:59:00,429 - workflow - INFO - [Workflow] Reconstructor result: {'reconstructed_query': '把我家地址设置为望京 SOHO', 'reasoning': '当前查询没有指代词或省略表述，仅补充了口语化省略的“了”使表述更完整，原查询已经清晰明确可直接执行。'}
+2026-05-29 16:59:00,431 - src.llm.router - INFO - [Router] Fast path: routed to navigation-agent (confidence=0.80)
+2026-05-29 16:59:00,432 - workflow - INFO - [Timing] router: 2.33ms
+2026-05-29 16:59:00,433 - workflow - INFO - [Workflow] Router result: {'target_agent': 'navigation-agent', 'confidence': 0.8, 'reasoning': '通过关键词分析快速路由'}
+2026-05-29 16:59:03,142 - httpx - INFO - HTTP Request: POST https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions "HTTP/1.1 200 OK"
+2026-05-29 16:59:03,152 - src.agent.executor - INFO - [Executor] call_tool: tool=set_frequent_location, user_id=test-user-001
+2026-05-29 16:59:03,153 - src.agent.executor - INFO - [Executor] Tool set_frequent_location requires metadata: {'vehicle_id': 'test-vehicle-001'}
+2026-05-29 16:59:03,153 - src.mcp.mcp_client - INFO - call_tool: user=test-user-001, tool=set_frequent_location, server=nav_server, metadata={'vehicle_id': 'test-vehicle-001'}
+2026-05-29 16:59:03,220 - httpx - INFO - HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+2026-05-29 16:59:03,221 - mcp.client.streamable_http - INFO - Received session ID: e22029aa407a4746b4227523dfac99fb
+2026-05-29 16:59:03,224 - mcp.client.streamable_http - INFO - Negotiated protocol version: 2025-11-25
+2026-05-29 16:59:03,235 - httpx - INFO - HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 202 Accepted"
+2026-05-29 16:59:03,237 - httpx - INFO - HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+2026-05-29 16:59:03,245 - httpx - INFO - HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+2026-05-29 16:59:03,667 - httpx - INFO - HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+2026-05-29 16:59:03,700 - httpx - INFO - HTTP Request: DELETE http://localhost:8001/mcp "HTTP/1.1 200 OK"
+2026-05-29 16:59:03,702 - mcp.client.streamable_http - INFO - GET stream disconnected, reconnecting in 1000ms...
+2026-05-29 16:59:03,704 - workflow - INFO - [Timing] run_agent: 3270.69ms
+2026-05-29 16:59:03,704 - workflow - INFO - [Workflow] Agent result: {'agent': 'navigation-agent', 'tool_result': {'status': 'fail', 'message': '保存失败: 数据库连接未初始化'}, 'tool_name': 'set_frequent_location', 'tool_args': {'location_type': 'home', 'poi': '望京SOHO', 'metadata': {'vehicle_id': 'test-vehicle-001'}}}
+2026-05-29 16:59:04,135 - httpx - INFO - HTTP Request: POST https://ark.ap-southeast.bytepluses.com/api/v3/chat/completions "HTTP/1.1 200 OK"
+2026-05-29 16:59:04,154 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,155 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u4e0d\u597d\u610f\u601d","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,203 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,212 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u5440","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,213 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,214 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\uff0c","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,215 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,216 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u521a\u521a","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,329 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,331 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u5c1d\u8bd5","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,333 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,336 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u628a","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,338 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,341 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u4f60\u7684","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,342 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,344 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u5bb6","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,434 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,435 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u5730\u5740","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,436 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,438 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u8bbe\u7f6e","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,439 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,441 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u4e3a","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,442 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,443 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u671b\u4eac","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,686 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,687 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"SO","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,688 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,689 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"HO","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,690 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,691 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u5931\u8d25","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,692 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,693 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u4e86","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,821 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,823 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\uff0c","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,824 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,825 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u5e94\u8be5","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,826 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,828 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u662f","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,830 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,831 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u7cfb\u7edf","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,854 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 16:59:04,858 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 16:59:04,939 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,940 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u6682\u65f6","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,940 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,941 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u51fa\u73b0","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,941 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,942 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u4e86","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:04,943 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:04,944 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u8fde\u63a5","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,030 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,030 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u95ee\u9898","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,031 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,032 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\uff0c","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,032 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,033 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u4f60","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,034 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,035 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u53ef\u4ee5","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,172 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,174 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u7a0d\u540e","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,174 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,175 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u518d","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,176 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,176 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u8bd5\u8bd5","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,177 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,178 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u54e6","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,322 - socketio.server - INFO - emitting event "stream_response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,323 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["stream_response",{"status":"streaming","chunk":"\u3002","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO"}]
+2026-05-29 16:59:05,324 - workflow - INFO - [Timing] build_response: 1619.37ms
+2026-05-29 16:59:05,325 - workflow - INFO - [Workflow] Result: {'classification': {'query_type': <QueryType.TASK_SPECIFIC: 2>, 'confidence': 0.98, 'reasoning': '该查询有明确的设置家庭地址的操作意图，属于车辆相关的任务指令类操作，符合任务指令的分类定义。'}, 'reconstruction': {'reconstructed_query': '把我家地址设置为望京 SOHO', 'reasoning': '当前查询没有指代词或省略表述，仅补充了口语化省略的“了”使表述更完整，原查询已经清晰明确可直接执行。'}, 'routing': {'target_agent': 'navigation-agent', 'confidence': 0.8, 'reasoning': '通过关键词分析快速路由'}, 'agent': {'agent': 'navigation-agent', 'tool_result': {'status': 'fail', 'message': '保存失败: 数据库连接未初始化'}, 'tool_name': 'set_frequent_location', 'tool_args': {'location_type': 'home', 'poi': '望京SOHO', 'metadata': {'vehicle_id': 'test-vehicle-001'}}}, 'response': '不好意思呀，刚刚尝试把你的家地址设置为望京SOHO失败了，应该是系统暂时出现了连接问题，你可以稍后再试试哦。'}
+2026-05-29 16:59:05,327 - workflow - INFO - [Timing] Total workflow: 7683.24ms
+2026-05-29 16:59:05,329 - __main__ - INFO - [SocketIO] Voice query result 1: {'classification': {'query_type': <QueryType.TASK_SPECIFIC: 2>, 'confidence': 0.98, 'reasoning': '该查询有明确的设置家庭地址的操作意图，属于车辆相关的任务指令类操作，符合任务指令的分类定义。'}, 'reconstruction': {'reconstructed_query': '把我家地址设置为望京 SOHO', 'reasoning': '当前查询没有指代词或省略表述，仅补充了口语化省略的“了”使表述更完整，原查询已经清晰明确可直接执行。'}, 'routing': {'target_agent': 'navigation-agent', 'confidence': 0.8, 'reasoning': '通过关键词分析快速路由'}, 'agent': {'agent': 'navigation-agent', 'tool_result': {'status': 'fail', 'message': '保存失败: 数据库连接未初始化'}, 'tool_name': 'set_frequent_location', 'tool_args': {'location_type': 'home', 'poi': '望京SOHO', 'metadata': {'vehicle_id': 'test-vehicle-001'}}}, 'response': '不好意思呀，刚刚尝试把你的家地址设置为望京SOHO失败了，应该是系统暂时出现了连接问题，你可以稍后再试试哦。'}
+2026-05-29 16:59:05,330 - __main__ - INFO - [SocketIO] Voice query result 2: {'classification': {'query_type': <QueryType.TASK_SPECIFIC: 2>, 'confidence': 0.98, 'reasoning': '该查询有明确的设置家庭地址的操作意图，属于车辆相关的任务指令类操作，符合任务指令的分类定义。'}, 'reconstruction': {'reconstructed_query': '把我家地址设置为望京 SOHO', 'reasoning': '当前查询没有指代词或省略表述，仅补充了口语化省略的“了”使表述更完整，原查询已经清晰明确可直接执行。'}, 'routing': {'target_agent': 'navigation-agent', 'confidence': 0.8, 'reasoning': '通过关键词分析快速路由'}, 'agent': {'agent': 'navigation-agent', 'tool_result': {'status': 'fail', 'message': '保存失败: 数据库连接未初始化'}, 'tool_name': 'set_frequent_location', 'tool_args': {'location_type': 'home', 'poi': '望京SOHO', 'metadata': {'vehicle_id': 'test-vehicle-001'}}}, 'response': '不好意思呀，刚刚尝试把你的家地址设置为望京SOHO失败了，应该是系统暂时出现了连接问题，你可以稍后再试试哦。'}
+2026-05-29 16:59:05,331 - socketio.server - INFO - emitting event "response" to gY7CvXzc_7IzxdhrAAAB [/]
+2026-05-29 16:59:05,332 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet MESSAGE data 2["response",{"status":"success","query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u4e3a\u671b\u4eac SOHO","result":{"classification":{"query_type":2,"confidence":0.98,"reasoning":"\u8be5\u67e5\u8be2\u6709\u660e\u786e\u7684\u8bbe\u7f6e\u5bb6\u5ead\u5730\u5740\u7684\u64cd\u4f5c\u610f\u56fe\uff0c\u5c5e\u4e8e\u8f66\u8f86\u76f8\u5173\u7684\u4efb\u52a1\u6307\u4ee4\u7c7b\u64cd\u4f5c\uff0c\u7b26\u5408\u4efb\u52a1\u6307\u4ee4\u7684\u5206\u7c7b\u5b9a\u4e49\u3002"},"reconstruction":{"reconstructed_query":"\u628a\u6211\u5bb6\u5730\u5740\u8bbe\u7f6e\u4e3a\u671b\u4eac SOHO","reasoning":"\u5f53\u524d\u67e5\u8be2\u6ca1\u6709\u6307\u4ee3\u8bcd\u6216\u7701\u7565\u8868\u8ff0\uff0c\u4ec5\u8865\u5145\u4e86\u53e3\u8bed\u5316\u7701\u7565\u7684\u201c\u4e86\u201d\u4f7f\u8868\u8ff0\u66f4\u5b8c\u6574\uff0c\u539f\u67e5\u8be2\u5df2\u7ecf\u6e05\u6670\u660e\u786e\u53ef\u76f4\u63a5\u6267\u884c\u3002"},"routing":{"target_agent":"navigation-agent","confidence":0.8,"reasoning":"\u901a\u8fc7\u5173\u952e\u8bcd\u5206\u6790\u5feb\u901f\u8def\u7531"},"agent":{"agent":"navigation-agent","tool_result":{"status":"fail","message":"\u4fdd\u5b58\u5931\u8d25: \u6570\u636e\u5e93\u8fde\u63a5\u672a\u521d\u59cb\u5316"},"tool_name":"set_frequent_location","tool_args":{"location_type":"home","poi":"\u671b\u4eacSOHO","metadata":{"vehicle_id":"test-vehicle-001"}}},"response":"\u4e0d\u597d\u610f\u601d\u5440\uff0c\u521a\u521a\u5c1d\u8bd5\u628a\u4f60\u7684\u5bb6\u5730\u5740\u8bbe\u7f6e\u4e3a\u671b\u4eacSOHO\u5931\u8d25\u4e86\uff0c\u5e94\u8be5\u662f\u7cfb\u7edf\u6682\u65f6\u51fa\u73b0\u4e86\u8fde\u63a5\u95ee\u9898\uff0c\u4f60\u53ef\u4ee5\u7a0d\u540e\u518d\u8bd5\u8bd5\u54e6\u3002"}}]
+2026-05-29 16:59:05,357 - __main__ - INFO - [SocketIO] Query processed successfully: sid=gY7CvXzc_7IzxdhrAAAB
+2026-05-29 16:59:29,859 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 16:59:29,866 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 16:59:54,868 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 16:59:54,872 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:00:19,874 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:00:19,879 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:00:44,882 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:00:44,887 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:01:09,889 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:01:09,892 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:01:34,895 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:01:34,898 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:01:59,900 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:01:59,902 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:02:24,903 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:02:24,905 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:02:49,906 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:02:49,909 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:03:14,911 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:03:14,915 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:03:39,507 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:03:39,509 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:04:04,511 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:04:04,514 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:04:29,105 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:04:29,108 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:04:54,110 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:04:54,114 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:05:19,116 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:05:19,120 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:05:44,122 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:05:44,126 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:06:09,127 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:06:09,130 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:06:34,131 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:06:34,134 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:06:59,136 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:06:59,140 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:07:23,725 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:07:23,726 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:07:48,728 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:07:48,730 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:08:13,730 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:08:13,732 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:08:38,733 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:08:38,735 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:09:03,736 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:09:03,739 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:09:28,334 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:09:28,337 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:09:53,339 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:09:53,342 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:10:18,344 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:10:18,346 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:10:43,347 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:10:43,350 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:11:07,944 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:11:07,946 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:11:32,947 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:11:32,949 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:11:57,951 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:11:57,953 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:12:22,955 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:12:22,958 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:12:47,544 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:12:47,548 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:13:12,549 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:13:12,551 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:13:37,552 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:13:37,555 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:14:02,557 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:14:02,559 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:14:27,560 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:14:27,565 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:14:52,149 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:14:52,151 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:15:17,152 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:15:17,154 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:15:42,155 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:15:42,157 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:16:07,159 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:16:07,161 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:16:31,748 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:16:31,750 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:16:56,241 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:16:56,244 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:17:20,840 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:17:20,843 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:17:45,845 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:17:45,847 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:18:10,421 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:18:10,425 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:18:34,977 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:18:34,979 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:18:59,507 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:18:59,511 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:19:24,514 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:19:24,516 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:19:49,058 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:19:49,063 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:20:13,596 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:20:13,599 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:20:38,136 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:20:38,138 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:21:03,139 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:21:03,142 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:21:27,656 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:21:27,660 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:21:52,194 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:21:52,196 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:22:16,732 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:22:16,736 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:22:41,265 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:22:41,268 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:23:06,271 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:23:06,273 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:23:30,795 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:23:30,847 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:23:55,387 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:23:55,389 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:24:19,943 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:24:19,948 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:24:44,950 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:24:44,953 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:25:09,467 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:25:09,471 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:25:33,987 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:25:33,989 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:25:58,549 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:25:58,552 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:26:23,017 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:26:23,020 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
+2026-05-29 17:26:48,021 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Sending packet PING data None
+2026-05-29 17:26:48,025 - engineio.server - INFO - lK6XiazuRtwNcbx1AAAA: Received packet PONG data 
