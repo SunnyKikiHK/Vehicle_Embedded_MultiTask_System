@@ -1,27 +1,27 @@
-INFO:     Started server process [742]
+INFO:     Started server process [730]
 INFO:     Waiting for application startup.
-[05/31/26 17:21:14] INFO     StreamableHTTP       streamable_http_manager.py:128
+[06/03/26 10:04:47] INFO     StreamableHTTP       streamable_http_manager.py:128
                              session manager                                    
                              started                                            
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
-[05/31/26 17:25:38] INFO     Created new          streamable_http_manager.py:255
+[06/03/26 10:08:17] INFO     Created new          streamable_http_manager.py:255
                              transport with                                     
                              session ID:                                        
-                             5d549d151a4f4138aa2e                               
-                             5b1207d551d8                                       
-INFO:     127.0.0.1:60058 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60059 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:60060 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60061 - "POST /mcp HTTP/1.1" 200 OK
+                             3696700b9d3d432f9bd5                               
+                             017e6d8f33a1                                       
+INFO:     127.0.0.1:50422 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50423 - "POST /mcp HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:50424 - "GET /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50425 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              CallToolRequest                                    
-[05/31/26 17:25:41] INFO     HTTP Request: GET                   _client.py:1740
+[06/03/26 10:08:20] INFO     HTTP Request: GET                   _client.py:1740
                              https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E6%9C%9B%E4%BA%ACSOHO                
-                             &key=cc0fe57173df27a3b6b2e39f1fd0ba                
-                             cd&output=json "HTTP/1.1 200 OK"                   
-                    INFO     [FrequentLocationStore] Pool  postgres_client.py:89
+                             ext?keywords=%E6%95%85%E5%AE%AB&key                
+                             =cc0fe57173df27a3b6b2e39f1fd0bacd&o                
+                             utput=json "HTTP/1.1 200 OK"                       
+[06/03/26 10:08:21] INFO     [FrequentLocationStore] Pool  postgres_client.py:89
                              initialized                                        
                     INFO     [nav_server] FrequentLocationStore nav_server.py:70
                              pool initialized                                   
@@ -30,6 +30,9 @@ INFO:     127.0.0.1:60061 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     [nav_server]                       nav_server.py:73
                              CollectedLocationStore pool                        
                              initialized                                        
+                    INFO     [CollectedLocationStore]     postgres_client.py:350
+                             Saved for test-vehicle-001:                        
+                             故宫博物院                                         
                     INFO     Warning: RuntimeWarning: opening the  server.py:717
                              async pool AsyncConnectionPool in the              
                              constructor is deprecated and will                 
@@ -39,455 +42,100 @@ INFO:     127.0.0.1:60061 - "POST /mcp HTTP/1.1" 200 OK
                              context manager using: `async with                 
                              AsyncConnectionPool(...) as pool:                  
                              `...                                               
-INFO:     127.0.0.1:62395 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54152 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              ListToolsRequest                                   
                     INFO     Terminating session:         streamable_http.py:785
-                             5d549d151a4f4138aa2e5b1207d5                       
-                             51d8                                               
-INFO:     127.0.0.1:62396 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:26:11] INFO     Created new          streamable_http_manager.py:255
+                             3696700b9d3d432f9bd5017e6d8f                       
+                             33a1                                               
+INFO:     127.0.0.1:54153 - "DELETE /mcp HTTP/1.1" 200 OK
+[06/03/26 10:08:39] INFO     Created new          streamable_http_manager.py:255
                              transport with                                     
                              session ID:                                        
-                             a47ee24c750a40aa9c48                               
-                             af15153a25d8                                       
-INFO:     127.0.0.1:55589 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55590 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:55591 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55592 - "POST /mcp HTTP/1.1" 200 OK
+                             cb5758d3910d4dca9241                               
+                             f5d93dba02da                                       
+INFO:     127.0.0.1:52066 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52067 - "POST /mcp HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:52068 - "GET /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52069 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              CallToolRequest                                    
-                    INFO     [LocationProvider]         location_provider.py:144
-                             Initialized                                        
-                    INFO     [nav_server] LocationProvider      nav_server.py:85
-                             initialized with Redis                             
-[05/31/26 17:26:14] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/geocode                
-                             /regeo?location=112.50055%2C23.0785                
-                             19&key=cc0fe57173df27a3b6b2e39f1fd0                
-                             bacd&output=json "HTTP/1.1 200 OK"                 
-                    INFO     [FrequentLocationStore]      postgres_client.py:223
-                             Saved company for                                  
-                             test-vehicle-001                                   
-                             (replaced_existing=False)                          
-INFO:     127.0.0.1:55595 - "POST /mcp HTTP/1.1" 200 OK
+[06/03/26 10:08:43] INFO     HTTP Request: GET                   _client.py:1740
+                             https://restapi.amap.com/v3/place/t                
+                             ext?keywords=%E6%95%85%E5%AE%AB%E5%                
+                             8D%9A%E7%89%A9%E9%99%A2&key=cc0fe57                
+                             173df27a3b6b2e39f1fd0bacd&output=js                
+                             on "HTTP/1.1 200 OK"                               
+INFO:     127.0.0.1:63097 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              ListToolsRequest                                   
                     INFO     Terminating session:         streamable_http.py:785
-                             a47ee24c750a40aa9c48af15153a                       
-                             25d8                                               
-INFO:     127.0.0.1:55596 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:38:16] INFO     Created new          streamable_http_manager.py:255
+                             cb5758d3910d4dca9241f5d93dba                       
+                             02da                                               
+INFO:     127.0.0.1:63098 - "DELETE /mcp HTTP/1.1" 200 OK
+[06/03/26 10:09:08] INFO     Created new          streamable_http_manager.py:255
                              transport with                                     
                              session ID:                                        
-                             485f4e4fa5734e4fa6f3                               
-                             c122d3a061b1                                       
-INFO:     127.0.0.1:50820 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50821 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:50822 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50823 - "POST /mcp HTTP/1.1" 200 OK
+                             5e7f56d64bb044b485f0                               
+                             1a5c2e68ac8c                                       
+INFO:     127.0.0.1:64812 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64813 - "POST /mcp HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:64814 - "GET /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64815 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              CallToolRequest                                    
-INFO:     127.0.0.1:50824 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64816 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              ListToolsRequest                                   
                     INFO     Terminating session:         streamable_http.py:785
-                             485f4e4fa5734e4fa6f3c122d3a0                       
-                             61b1                                               
-INFO:     127.0.0.1:50825 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:39:07] INFO     Created new          streamable_http_manager.py:255
+                             5e7f56d64bb044b485f01a5c2e68                       
+                             ac8c                                               
+INFO:     127.0.0.1:64817 - "DELETE /mcp HTTP/1.1" 200 OK
+[06/03/26 10:09:43] INFO     Created new          streamable_http_manager.py:255
                              transport with                                     
                              session ID:                                        
-                             9deef212a5d2470f91e8                               
-                             19ac3e0e763c                                       
-INFO:     127.0.0.1:59035 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59036 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:59037 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59038 - "POST /mcp HTTP/1.1" 200 OK
+                             2f22f90487af45d5914b                               
+                             0c0b9b92ea78                                       
+INFO:     127.0.0.1:49788 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49795 - "POST /mcp HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:49803 - "GET /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49804 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              CallToolRequest                                    
-INFO:     127.0.0.1:59039 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49805 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              ListToolsRequest                                   
                     INFO     Terminating session:         streamable_http.py:785
-                             9deef212a5d2470f91e819ac3e0e                       
-                             763c                                               
-INFO:     127.0.0.1:59040 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:39:39] INFO     Created new          streamable_http_manager.py:255
+                             2f22f90487af45d5914b0c0b9b92                       
+                             ea78                                               
+INFO:     127.0.0.1:49806 - "DELETE /mcp HTTP/1.1" 200 OK
+[06/03/26 10:10:22] INFO     Created new          streamable_http_manager.py:255
                              transport with                                     
                              session ID:                                        
-                             a2d6e31d45ed41b68ca1                               
-                             89a317dae045                                       
-INFO:     127.0.0.1:50761 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50762 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:50763 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50764 - "POST /mcp HTTP/1.1" 200 OK
+                             9c44de55668f4a558a52                               
+                             5822631336c5                                       
+INFO:     127.0.0.1:54284 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54286 - "POST /mcp HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:54285 - "GET /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54287 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              CallToolRequest                                    
-INFO:     127.0.0.1:50765 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             a2d6e31d45ed41b68ca189a317da                       
-                             e045                                               
-INFO:     127.0.0.1:50766 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:41:10] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             9059c62c77aa44c7a9b2                               
-                             35982186b7de                                       
-INFO:     127.0.0.1:64668 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64669 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:64670 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64671 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-INFO:     127.0.0.1:64672 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             9059c62c77aa44c7a9b235982186                       
-                             b7de                                               
-INFO:     127.0.0.1:64674 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:41:31] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             17cf571df22b410cb73b                               
-                             0f4151c1f72f                                       
-INFO:     127.0.0.1:59076 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59077 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:59078 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:59079 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:41:35] INFO     HTTP Request: GET                   _client.py:1740
+[06/03/26 10:10:25] INFO     HTTP Request: GET                   _client.py:1740
                              https://restapi.amap.com/v3/place/t                
                              ext?keywords=%E6%95%85%E5%AE%AB&key                
                              =cc0fe57173df27a3b6b2e39f1fd0bacd&o                
                              utput=json "HTTP/1.1 200 OK"                       
-                    INFO     [CollectedLocationStore]     postgres_client.py:350
-                             Saved for test-vehicle-001:                        
-                             故宫博物院                                         
-INFO:     127.0.0.1:56731 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             17cf571df22b410cb73b0f4151c1                       
-                             f72f                                               
-INFO:     127.0.0.1:56732 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:41:53] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             3dc7713e1e624b6aa48d                               
-                             154e8648c82d                                       
-INFO:     127.0.0.1:62210 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62211 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:62212 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62213 - "POST /mcp HTTP/1.1" 200 OK
-[05/31/26 17:41:54] INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:41:58] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E6%9C%9B%E4%BA%ACSOHO                
-                             &key=cc0fe57173df27a3b6b2e39f1fd0ba                
-                             cd&output=json "HTTP/1.1 200 OK"                   
-                    INFO     [CollectedLocationStore]     postgres_client.py:350
-                             Saved for test-vehicle-001:                        
-                             望京SOHO                                           
-INFO:     127.0.0.1:61908 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             3dc7713e1e624b6aa48d154e8648                       
-                             c82d                                               
-INFO:     127.0.0.1:61909 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:42:18] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             67e8fdd34bc248b69f38                               
-                             3199ad2ae643                                       
-INFO:     127.0.0.1:62548 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62550 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:62549 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62551 - "POST /mcp HTTP/1.1" 200 OK
-[05/31/26 17:42:19] INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-INFO:     127.0.0.1:62552 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             67e8fdd34bc248b69f383199ad2a                       
-                             e643                                               
-INFO:     127.0.0.1:62553 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:42:51] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             7f64374b39be4efd9044                               
-                             37069d776884                                       
-INFO:     127.0.0.1:56176 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56177 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:56178 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56179 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-INFO:     127.0.0.1:56180 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             7f64374b39be4efd904437069d77                       
-                             6884                                               
-INFO:     127.0.0.1:56181 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:43:16] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             de5996ce6d8743f7a7e6                               
-                             efaea2a6fb44                                       
-INFO:     127.0.0.1:63459 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63460 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:63461 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63462 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:43:19] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/geocode                
-                             /regeo?location=112.50055%2C23.0785                
-                             19&key=cc0fe57173df27a3b6b2e39f1fd0                
-                             bacd&output=json "HTTP/1.1 200 OK"                 
-INFO:     127.0.0.1:50259 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             de5996ce6d8743f7a7e6efaea2a6                       
-                             fb44                                               
-INFO:     127.0.0.1:50260 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:43:42] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             48a9e102ac484dc5a690                               
-                             9cd9408f1fed                                       
-INFO:     127.0.0.1:56356 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56357 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:56358 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56359 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:43:47] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/a                
-                             round?keywords=%E5%8A%A0%E6%B2%B9%E                
-                             7%AB%99&location=112.50055%2C23.078                
-                             519&radius=5000&sortrule=distance&t                
-                             ypes=%E5%8A%A0%E6%B2%B9%E7%AB%99&ke                
-                             y=cc0fe57173df27a3b6b2e39f1fd0bacd&                
-                             output=json "HTTP/1.1 200 OK"                      
-INFO:     127.0.0.1:52343 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             48a9e102ac484dc5a6909cd9408f                       
-                             1fed                                               
-INFO:     127.0.0.1:52344 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:44:14] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             5dcb2cfb8e1f4d1790ba                               
-                             be36692c5921                                       
-INFO:     127.0.0.1:58746 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58747 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:58748 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58749 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-INFO:     127.0.0.1:58750 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             5dcb2cfb8e1f4d1790babe36692c                       
-                             5921                                               
-INFO:     127.0.0.1:58751 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:44:33] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             b2506ba5779c4337921d                               
-                             1a41a645b784                                       
-INFO:     127.0.0.1:63855 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63856 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:63857 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63858 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:44:36] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E5%BD%93%E5%89%8D%E4%                
-                             BD%8D%E7%BD%AE&key=cc0fe57173df27a3                
-                             b6b2e39f1fd0bacd&output=json                       
-                             "HTTP/1.1 200 OK"                                  
-[05/31/26 17:44:42] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/traffic                
-                             /status/circle?location=116.466517%                
-                             2C39.922778&radius=1000&key=cc0fe57                
-                             173df27a3b6b2e39f1fd0bacd&output=js                
-                             on "HTTP/1.1 200 OK"                               
-INFO:     127.0.0.1:59590 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             b2506ba5779c4337921d1a41a645                       
-                             b784                                               
-INFO:     127.0.0.1:59591 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:45:13] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             506ab3a4d144499da325                               
-                             2169c686b50e                                       
-INFO:     127.0.0.1:54989 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54990 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:54991 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54992 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:45:17] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E5%9B%BD%E8%B4%B8&key                
-                             =cc0fe57173df27a3b6b2e39f1fd0bacd&o                
-                             utput=json "HTTP/1.1 200 OK"                       
-[05/31/26 17:45:19] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/traffic                
-                             /status/circle?location=116.458855%                
-                             2C39.909863&radius=1000&key=cc0fe57                
-                             173df27a3b6b2e39f1fd0bacd&output=js                
-                             on "HTTP/1.1 200 OK"                               
-INFO:     127.0.0.1:65172 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             506ab3a4d144499da3252169c686                       
-                             b50e                                               
-INFO:     127.0.0.1:65173 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:46:21] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             d01e1842ee7b4592b540                               
-                             04386cda680a                                       
-INFO:     127.0.0.1:54875 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54876 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:54877 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54878 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:46:26] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=current&key=cc0fe57173                
+[06/03/26 10:10:28] INFO     HTTP Request: GET                   _client.py:1740
+                             https://restapi.amap.com/v3/directi                
+                             on/driving?origin=116.45885500%2C39                
+                             .90986300&destination=116.397029%2C                
+                             39.917839&strategy=0&key=cc0fe57173                
                              df27a3b6b2e39f1fd0bacd&output=json                 
                              "HTTP/1.1 200 OK"                                  
-[05/31/26 17:46:31] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E6%9C%9B%E4%BA%ACSOHO                
-                             &key=cc0fe57173df27a3b6b2e39f1fd0ba                
-                             cd&output=json "HTTP/1.1 200 OK"                   
-[05/31/26 17:46:36] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/directi                
-                             on/driving?origin=120.994205%2C23.9                
-                             75361&destination=116.481075%2C39.9                
-                             96743&strategy=0&key=cc0fe57173df27                
-                             a3b6b2e39f1fd0bacd&output=json                     
-                             "HTTP/1.1 200 OK"                                  
-INFO:     127.0.0.1:51099 - "POST /mcp HTTP/1.1" 200 OK
-[05/31/26 17:46:40] INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             d01e1842ee7b4592b54004386cda                       
-                             680a                                               
-INFO:     127.0.0.1:51100 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:47:35] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             3db44316aad5423d9d21                               
-                             ab461d94071c                                       
-INFO:     127.0.0.1:61346 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61347 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:61348 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61349 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-INFO:     127.0.0.1:61350 - "POST /mcp HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56285 - "POST /mcp HTTP/1.1" 200 OK
                     INFO     Processing request of type            server.py:727
                              ListToolsRequest                                   
                     INFO     Terminating session:         streamable_http.py:785
-                             3db44316aad5423d9d21ab461d94                       
-                             071c                                               
-INFO:     127.0.0.1:61351 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:48:41] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             51e5614d1c824610bcb9                               
-                             26b8364f519e                                       
-INFO:     127.0.0.1:63098 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63099 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:63101 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:63102 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:48:46] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E6%95%85%E5%AE%AB&key                
-                             =cc0fe57173df27a3b6b2e39f1fd0bacd&o                
-                             utput=json "HTTP/1.1 200 OK"                       
-                    INFO     [FrequentLocationStore]      postgres_client.py:223
-                             Saved home for                                     
-                             test-vehicle-001                                   
-                             (replaced_existing=False)                          
-INFO:     127.0.0.1:63516 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             51e5614d1c824610bcb926b8364f                       
-                             519e                                               
-INFO:     127.0.0.1:63517 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:49:01] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             d5120b2125db4cb397f4                               
-                             20faa4e10316                                       
-INFO:     127.0.0.1:51628 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51629 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:51630 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51631 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:49:05] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E6%95%85%E5%AE%AB%E5%                
-                             8D%9A%E7%89%A9%E9%99%A2&key=cc0fe57                
-                             173df27a3b6b2e39f1fd0bacd&output=js                
-                             on "HTTP/1.1 200 OK"                               
-INFO:     127.0.0.1:56446 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             d5120b2125db4cb397f420faa4e1                       
-                             0316                                               
-INFO:     127.0.0.1:56447 - "DELETE /mcp HTTP/1.1" 200 OK
-[05/31/26 17:50:02] INFO     Created new          streamable_http_manager.py:255
-                             transport with                                     
-                             session ID:                                        
-                             3326a0c2591d4c00bb6e                               
-                             8fc39b552976                                       
-INFO:     127.0.0.1:52092 - "POST /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52093 - "POST /mcp HTTP/1.1" 202 Accepted
-INFO:     127.0.0.1:52094 - "GET /mcp HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52095 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             CallToolRequest                                    
-[05/31/26 17:50:06] INFO     HTTP Request: GET                   _client.py:1740
-                             https://restapi.amap.com/v3/place/t                
-                             ext?keywords=%E6%95%85%E5%AE%AB%E5%                
-                             8D%9A%E7%89%A9%E9%99%A2&key=cc0fe57                
-                             173df27a3b6b2e39f1fd0bacd&output=js                
-                             on "HTTP/1.1 200 OK"                               
-INFO:     127.0.0.1:52103 - "POST /mcp HTTP/1.1" 200 OK
-                    INFO     Processing request of type            server.py:727
-                             ListToolsRequest                                   
-                    INFO     Terminating session:         streamable_http.py:785
-                             3326a0c2591d4c00bb6e8fc39b55                       
-                             2976                                               
-INFO:     127.0.0.1:52104 - "DELETE /mcp HTTP/1.1" 200 OK
+                             9c44de55668f4a558a5258226313                       
+                             36c5                                               
+INFO:     127.0.0.1:56286 - "DELETE /mcp HTTP/1.1" 200 OK

@@ -1,0 +1,536 @@
+{
+  "timestamp": "2026-06-01 12:29:37",
+  "model": "qwen3.6-flash",
+  "total_cases": 1000,
+  "correct": 931,
+  "accuracy": 0.931,
+  "avg_latency_ms": 1541.42,
+  "per_class": {
+    "CHILL_CHAT": {
+      "precision": 0.9193548387096774,
+      "recall": 0.8231046931407943,
+      "f1": 0.8685714285714285,
+      "support": 277,
+      "correct": 228,
+      "incorrect": 49
+    },
+    "TASK_SPECIFIC": {
+      "precision": 0.9118773946360154,
+      "recall": 1.0,
+      "f1": 0.9539078156312625,
+      "support": 476,
+      "correct": 476,
+      "incorrect": 0
+    },
+    "MEANINGLESS": {
+      "precision": 0.9869565217391304,
+      "recall": 0.9190283400809717,
+      "f1": 0.9517819706498952,
+      "support": 247,
+      "correct": 227,
+      "incorrect": 20
+    }
+  },
+  "confusion_matrix": {
+    "CHILL_CHAT": {
+      "CHILL_CHAT": 228,
+      "TASK_SPECIFIC": 46,
+      "MEANINGLESS": 3
+    },
+    "TASK_SPECIFIC": {
+      "CHILL_CHAT": 0,
+      "TASK_SPECIFIC": 476,
+      "MEANINGLESS": 0
+    },
+    "MEANINGLESS": {
+      "CHILL_CHAT": 20,
+      "TASK_SPECIFIC": 0,
+      "MEANINGLESS": 227
+    }
+  },
+  "error_cases": [
+    {
+      "query": "现在外面下雨了吗？需要开雨刮吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "询问天气状况并引发讨论，属于信息查询类闲聊，未直接下达开关命令"
+    },
+    {
+      "query": "我的邮箱地址是什么来着？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.9,
+      "description": "虽然可能关联用户信息，但以自我回忆的口吻提出，偏向自言自语式的闲聊确认"
+    },
+    {
+      "query": "我觉得最近有点累，能放点轻松的音乐让我放松一下吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "情感表达结合娱乐需求，寻求音乐推荐的闲聊场景"
+    },
+    {
+      "query": "现在的时速是多少？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "简单的信息获取类闲聊，询问车辆当前状态而非控制指令"
+    },
+    {
+      "query": "帮我查一下明天广州的天气怎么样",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "生活资讯查询，属于百科/天气类的闲聊问答"
+    },
+    {
+      "query": "这首歌太好听了，能不能再放一遍？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "对当前媒体的主观评价并隐含重播意愿，以情感表达为主的闲聊口吻"
+    },
+    {
+      "query": "附近的加油站还有多远？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "询问距离信息的闲聊式提问，尚未转化为明确的“导航至”指令"
+    },
+    {
+      "query": "喂...喂...听得见吗？听不见就挂了哦",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "测试设备连接状态的无效通话尝试，最终放弃且无语义意图"
+    },
+    {
+      "query": "呜呜呜...好困啊...",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "混合了抱怨情绪的呻吟声和半句自语，重点在于情绪宣泄而非指令传达，且语调模糊"
+    },
+    {
+      "query": "现在外面下雨了吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "获取当前环境信息的自然语言查询"
+    },
+    {
+      "query": "哎呀我忘了我要说什么了哈哈",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "话未说完且无实质内容的中断语音"
+    },
+    {
+      "query": "今天北京的空气质量怎么样？适合开窗吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "获取环境信息和生活方式建议，属于闲聊/信息查询性质，非直接控制指令"
+    },
+    {
+      "query": "好累啊……呼……想睡觉……zzz...",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "驾驶员疲惫时的呻吟声、叹气及模拟入睡的声音，无交互意图"
+    },
+    {
+      "query": "嘿！喂？听得到吗？能听到吗？",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "测试连接时反复试探的无效呼喊，未提出具体需求"
+    },
+    {
+      "query": "前面堵车的路段有多长？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "获取实时交通状况的具体数值信息，属于信息查询类闲聊"
+    },
+    {
+      "query": "现在车内温度是多少度？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "查询车辆内部传感器数据，虽涉及车载环境但不构成直接的控制改变命令"
+    },
+    {
+      "query": "我想听那首昨天在广播里放的经典老歌",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "模糊的音乐回忆与检索请求，属于娱乐资讯类的闲聊"
+    },
+    {
+      "query": "我想听点轻音乐放松一下",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "娱乐性质的闲聊，涉及音乐喜好表达但未指定具体歌曲或操作"
+    },
+    {
+      "query": "哎呀妈呀真是服了这个人怎么这样无语子",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "情绪宣泄式的碎碎念，虽然含有词汇但作为对车机的语音输入缺乏明确的任务指向性或逻辑完整性，归类为低质量/无意义干扰信号更为稳妥，或者视为极度口语化且无后续操作的抱怨。此处为了平衡数量，归入MEANINGLESS边缘案例，强调其非功能性。注：若严格定义为有实意吐槽可算Type1，但在车载场景中这种突然的情绪爆发往往伴随停顿或非清晰表述，故在此模型中倾向于噪声处理以提升鲁棒性训练。更准确的描述应为：连续的情绪感叹词，缺乏明确交互对象，易造成解析歧义的非标准语音流。"
+    },
+    {
+      "query": "推荐几家适合带狗去的户外餐厅",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "生活资讯咨询，涉及宠物友好场所的推荐需求"
+    },
+    {
+      "query": "巴拉拉能量...沙罗沙罗...",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "电视剧台词的碎片化念白，在当前语境下若无后续动作则视为无意义干扰"
+    },
+    {
+      "query": "帮我查一下现在股市行情如何",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "财经新闻/市场信息查询，属于信息获取类闲聊"
+    },
+    {
+      "query": "今天北京空气质量怎么样？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "关于环境信息的开放式问答"
+    },
+    {
+      "query": "我想听一首舒缓的音乐放松一下",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "基于情感需求的音乐推荐或闲聊对话"
+    },
+    {
+      "query": "外面下雨了吗？需要我带伞吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "基于当前环境的闲聊关怀与天气确认结合"
+    },
+    {
+      "query": "给我放一首适合深夜开车听的爵士乐",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "带有情感色彩的娱乐性质查询，寻求音乐风格推荐而非直接播放特定曲目"
+    },
+    {
+      "query": "喂？听得见吗？喂？",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "典型的麦克风信号测试或连接建立前的试探性呼喊，无实质内容"
+    },
+    {
+      "query": "呃...那个...我好像忘带钥匙了...",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "包含犹豫填充音且语义不完整的中断语句，无明确指令意图"
+    },
+    {
+      "query": "外面的气温是多少度？适合开窗吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "结合天气信息与主观判断的闲聊式提问，侧重交互感受"
+    },
+    {
+      "query": "你能告诉我现在几点钟了吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "时间询问，虽系统可直接显示，但作为自然语言交互仍属基础信息获取型闲聊"
+    },
+    {
+      "query": "哇哦……嘶——好疼……哎哟……",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "受伤或受到惊吓时的痛呼声和吸气声混合，非正常语音指令"
+    },
+    {
+      "query": "现在外面天气怎么样？适合洗车吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "结合天气预报与生活建议的闲聊咨询"
+    },
+    {
+      "query": "今天外面下雨了吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "主观评价类的社交互动问题，不涉及车辆控制，属于CHILL_CHAT"
+    },
+    {
+      "query": "喂？听得到吗？喂？",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "测试麦克风连接时的试音话术，若连续重复且无后续有效指令，视为无效输入，属于MEANINGLESS"
+    },
+    {
+      "query": "现在几点钟了？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "简单的时钟询问，在车载场景中常作为寒暄或确认时间，若不关联闹钟/行程设置则偏向闲聊，此处归为CHILL_CHAT以区分明确的日程管理任务"
+    },
+    {
+      "query": "今天上班堵不堵车啊？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "基于主观感受的交通状况询问，侧重于社交分享和情绪共鸣，而非具体的路线规划查询"
+    },
+    {
+      "query": "推荐一家适合商务宴请的高档餐厅",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "生活咨询服务，虽然隐含潜在导航意图，但当前阶段主要是在寻求信息建议和点评，归类为广义的生活资讯闲聊（注：若直接说'导航去XXX'则必为Task，此处侧重推荐咨询）"
+    },
+    {
+      "query": "嗯...那个...对了...先不说这个了",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "典型的思维中断和自我纠正过程产生的口语废词，未形成完整有效的指令链"
+    },
+    {
+      "query": "我想去的那个海边城市叫什么来着？就是上次我们自驾游的地方",
+      "expected": "CHILL_CHAT",
+      "predicted": "MEANINGLESS",
+      "confidence": 0.9,
+      "description": "涉及记忆回溯的情感型/信息型闲聊，非功能性查询"
+    },
+    {
+      "query": "今晚的天气怎么样？适合洗车吗",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "虽然关联天气数据，但核心诉求是生活建议与闲聊判断，非单纯的数据读取"
+    },
+    {
+      "query": "嗯...我好像忘了带东西...哎呀不管了就这样吧",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "思绪混乱导致的无效语音流，最终放弃表达任何具体意图"
+    },
+    {
+      "query": "今天的空气质量指数是多少？对过敏人群友好吗",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "虽然查询天气数据，但侧重于对生活影响的解读和建议，偏向闲聊性质"
+    },
+    {
+      "query": "帮我查一下这周剩下的工作日还有几天",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "日期计算与生活常识咨询，不涉及车辆控制，属于轻松的信息获取闲聊"
+    },
+    {
+      "query": "今天的空气质量如何？适合开窗通风吗",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "虽然涉及天气数据查询，但核心在于获取生活建议（是否适合开窗），属于轻度闲聊与建议咨询"
+    },
+    {
+      "query": "妈呀吓死我了！",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "纯粹的情绪宣泄感叹，未包含任何可供执行的系统指令或信息查询关键词"
+    },
+    {
+      "query": "帮我查一下明天早上8点的航班状态，别误点了",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "虽然涉及具体时间，但核心是旅行资讯查询，不属于车载硬件控制，归类为生活/新闻类闲聊咨询"
+    },
+    {
+      "query": "哎呀我去！",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.85,
+      "description": "突然发出的口头禅或惊叹声，缺乏具体指代对象和执行意图，归类为无意义噪音"
+    },
+    {
+      "query": "给我读一段鲁迅先生的《狂人日记》开头",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "文学经典作品朗读请求，属于文化教育类的知识获取与交流"
+    },
+    {
+      "query": "哈欠……唔……头好晕……不想动了……zzz...",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "模拟极度疲劳时的打哈欠、含糊嘟囔及入睡呼声，无语义"
+    },
+    {
+      "query": "最近有什么新出的电动汽车评测视频看看吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "资讯与媒体内容推荐的混合请求，侧重于寻找娱乐/学习资料而非立即执行车载动作"
+    },
+    {
+      "query": "哎哟我的天哪",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "感叹词或突然的情绪宣泄片段，缺乏后续有效指令或语境支撑，视为无意义碎片"
+    },
+    {
+      "query": "给我放一首适合深夜驾驶的舒缓钢琴曲",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "寻求音乐推荐，属于娱乐性质的闲聊，不涉及具体媒体播放命令"
+    },
+    {
+      "query": "我想听一些放松心情的爵士乐",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "寻求音乐风格推荐的闲聊请求，不涉及具体播放控制"
+    },
+    {
+      "query": "嗯...那个...我忘了要说什么了",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "明显的记忆中断和废话填充，最终无有效意图输出"
+    },
+    {
+      "query": "哼~哈~咿呀~",
+      "expected": "CHILL_CHAT",
+      "predicted": "MEANINGLESS",
+      "confidence": 0.95,
+      "description": "要求生成幽默故事的闲聊指令"
+    },
+    {
+      "query": "哎呀妈呀吓死我了 *喘粗气*",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "突发情绪下的感叹词伴随呼吸声，虽含语义但未构成可执行的独立任务或完整的闲聊上下文，视为噪声/碎片"
+    },
+    {
+      "query": "我想听听那种让人想跳舞的电音",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "寻求音乐风格推荐的闲聊请求，不涉及具体播放控制，侧重情感共鸣"
+    },
+    {
+      "query": "今天出门需要带伞吗？看预报好像有雨",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "基于天气信息的日常生活建议咨询，偏向生活化闲聊而非单纯的数据查询"
+    },
+    {
+      "query": "今天北京空气质量怎么样？适合开窗吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "虽然涉及天气数据，但核心是寻求生活建议而非直接操控车辆硬件，归类为闲聊问答中的生活咨询；若视为严格信息查询也可归入Task，但在本体系中更偏向于获取信息的自然对话交互。注：为了平衡类型分布，此处作为Type 1处理，因为它是开放式的生活咨询。"
+    },
+    {
+      "query": "我有点累了，想听首轻音乐舒缓心情",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "情感表达结合模糊的娱乐需求，主要意图在于社交互动和情感共鸣，虽隐含播放可能，但未指定具体曲目或动作细节，倾向于闲聊开场"
+    },
+    {
+      "query": "哈哈哈哈哈哈哈哈哈",
+      "expected": "CHILL_CHAT",
+      "predicted": "MEANINGLESS",
+      "confidence": 0.95,
+      "description": "假设性话题讨论，激发AI参与虚拟对话，属于娱乐性质闲聊"
+    },
+    {
+      "query": "今晚上海的天气如何？晚上出门需要带伞吗？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "生活类信息咨询，询问天气预报及出行建议，属于闲聊问答"
+    },
+    {
+      "query": "哎呀妈呀...真是服了...",
+      "expected": "MEANINGLESS",
+      "predicted": "CHILL_CHAT",
+      "confidence": 0.95,
+      "description": "情绪宣泄式的感叹词组合，若无后续明确指代对象，常作为无效输入或背景噪音处理，此处侧重其无语义完整性"
+    },
+    {
+      "query": "现在的室外温度是多少？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "闲聊问答：虽然是事实性查询，但属于即时环境感知而非车控，归为闲聊/资讯类"
+    },
+    {
+      "query": "还有多远到家？",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "闲聊问答：虽然涉及行程状态，但若未触发精确导航计算接口或仅为随口一问，常视为交互型闲聊；若需严格区分可归为任务，此处为了平衡分类，假设其为一种模糊的状态询问而非精确路由更新指令。注：在某些系统中这也可被视为Task，但在多任务测试中常作为边界案例用于训练模型区分‘精确控制’与‘信息查询’的差异，这里倾向于将其定义为获取当前状态的闲聊式确认。更正：为确保准确性，建议将此类明确的行程状态查询归类为Task更稳妥，或者保持此条目作为边缘Case让模型学习上下文。鉴于前文已有明确导航指令，此项保留为闲聊以展示对‘粗略信息’的处理逻辑差异，即不启动重新规划路径的逻辑。"
+    },
+    {
+      "query": "今天北京空气质量怎么样，适合开窗吗",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "闲聊问答：结合天气生活信息的日常决策咨询（侧重信息获取而非直接车控）"
+    },
+    {
+      "query": "我想看昨晚的新闻联播摘要",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.9,
+      "description": "闲聊问答：新闻资讯类的回顾与信息索取"
+    },
+    {
+      "query": "明天早上八点提醒我开早会",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 1.0,
+      "description": "闲聊问答/生活助理：日程提醒类咨询（注：若系统具备闹钟功能属Task，此处侧重于自然语言的生活习惯咨询场景，区别于硬性的车载设备控制如空调/车窗）"
+    },
+    {
+      "query": "推荐一家附近适合求婚的西餐厅",
+      "expected": "CHILL_CHAT",
+      "predicted": "TASK_SPECIFIC",
+      "confidence": 0.95,
+      "description": "闲聊问答：基于情境的美食推荐咨询，虽涉及地点但未直接触发导航执行"
+    }
+  ]
+}
