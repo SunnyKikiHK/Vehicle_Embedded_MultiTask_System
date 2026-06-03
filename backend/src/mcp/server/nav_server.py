@@ -66,10 +66,10 @@ async def _ensure_stores_initialized():
     _create_stores()
     
     if FrequentLocationStore._pool is None:
-        await FrequentLocationStore.init_pool(_frequent_store)
+        await FrequentLocationStore.create_pool(_frequent_store)
         logger.info("[nav_server] FrequentLocationStore pool initialized")
     if CollectedLocationStore._pool is None:
-        await CollectedLocationStore.init_pool(_collected_store)
+        await CollectedLocationStore.create_pool(_collected_store)
         logger.info("[nav_server] CollectedLocationStore pool initialized")
 
 
@@ -392,7 +392,7 @@ async def check_frequent_location(location_type: Optional[str] = None, metadata:
             return {"status": "fail", "message": "location_type 必须是 'home' 或 'company'"}
         
         result, err_msg = await _frequent_store.get(vehicle_id, location_type)
-        if err_msg:
+        if not result and err_msg:
             return {"status": "error", "message": f"查询失败: {err_msg}"}
         if result:
             return {
@@ -404,7 +404,7 @@ async def check_frequent_location(location_type: Optional[str] = None, metadata:
                 "updated_at": str(result.get("updated_at", ""))
             }
         return {
-            "status": "success",
+            "status": "error",
             "type": location_type,
             "message": f"尚未设置{'家' if location_type == 'home' else '公司'}地址"
         }
@@ -486,11 +486,18 @@ async def list_collected_locations(metadata: Optional[Dict[str, Any]] = None) ->
 
 
 @mcp.tool()
-async def delete_collected_locations(location_id: Optional[int] = None, metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    """Delete collected/favorite locations.
-    
+async def delete_collected_locations(poi: Optional[str] = None, metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """Delete collected/favorite locations (收藏地址删除).
+
+    Supports two deletion modes:
+      - By POI name: provide `poi` and it will be resolved via Amap, then the matching
+        saved location will be deleted. Tries name+address match first (mirrors collect_location
+        save logic). Falls back to coordinate proximity (~100m) if name+address didn't find a match.
+      - Delete all: omit `poi` to delete ALL collected locations.
+
     Args:
-        location_id: Optional. Specific location ID to delete. If omitted, deletes ALL collected locations.
+        poi: Name or address of the saved location to delete (e.g., "望京SOHO", "故宫").
+             If omitted, deletes all collected locations.
         metadata: Internal context data (auto-populated by the system).
     """
     vehicle_id = metadata.get("vehicle_id") if metadata else None
@@ -498,18 +505,49 @@ async def delete_collected_locations(location_id: Optional[int] = None, metadata
         return {"status": "error", "message": "无法获取车辆标识"}
 
     await _ensure_stores_initialized()
-    if location_id:
-        # Delete specific location
-        success, err_msg = await _collected_store.delete(location_id)
-        if not success:
-            return {"status": "fail", "message": f"删除失败: {err_msg}"}
-        return {"status": "success", "message": f"已删除收藏地点 (ID: {location_id})"}
-    else:
-        # Delete all collected locations
+
+    if poi is None:
         success, err_msg = await _collected_store.delete_all(vehicle_id)
         if not success:
-            return {"status": "fail", "message": f"删除失败: {err_msg}"}
+            return {"status": "fail", "message": f"删除收藏地点失败: {err_msg}"}
         return {"status": "success", "message": "已删除所有收藏地点"}
+
+    # Resolve POI via Amap (same logic as collect_location)
+    search_result = await amap_request("place/text", {"keywords": poi})
+    if not (search_result.get("status") == "1" and search_result.get("pois")):
+        return {"status": "fail", "message": f"未找到地点: {poi}"}
+
+    selected = search_result["pois"][0]
+    name = selected.get("name", poi)
+    address = selected.get("address", "")
+    loc_str = selected.get("location", "")
+
+    # Delete by name + address (exact match, mirrors collect_location save logic)
+    success, err_msg = await _collected_store.delete_by_name(vehicle_id, name, address)
+    if success:
+        return {"status": "success", "message": f"已删除收藏地点 [{name}]"}
+
+    # Fallback: if address didn't match (e.g., Amap returns a different address string
+    # for the same POI), try coordinate-based matching
+    if loc_str:
+        try:
+            poi_lng, poi_lat = float(loc_str.split(",")[0]), float(loc_str.split(",")[1])
+        except Exception:
+            poi_lng = poi_lat = None
+
+        if poi_lng is not None:
+            all_saved, _ = await _collected_store.get_all(vehicle_id)
+            for saved in all_saved:
+                if saved.get("longitude") and saved.get("latitude"):
+                    d_lng = saved["longitude"] - poi_lng
+                    d_lat = saved["latitude"] - poi_lat
+                    # ~100m tolerance in degree units
+                    if d_lng * d_lng + d_lat * d_lat < 0.000001:
+                        del_success, _ = await _collected_store.delete(saved["id"])
+                        if del_success:
+                            return {"status": "success", "message": f"已删除收藏地点 [{saved['name']}]"}
+
+    return {"status": "fail", "message": f"收藏夹中未找到 [{name}]"}
 
 @mcp.tool()
 async def ask_where_am_i(metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -548,7 +586,7 @@ async def check_area_traffic(poi: Optional[str] = None, radius: int = 1000, meta
     
     Use when user asks: 
     - "How is the traffic near [Place]?" / "[Place]附近堵不堵？" -> Provide poi argument.
-    - "Is it congested around me?" / "附近堵不堵？" / "当前路况" -> Omit poi argument (uses car GPS).
+    - "Is it congested around me?" /  "附近堵不堵？" / "当前路况" -> Omit poi argument (uses car GPS).
     
     Args:
         poi: Name of the POI or area (e.g., "故宫", "国贸"). If omitted, automatically uses current vehicle GPS location. Do not input poi if user does not mention origin.
@@ -589,6 +627,73 @@ async def check_area_traffic(poi: Optional[str] = None, radius: int = 1000, meta
     return _parse_traffic_evaluation(traffic_result, context_name=context_name)
 
 
+async def _resolve_location(
+    value: Optional[str],
+    vehicle_id: Optional[str],
+    is_origin: bool
+) -> str | Dict[str, Any]:
+    """Resolve a location string to coordinates.
+
+    Supported value formats:
+      - None         → current vehicle GPS (origin only)
+      - "home"       → saved home coordinates
+      - "company"    → saved company coordinates
+      - "lng,lat"    → validated coordinate string
+      - Other string → Amap POI search
+
+    Returns:
+      - Coordinate string "lng,lat" on success
+      - Error dict {"status": "error", ...} on failure
+    """
+    # None origin → use current GPS
+    if value is None:
+        if not is_origin:
+            return {"status": "error", "message": "目的地不能为空"}
+        loc = await get_current_vehicle_location(vehicle_id)
+        if loc == "no_id":
+            return {"status": "error", "message": "系统错误：无法获取车辆标识，请检查车辆连接状态"}
+        if loc == "no_location":
+            return {"status": "error", "message": "无法获取当前位置，请确保GPS已开启并发送位置信息"}
+        return loc
+
+    # Frequent location aliases
+    if value in ("home", "company", "家", "家地址", "公司", "公司地址"):
+        loc_type = "home" if value == "home" else "company"
+        await _ensure_stores_initialized()
+        result, err = await _frequent_store.get(vehicle_id, loc_type)
+        if err:
+            return {"status": "error", "message": f"查询失败: {err}"}
+        if not result:
+            label = "家" if loc_type == "home" else "公司"
+            return {"status": "error", "message": f"尚未设置{label}地址，请先设置"}
+        lng = result.get("longitude")
+        lat = result.get("latitude")
+        if not lng or not lat:
+            return {"status": "error", "message": f"{'家' if loc_type == 'home' else '公司'}地址缺少坐标信息，请重新设置"}
+        return f"{lng},{lat}"
+
+    # Coordinate string
+    if "," in value and value[0].isdigit():
+        parts = value.split(",")
+        if len(parts) == 2:
+            try:
+                float(parts[0])
+                float(parts[1])
+                return value
+            except ValueError:
+                pass
+
+    # POI name → Amap search
+    role = "起点" if is_origin else "目的地"
+    search = await amap_request("place/text", {"keywords": value})
+    if not (search.get("status") == "1" and search.get("pois")):
+        return {"status": "error", "message": f"未找到{role}: {value}"}
+    loc = search["pois"][0].get("location")
+    if not loc:
+        return {"status": "error", "message": f"{role} {value} 坐标异常"}
+    return loc
+
+
 @mcp.tool()
 async def check_route_traffic(
     destination: str,
@@ -598,9 +703,15 @@ async def check_route_traffic(
     """Check traffic conditions ALONG a driving route (沿途路况 / 路线拥堵情况).
     Use when user asks: "Is the road to [Destination] jammed?" or "去[目的地]的路上堵吗？"
 
+    Both origin and destination accept:
+      - A POI name string (e.g., "望京SOHO", "故宫") → resolved to coordinates via Amap
+      - "home" or "company" → resolved to saved frequent location coordinates
+      - A "lng,lat" coordinate string (e.g., "116.473168,39.993015") → used directly
+      - Omitted / None → uses current vehicle GPS for origin; destination is required
+
     Args:
-        destination: Destination POI name (e.g., "望京SOHO", "故宫"). ONLY POI name allowed.
-        origin: Starting point POI name. If omitted, uses current vehicle GPS. Do not input origin if user does not mention origin.
+        destination: Destination. POI name, "home", "company", or "lng,lat".
+        origin: Starting point. Same types as above. Defaults to current vehicle GPS.
         metadata: Internal context data (auto-populated by the system).
     """
     if not destination:
@@ -608,33 +719,24 @@ async def check_route_traffic(
 
     vehicle_id = metadata.get("vehicle_id") if metadata else None
 
-    # Resolve ORIGIN (ONLY POI name OR current GPS)
-    if origin is None:
-        # No origin → use current vehicle GPS
-        origin_loc = await get_current_vehicle_location(vehicle_id)
-        if origin_loc == "no_id":
-            return {"status": "error", "message": "系统错误：无法获取车辆标识，请检查车辆连接状态"}
-        if origin_loc == "no_location":
-            return {"status": "error", "message": "无法获取当前位置，请确保GPS已开启并发送位置信息"}
-    else:
-        # Origin IS A POI → resolve to coordinates
-        origin_search = await amap_request("place/text", {"keywords": origin})
-        if not (origin_search.get("status") == "1" and origin_search.get("pois")):
-            return {"status": "error", "message": f"未找到起点: {origin}"}
-        origin_loc = origin_search["pois"][0].get("location")
-        if not origin_loc:
-            return {"status": "error", "message": f"起点 {origin} 坐标异常"}
+    # Resolve ORIGIN
+    origin_loc = await _resolve_location(origin, vehicle_id, is_origin=True)
+    if isinstance(origin_loc, dict):
+        return origin_loc  # error dict
 
-    # Resolve DESTINATION ,ONLY POI name
-    dest_search = await amap_request("place/text", {"keywords": destination})
-    if not (dest_search.get("status") == "1" and dest_search.get("pois")):
-        return {"status": "error", "message": f"未找到目的地: {destination}"}
-    
-    dest_loc = dest_search["pois"][0].get("location")
-    dest_name = dest_search["pois"][0].get("name", destination)
-    
-    if not dest_loc:
-        return {"status": "error", "message": f"目的地 {destination} 坐标异常"}
+    # Resolve DESTINATION
+    dest_loc = await _resolve_location(destination, vehicle_id, is_origin=False)
+    if isinstance(dest_loc, dict):
+        return dest_loc  # error dict
+
+    # Track destination label for the response message
+    dest_name = destination
+    if destination in ("home", "company", "家", "家地址", "公司", "公司地址"):
+        loc_type = "home" if destination == "home" else "company"
+        await _ensure_stores_initialized()
+        result, _ = await _frequent_store.get(vehicle_id, loc_type)
+        if result:
+            dest_name = result.get("name", "家" if loc_type == "home" else "公司")
 
     # Get driving route & traffic
     route_result = await amap_request(
@@ -740,12 +842,12 @@ async def close_nav() -> Dict[str, Any]:
 
 
 @mcp.tool()
-async def go_home() -> Dict[str, Any]:
+async def go_home(metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """导航回家 - Navigate to saved home address
-    
+
     Gets the saved home location from database and calculates navigation route.
     """
-    vehicle_id = None
+    vehicle_id = metadata.get("vehicle_id") if metadata else None
     current_loc = await get_current_vehicle_location(vehicle_id)
     
     if current_loc == "no_id":
@@ -796,21 +898,21 @@ async def go_home() -> Dict[str, Any]:
         }
     
     return {
-        "status": "success",
+        "status": "error",
         "action": "go_home",
         "destination": home.get("name", "家"),
         "destination_address": home.get("address"),
-        "message": "正在导航回家"
+        "message": "路线规划失败，未找到可行路径，请检查网络或稍后重试"
     }
 
 
 @mcp.tool()
-async def go_company() -> Dict[str, Any]:
+async def go_company(metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """导航到公司 - Navigate to saved company address
     
     Gets the saved company location from database and calculates navigation route.
     """
-    vehicle_id = None
+    vehicle_id = metadata.get("vehicle_id") if metadata else None
     current_loc = await get_current_vehicle_location(vehicle_id)
     
     if current_loc == "no_id":
@@ -861,11 +963,11 @@ async def go_company() -> Dict[str, Any]:
         }
     
     return {
-        "status": "success",
+        "status": "error",
         "action": "go_company",
         "destination": company.get("name", "公司"),
         "destination_address": company.get("address"),
-        "message": "正在导航到公司"
+        "message": "路线规划失败，未找到可行路径，请检查网络或稍后重试"
     }
 
 @mcp.tool()
@@ -1104,18 +1206,78 @@ async def cancel_avoid_fee() -> Dict[str, Any]:
     }
 
 
-#  Traffic Information 
+#  Traffic Information
+
+async def _traffic_to_frequent(
+    vehicle_id: Optional[str],
+    loc_type: str,
+) -> Dict[str, Any]:
+    """Check traffic on route from current GPS to a saved frequent location (home/company).
+
+    Returns the same response shape as check_route_traffic.
+    """
+    current_loc = await get_current_vehicle_location(vehicle_id)
+    if current_loc == "no_id":
+        return {"status": "error", "message": "系统错误：无法获取车辆标识，请检查车辆连接状态"}
+    if current_loc == "no_location":
+        return {"status": "error", "message": "无法获取当前位置，请确保GPS已开启并发送位置信息"}
+
+    await _ensure_stores_initialized()
+    result, err = await _frequent_store.get(vehicle_id, loc_type)
+    if err:
+        return {"status": "error", "message": f"查询失败: {err}"}
+    if not result:
+        label = "家" if loc_type == "home" else "公司"
+        return {"status": "error", "message": f"尚未设置{label}地址，请先设置"}
+
+    lng = result.get("longitude")
+    lat = result.get("latitude")
+    if not lng or not lat:
+        return {"status": "error", "message": f"{'家' if loc_type == 'home' else '公司'}地址缺少坐标信息，请重新设置"}
+
+    dest_name = result.get("name", "家" if loc_type == "home" else "公司")
+
+    route = await amap_request(
+        "direction/driving",
+        {"origin": current_loc, "destination": f"{lng},{lat}", "strategy": 0}
+    )
+    if route.get("status") == "1" and route.get("route", {}).get("paths"):
+        path = route["route"]["paths"][0]
+        distance_km = round(int(path.get("distance", 0)) / 1000, 1)
+        duration_min = round(int(path.get("duration", 0)) / 60, 1)
+        return {
+            "status": "success",
+            "context_name": f"去 {dest_name} 的路线",
+            "destination": dest_name,
+            "distance_km": distance_km,
+            "estimated_time_minutes": duration_min,
+            "traffic_lights": path.get("traffic_lights", 0),
+            "strategy": "躲避拥堵" if path.get("strategy") else "默认",
+            "message": f"去 {dest_name} 全程 {distance_km} 公里，预计行驶 {duration_min} 分钟。"
+        }
+    return {"status": "error", "message": "路线规划失败，无法获取沿途路况"}
+
 
 @mcp.tool()
-async def home_condition() -> Dict[str, Any]:
-    """家路况 - Check traffic on route home"""
-    return {"status": "info", "message": "请先设置家地址后查询路况"}
+async def home_condition(metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """家路况 - Check traffic on the route from current location to saved home address.
+
+    Use when user asks: "回家的路堵不堵？" or "家那边路况怎么样？"
+    Returns route distance, ETA, and traffic conditions.
+    """
+    vehicle_id = metadata.get("vehicle_id") if metadata else None
+    return await _traffic_to_frequent(vehicle_id, "home")
 
 
 @mcp.tool()
-async def company_condition() -> Dict[str, Any]:
-    """公司路况 - Check traffic on route to company"""
-    return {"status": "info", "message": "请先设置公司地址后查询路况"}
+async def company_condition(metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    """公司路况 - Check traffic on the route from current location to saved company address.
+
+    Use when user asks: "去公司的路堵不堵？" or "公司那边路况怎么样？"
+    Returns route distance, ETA, and traffic conditions.
+    """
+    vehicle_id = metadata.get("vehicle_id") if metadata else None
+    return await _traffic_to_frequent(vehicle_id, "company")
 
 
 @mcp.tool()
@@ -1356,79 +1518,79 @@ async def change_nav_sign() -> Dict[str, Any]:
     }
 
 
-#  Group Travel 
+# #  Group Travel (Removed from Navigation Agent)
 
-@mcp.tool()
-async def join_group() -> Dict[str, Any]:
-    """加入组队 - Join a travel group"""
-    return {
-        "status": "info",
-        "action": "join_group",
-        "message": "请提供组队邀请码"
-    }
-
-
-@mcp.tool()
-async def build_group() -> Dict[str, Any]:
-    """创建组队 - Create a new group"""
-    return {
-        "status": "success",
-        "action": "build_group",
-        "message": "车队已创建",
-        "invite_code": "ABC123"
-    }
+# @mcp.tool()
+# async def join_group() -> Dict[str, Any]:
+#     """加入组队 - Join a travel group"""
+#     return {
+#         "status": "info",
+#         "action": "join_group",
+#         "message": "请提供组队邀请码"
+#     }
 
 
-@mcp.tool()
-async def quit_group() -> Dict[str, Any]:
-    """退出组队 - Leave current group"""
-    return {
-        "status": "success",
-        "action": "quit_group",
-        "message": "已退出车队"
-    }
+# @mcp.tool()
+# async def build_group() -> Dict[str, Any]:
+#     """创建组队 - Create a new group"""
+#     return {
+#         "status": "success",
+#         "action": "build_group",
+#         "message": "车队已创建",
+#         "invite_code": "ABC123"
+#     }
 
 
-@mcp.tool()
-async def open_group() -> Dict[str, Any]:
-    """打开组队 - Open group travel interface"""
-    return {
-        "status": "success",
-        "action": "open_group",
-        "message": "组队界面已打开"
-    }
+# @mcp.tool()
+# async def quit_group() -> Dict[str, Any]:
+#     """退出组队 - Leave current group"""
+#     return {
+#         "status": "success",
+#         "action": "quit_group",
+#         "message": "已退出车队"
+#     }
 
 
-@mcp.tool()
-async def ask_meeting_place() -> Dict[str, Any]:
-    """设置集结地 - Query group meetup location"""
-    return {
-        "status": "info",
-        "action": "ask_meeting_place",
-        "message": "请设置集结地点"
-    }
+# @mcp.tool()
+# async def open_group() -> Dict[str, Any]:
+#     """打开组队 - Open group travel interface"""
+#     return {
+#         "status": "success",
+#         "action": "open_group",
+#         "message": "组队界面已打开"
+#     }
 
 
-@mcp.tool()
-async def go_meeting_place() -> Dict[str, Any]:
-    """去汇合地点 - Navigate to meetup point"""
-    return {
-        "status": "success",
-        "action": "go_meeting_place",
-        "message": "正在导航到汇合地点"
-    }
+# @mcp.tool()
+# async def ask_meeting_place() -> Dict[str, Any]:
+#     """设置集结地 - Query group meetup location"""
+#     return {
+#         "status": "info",
+#         "action": "ask_meeting_place",
+#         "message": "请设置集结地点"
+#     }
 
 
-@mcp.tool()
-async def group_member_location() -> Dict[str, Any]:
-    """查看成员位置 - View locations of group members"""
-    return {
-        "status": "success",
-        "members": [
-            {"name": "张三", "distance": "3公里", "direction": "前方"},
-            {"name": "李四", "distance": "5公里", "direction": "左后方"}
-        ]
-    }
+# @mcp.tool()
+# async def go_meeting_place() -> Dict[str, Any]:
+#     """去汇合地点 - Navigate to meetup point"""
+#     return {
+#         "status": "success",
+#         "action": "go_meeting_place",
+#         "message": "正在导航到汇合地点"
+#     }
+
+
+# @mcp.tool()
+# async def group_member_location() -> Dict[str, Any]:
+#     """查看成员位置 - View locations of group members"""
+#     return {
+#         "status": "success",
+#         "members": [
+#             {"name": "张三", "distance": "3公里", "direction": "前方"},
+#             {"name": "李四", "distance": "5公里", "direction": "左后方"}
+#         ]
+#     }
 
 if __name__ == "__main__":
     mcp.run(transport="streamable-http")

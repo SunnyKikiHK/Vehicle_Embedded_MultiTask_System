@@ -175,6 +175,7 @@ function App() {
             socket={socket}
             connectionStatus={connectionStatus}
             sessionInfo={sessionInfo}
+            ttlSeconds={sessionInfo?.gps_ttl_seconds ?? null}
           />
           <QueryPanel
             onSendQuery={sendQuery}

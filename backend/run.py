@@ -13,6 +13,7 @@ from workflow import workflow
 from src.db.redis_client import RedisClient
 from src.agent.executor import get_executor, shutdown_executor
 from src.context.location_provider import init_location_provider, get_location_provider
+from src.context.location_store import LOCATION_TTL_SECONDS
 from src.constants import SERVER_LOG_PATH
 
 from fastapi import FastAPI
@@ -44,7 +45,7 @@ def setup_file_logging():
         os.makedirs(log_dir, exist_ok=True)
     
     # Create file handler
-    file_handler = logging.FileHandler(SERVER_LOG_PATH, mode='w')
+    file_handler = logging.FileHandler(SERVER_LOG_PATH, mode='a')
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(logging.Formatter(
         "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -138,6 +139,7 @@ async def _on_connect(sid: str, environ: dict, auth: dict | None = None) -> bool
             "status": "connected",
             "session_id": sid,
             "user_id": user_id,
+            "gps_ttl_seconds": LOCATION_TTL_SECONDS,
         }, to=sid)
 
         logger.info(f"[SocketIO] Emitted 'connected' event to sid={sid}")
@@ -386,7 +388,8 @@ async def _on_gps_update(sid: str, data: dict[str, Any]) -> dict[str, Any]:
     return {
         "status": "success",
         "message": "GPS location updated",
-        "data": {"latitude": float(latitude), "longitude": float(longitude)}
+        "data": {"latitude": float(latitude), "longitude": float(longitude)},
+        "ttl_seconds": LOCATION_TTL_SECONDS,
     }
 
 

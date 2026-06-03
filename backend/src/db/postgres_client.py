@@ -82,9 +82,9 @@ class PostgresClient:
             instance._conninfo,
             min_size=instance._min_size,
             max_size=instance._max_size,
-            configure=configure_connection # important for fetching data
+            configure=configure_connection # important for fetching data , or kwargs={"row_factory": dict_row}
         )
-        await cls._pool.wait()
+        await cls._pool.open()
         await cls._run_init_queries()
         logger.info(f"[{cls.__name__}] Pool initialized")
 
@@ -111,7 +111,8 @@ class PostgresClient:
     ) -> None:
         """Execute a query with auto-commit."""
         async with self.pool_connection() as conn:
-            await conn.execute(query, params)
+            async with conn.cursor() as cur:
+                await cur.execute(query, params)
             await conn.commit()
 
     async def fetch_one(
@@ -121,7 +122,9 @@ class PostgresClient:
     ) -> dict | None:
         """Fetch a single row."""
         async with self.pool_connection() as conn:
-            row = await conn.fetchone(query, params)
+            async with conn.cursor() as cur:
+                await cur.execute(query, params)
+                row = await cur.fetchone()
             return dict(row) if row else None
 
     async def fetch_all(
@@ -131,7 +134,9 @@ class PostgresClient:
     ) -> list[dict]:
         """Fetch all rows."""
         async with self.pool_connection() as conn:
-            rows = await conn.fetchall(query, params)
+            async with conn.cursor() as cur:
+                await cur.execute(query, params)
+                rows = await cur.fetchall()
             return [dict(row) for row in rows]
 
     async def fetch_value(
@@ -140,8 +145,10 @@ class PostgresClient:
         params: tuple[Any, ...] | dict[str, Any] | None = None,
     ) -> Any:
         """Fetch a single scalar value."""
-        async with self._pool.connection() as conn:
-            row = await conn.fetchone(query, params)
+        async with self.pool_connection() as conn:
+            async with conn.cursor() as cur:
+                await cur.execute(query, params)
+                row = await cur.fetchone()
             return row[0] if row else None
 
     @asynccontextmanager
@@ -150,7 +157,7 @@ class PostgresClient:
     ) -> AsyncGenerator[AsyncConnection[DictRow], None]:
         """Get a connection from the pool for transactions."""
         if self._pool is None:
-            self.create_pool(self)
+            await self.create_pool(self)
         async with self._pool.connection() as conn:
             yield conn
 
@@ -173,7 +180,8 @@ class FrequentLocationStore(PostgresClient):
         latitude: float | None = None,
     ) -> tuple[bool, str]:
         """
-        Save frequent location (home or company).
+        Save frequent location (home or company). If one already exists, it will be
+        replaced and the previous data is returned as info.
 
         Args:
             vehicle_id: Vehicle identifier
@@ -184,13 +192,20 @@ class FrequentLocationStore(PostgresClient):
             latitude: GPS latitude
 
         Returns:
-            Tuple of (success: bool, error_message: str)
+            Tuple of (success: bool, info_message: str).
+            info_message is empty on pure success, or contains the previous record
+            as a JSON string when an existing record was replaced.
         """
         if self._pool is None:
             logger.error("[FrequentLocationStore] Pool not initialized")
             return False, "数据库连接未初始化"
-
         try:
+            existing, _ = await self.get(vehicle_id, location_type)
+            replacement_info = ""
+            if existing:
+                if existing.get("name") == name and existing.get("address") == address:
+                    return False, "数据库已存在相同的地址"
+                replacement_info = f"[旧地址] {existing.get('name')} | {existing.get('address')} -> [新地址] {name} | {address}"
             await self.execute(
                 """
                 INSERT INTO frequent_locations (vehicle_id, location_type, name, address, longitude, latitude, updated_at)
@@ -205,8 +220,8 @@ class FrequentLocationStore(PostgresClient):
                 """,
                 (vehicle_id, location_type, name, address, longitude, latitude, datetime.now()),
             )
-            logger.info(f"[FrequentLocationStore] Saved {location_type} for {vehicle_id}")
-            return True, ""
+            logger.info(f"[FrequentLocationStore] Saved {location_type} for {vehicle_id} (replaced_existing={existing is not None})")
+            return True, replacement_info
         except Exception as e:
             logger.error(f"[FrequentLocationStore] Failed to save: {e}")
             return False, str(e)
@@ -257,9 +272,13 @@ class FrequentLocationStore(PostgresClient):
         Delete frequent location by type.
 
         Returns:
-            Tuple of (success: bool, error_message: str)
+            Tuple of (success: bool, error_message: str).
+            Returns (False, "...") if no matching record exists.
         """
         try:
+            existing, _ = await self.get(vehicle_id, location_type)
+            if existing is None:
+                return False, f"没有找到{location_type}地址"
             await self.execute(
                 """
                 DELETE FROM frequent_locations
@@ -291,7 +310,8 @@ class CollectedLocationStore(PostgresClient):
         latitude: float | None = None,
     ) -> tuple[bool, str]:
         """
-        Save collected/favorite location.
+        Save collected/favorite location. If an identical record already exists for this
+        vehicle, returns a notification instead of inserting a duplicate.
 
         Args:
             vehicle_id: Vehicle identifier
@@ -301,13 +321,25 @@ class CollectedLocationStore(PostgresClient):
             latitude: GPS latitude
 
         Returns:
-            Tuple of (success: bool, error_message: str)
+            Tuple of (success: bool, message: str).
+            message is empty on pure success, or contains a notification string when
+            a duplicate already exists.
         """
         if self._pool is None:
             logger.error("[CollectedLocationStore] Pool not initialized")
             return False, "数据库连接未初始化"
 
         try:
+            existing = await self.fetch_one(
+                """
+                SELECT * FROM collected_locations
+                WHERE vehicle_id = %s AND name = %s AND address = %s
+                """,
+                (vehicle_id, name, address),
+            )
+            if existing:
+                logger.info(f"[CollectedLocationStore] Duplicate skipped for {vehicle_id}: {name}")
+                return True, f"收藏地点 [{name}] 已存在，无需重复添加"
             await self.execute(
                 """
                 INSERT INTO collected_locations (vehicle_id, name, address, longitude, latitude)
@@ -342,31 +374,18 @@ class CollectedLocationStore(PostgresClient):
             logger.error(f"[CollectedLocationStore] Failed to get all: {e}")
             return [], str(e)
 
-    async def delete(self, location_id: int) -> tuple[bool, str]:
-        """
-        Delete a collected location by ID.
-
-        Returns:
-            Tuple of (success: bool, error_message: str)
-        """
-        try:
-            await self.execute(
-                "DELETE FROM collected_locations WHERE id = %s",
-                (location_id,),
-            )
-            return True, ""
-        except Exception as e:
-            logger.error(f"[CollectedLocationStore] Failed to delete: {e}")
-            return False, str(e)
-
     async def delete_all(self, vehicle_id: str) -> tuple[bool, str]:
         """
         Delete all collected locations for a vehicle.
 
         Returns:
-            Tuple of (success: bool, error_message: str)
+            Tuple of (success: bool, error_message: str).
+            Returns (False, "...") if no records exist for this vehicle.
         """
         try:
+            existing, _ = await self.get_all(vehicle_id)
+            if not existing:
+                return False, "没有找到收藏地点"
             await self.execute(
                 "DELETE FROM collected_locations WHERE vehicle_id = %s",
                 (vehicle_id,),
@@ -374,4 +393,33 @@ class CollectedLocationStore(PostgresClient):
             return True, ""
         except Exception as e:
             logger.error(f"[CollectedLocationStore] Failed to delete all: {e}")
+            return False, str(e)
+
+    async def delete_by_name(self, vehicle_id: str, name: str, address: str = "") -> tuple[bool, str]:
+        """
+        Delete a collected location by name and address (exact match, mirrors save logic).
+
+        Args:
+            vehicle_id: Vehicle identifier.
+            name: Location name (must match exactly).
+            address: Full address (must match exactly).
+
+        Returns:
+            Tuple of (success: bool, error_message: str).
+            Returns (False, "...") if no matching record exists.
+        """
+        try:
+            existing = await self.fetch_one(
+                "SELECT * FROM collected_locations WHERE vehicle_id = %s AND name = %s AND address = %s",
+                (vehicle_id, name, address),
+            )
+            if existing is None:
+                return False, f"收藏夹中没有 [{name}]"
+            await self.execute(
+                "DELETE FROM collected_locations WHERE vehicle_id = %s AND name = %s AND address = %s",
+                (vehicle_id, name, address),
+            )
+            return True, ""
+        except Exception as e:
+            logger.error(f"[CollectedLocationStore] Failed to delete by name: {e}")
             return False, str(e)

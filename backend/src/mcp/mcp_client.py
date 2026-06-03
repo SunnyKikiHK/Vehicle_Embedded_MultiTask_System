@@ -68,13 +68,18 @@ class MCPClient:
             async with ClientSession(read_stream, write_stream) as session:
                 await session.initialize()
                 result = await session.call_tool(tool_name, tool_args)
-                
+                logger.info(f"[MCPClient]call_tool result: {result}")
                 if not result.isError and result.content:
                     text_block = result.content[0]
                     if getattr(text_block, "type", None) == "text":
                         return json.loads(text_block.text)
+                else:
+                    logger.error(f"[MCPClient]call_tool has error: {result}")
+                    return None
         
-        return None
+        return {
+            "message": "Server error",
+        }
 
     async def list_tools(
         self,

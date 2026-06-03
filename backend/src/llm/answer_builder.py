@@ -268,6 +268,9 @@ async def reconstruct_stream(
         The complete response string.
     """
     writer = get_stream_writer()
+    if tool_result is None:
+        writer("不好意思，服务器出错了，请稍后再试")
+        return "不好意思，服务器出错了，请稍后再试"
 
     # Try template first
     template_response = _try_template(tool_name, tool_result)
@@ -320,6 +323,9 @@ async def quick_reconstruct_stream(
     Returns:
         A friendly response string.
     """
+    if tool_result is None:
+        return "不好意思，服务器出错了，请稍后再试"
+
     if llm is None:
         response = _generate_fallback_response(tool_name, tool_result)
         writer = get_stream_writer()

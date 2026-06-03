@@ -1,6 +1,6 @@
 ---
 name: weather-life-agent
-description: Implements Weather & Life Agent intents in the vehicle embedded multi-task system. Handles weather queries, life advisory (clothing, travel, car wash), fuel prices, license plate restrictions, date/time queries, and mobile data management. Use when the user mentions weather, temperature, rain, clothing, travel, car wash, oil price, license plate, date, week, or mobile data. Trigger terms: 天气, 查询, 穿衣, 洗车, 钓鱼, 运动, 紫外线, 油价, 限行, 星期, 日期, 流量.
+description: Implements Weather & Life Agent intents in the vehicle embedded multi-task system. Handles weather queries, life advisory (clothing, travel, car wash), fuel prices, license plate restrictions, date/time queries, and mobile data management. Use when the user mentions weather, temperature, rain, clothing, travel, car wash, oil price, license plate, date, week, or mobile data. Trigger terms: 天气, 查询, 穿衣, 洗车, 钓鱼, 运动天气, 紫外线, 油价, 限行, 星期, 日期, 流量.
 ---
 
 # Weather & Life Agent — Weather, Life Advisory & Data Management Skill

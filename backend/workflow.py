@@ -141,7 +141,7 @@ async def build_response(tool_name: str, tool_args: dict, tool_result: dict, que
 
 @task
 async def build_response_stream(tool_name: str, tool_args: dict, tool_result: dict, query: str) -> str:
-    """Build response with streaming support."""
+    """Build response with streaming support."""        
     llm = get_llm(ARK_MODEL_MINI, ARK_API_BASE, ARK_API_KEY, extra_body=extra_body_doubao)
     return await quick_reconstruct_stream(
         tool_name,
