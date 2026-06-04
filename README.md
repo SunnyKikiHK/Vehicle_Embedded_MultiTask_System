@@ -17,43 +17,43 @@ This system enables hands-free voice control of vehicle functions including navi
 
 ## Architecture
 
+```mermaid
+flowchart TD
+    A[Vehicle Client<br/>Socket.IO] --> B[FastAPI Server]
+    B --> C[LangGraph Workflow]
+
+    C --> D[Classifier]
+    C --> E[Reconstructor]
+    D --> F[Router]
+    E --> F
+
+    F -->|Task-Specific| G[Agent Executor<br/>Reasoning + Skill-Based Tool Calling]
+    F -->|Casual Chat| H[Qwen Chat Model]
+
+    G --> I[MCP Servers<br/>14 Domains]
+    I --> I1[Nav :8001]
+    I --> I2[AC :8003]
+    I --> I3[Media :8004]
+    I --> I4[Vehicle :8002]
+    I --> I5[Phone/Weather<br/>Calendar :8005-8007]
+    I --> I6[Interior :8008]
+    I --> I7[HUD :8009]
+    I --> I8[System/Wireless<br/>Camera/App :8010-8014]
+
+    J[Redis<br/>Session History] <--> C
+    K[PostgreSQL<br/>User Preferences] <--> G
+    L[SKILL.md<br/>Intent→Tool Mapping] --> G
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           Vehicle Client (Socket.IO)                        │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                       │
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                              FastAPI Server                                 │
-│  ┌──────────────────────────────────────────────────────────────────────┐   │
-│  │                        LangGraph Workflow                             │   │
-│  │                                                                      │   │
-│  │   ┌────────────┐    ┌─────────────────┐    ┌───────────┐             │   │
-│  │   │ Classifier │───▶│  Reconstructor  │───▶│  Router   │             │   │
-│  │   │ (3 types) │    │ (Query Fix)     │    │ (Agent)   │             │   │
-│  │   └────────────┘    └─────────────────┘    └─────┬─────┘             │   │
-│  │                                                     │                  │   │
-│  │                                                     ▼                  │   │
-│  │   ┌─────────────────────────────────────────────────────────────┐     │   │
-│  │   │                     Agent Executor                         │     │   │
-│  │   │              (ReAct Loop + Intent Detection)                │     │   │
-│  │   └─────────────────────────────────────────────────────────────┘     │   │
-│  └──────────────────────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                       │
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         MCP Servers (14 domains)                           │
-│  ┌─────────┐ ┌───────────┐ ┌─────────┐ ┌───────────┐ ┌─────────────────┐     │
-│  │   Nav   │ │    AC     │ │  Media  │ │  Vehicle  │ │  Phone/Weather  │     │
-│  │ :8001   │ │  :8003    │ │  :8004  │ │   :8002   │ │  :8005-8007     │     │
-│  └─────────┘ └───────────┘ └─────────┘ └───────────┘ └─────────────────┘     │
-│  ┌─────────────┐ ┌───────────┐ ┌──────────────┐ ┌──────────────────┐          │
-│  │  Interior   │ │   HUD     │ │   System/    │ │  Camera/App/    │          │
-│  │  :8008      │ │  :8009    │ │  Wireless    │ │  Interaction    │          │
-│  └─────────────┘ └───────────┘ └──────────────┘ └──────────────────┘          │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+
+### Architecture Notes
+
+- **Classifier** identifies whether a query is casual chat, task-specific, or meaningless.
+- **Reconstructor** rewrites incomplete user queries using conversation history.
+- **Router** sends task-specific requests to the Agent Executor while sending casual chat to the Qwen chat model.
+- **Agent Executor** loads the matching skill definition (SKILL.md) and calls MCP tools for execution.
+- **Redis** stores session history for multi-turn context.
+- **PostgreSQL** persists user preferences and long-term state.
+- Only the `nav_server` is fully implemented; other MCP servers are prototypes.
 
 ## Supported Agents & Capabilities
 
@@ -92,7 +92,7 @@ This system enables hands-free voice control of vehicle functions including navi
 │   ├── workflow.py                 # LangGraph workflow definition
 │   ├── src/
 │   │   ├── agent/
-│   │   │   ├── agent.py            # ReAct agent implementation
+│   │   │   ├── agent.py            # Skill-based agent implementation
 │   │   │   └── executor.py         # MCP tool executor
 │   │   ├── llm/
 │   │   │   ├── classifier.py       # Query type classification
@@ -235,9 +235,9 @@ Reconstructs incomplete queries using conversation history:
 
 ### Agent Execution
 
-Each agent follows the ReAct pattern:
+Each agent performs reasoning and executes tools in a single pass:
 1. Load skill definition (SKILL.md)
-2. LLM identifies intent and extracts slots
+2. LLM reasons over the query and identifies intent + extracts parameter slots
 3. Call MCP tool with resolved arguments
 4. Return natural language response
 
