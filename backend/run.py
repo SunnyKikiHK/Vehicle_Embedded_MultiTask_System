@@ -182,8 +182,9 @@ async def _on_voice_query(sid: str, data: dict[str, Any]) -> dict[str, Any]:
     Expected data format:
     {
         "query": "帮我导航到最近的加油站",
-        "metadata": {},  # optional
-        "stream": false  # optional, whether to stream the response
+        "metadata": {},       // optional
+        "stream": false,      // optional, whether to stream the response
+        "react_mode": false    // optional, enable retry-on-failure ReAct loop
     }
     """
     logger.info(f"[SocketIO] Voice query received: sid={sid}, query={data.get('query', '')[:50]}...")
@@ -203,6 +204,7 @@ async def _on_voice_query(sid: str, data: dict[str, Any]) -> dict[str, Any]:
     vehicle_id = session_data.get("vehicle_id", user_id)  # Use vehicle_id for location lookup
     metadata = data.get("metadata", {})
     stream_mode = data.get("stream", False)
+    react_mode = data.get("react_mode", False)
 
     if not query:
         return {
@@ -241,6 +243,7 @@ async def _on_voice_query(sid: str, data: dict[str, Any]) -> dict[str, Any]:
             "stream_mode": stream_mode,
             "sid": sid,
             "metadata": metadata,
+            "react_mode": react_mode,
         }
 
         # Run the workflow

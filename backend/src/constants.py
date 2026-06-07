@@ -9,6 +9,10 @@ NAV_INTENT_SAMPLE_PATH = "src/data/nav_intent_samples.json"
 RECONSTRUCTOR_SAMPLE_PATH = "src/data/reconstructor_samples.json"
 EVAL_DIR = "src/evaluation"
 
+AGENT_MAX_STEPS = (
+    2  # Max tool-call steps in ReAct loop (only used when react_mode=True)
+)
+
 AGENT_MAPPING = {
     "hvac-agent": "HVAC Agent",
     "navigation-agent": "Navigation Agent",
@@ -108,14 +112,12 @@ TOOL_RESPONSE_TEMPLATES: dict[str, str] = {
     "close_nav_collections": "好的，收藏夹已关闭。",
     "nav_to_collection": "好的，正在导航到收藏地址。",
     "collect_target_location": "好的，正在收藏目的地。",
-
     # AC templates
     "ac_on": "好的，空调已打开。",
     "ac_off": "好的，空调已关闭。",
     "ac_auto": "好的，已开启自动空调模式。",
     "defrost": "好的，已开启除雾功能。",
     "sync_ac": "好的，已开启同步控制。",
-
     # Media templates
     "play_media": "好的，正在播放。",
     "pause_media": "好的，已暂停。",
@@ -124,25 +126,23 @@ TOOL_RESPONSE_TEMPLATES: dict[str, str] = {
     "previous_track": "好的，已切换到上一首。",
     "mute_volume": "好的，已静音。",
     "unmute_volume": "好的，已取消静音。",
-
     # Light templates
     "lights_on": "好的，灯光已打开。",
     "lights_off": "好的，灯光已关闭。",
-
     # Phone templates
     "make_call": "好的，正在为您拨打 {number}。",
     "end_call": "好的，已挂断电话。",
     "answer_call": "好的，已接听电话。",
     "reject_call": "好的，已拒绝来电。",
-
     # Weather templates
     "get_weather": "好的，当前天气是 {weather}。",
-    #"get_forecast": "好的，明天天气是 {weather}。",
+    # "get_forecast": "好的，明天天气是 {weather}。",
 }
 
 # Mapping from tool name to variable names needed for response formatting
 # These variable names correspond to keys in the tool result dict
 # Used in answer_builder.py
+# Try to generate response from predefined templates.
 TOOL_VARIABLE_MAPPING: dict[str, list[str]] = {
     # Navigation templates
     "go_poi": ["destination", "address", "distance_meters"],
@@ -150,8 +150,20 @@ TOOL_VARIABLE_MAPPING: dict[str, list[str]] = {
     "collect_location": ["name", "longitude", "latitude"],
     "open_nav": [],
     "close_nav": [],
-    "go_home": ["destination", "destination_address", "distance", "duration", "message"],
-    "go_company": ["destination", "destination_address", "distance", "duration", "message"],
+    "go_home": [
+        "destination",
+        "destination_address",
+        "distance",
+        "duration",
+        "message",
+    ],
+    "go_company": [
+        "destination",
+        "destination_address",
+        "distance",
+        "duration",
+        "message",
+    ],
     "flush_route": [],
     "change_route": [],
     "open_ar_nav": [],
@@ -167,8 +179,24 @@ TOOL_VARIABLE_MAPPING: dict[str, list[str]] = {
     "check_area_traffic": ["context_name", "traffic_status", "description"],
     "check_route_traffic": ["context_name", "distance_km", "estimated_time_minutes"],
     "check_city_traffic_overview": ["context_name", "traffic_status", "description"],
-    "home_condition": ["context_name", "destination", "distance_km", "estimated_time_minutes", "traffic_lights", "strategy", "message"],
-    "company_condition": ["context_name", "destination", "distance_km", "estimated_time_minutes", "traffic_lights", "strategy", "message"],
+    "home_condition": [
+        "context_name",
+        "destination",
+        "distance_km",
+        "estimated_time_minutes",
+        "traffic_lights",
+        "strategy",
+        "message",
+    ],
+    "company_condition": [
+        "context_name",
+        "destination",
+        "distance_km",
+        "estimated_time_minutes",
+        "traffic_lights",
+        "strategy",
+        "message",
+    ],
     # Route preferences templates
     "switch_main_route": [],
     "switch_side_route": [],
@@ -224,14 +252,12 @@ TOOL_VARIABLE_MAPPING: dict[str, list[str]] = {
     "close_nav_collections": [],
     "nav_to_collection": [],
     "collect_target_location": [],
-
     # AC templates
     "ac_on": [],
     "ac_off": [],
     "ac_auto": [],
     "defrost": [],
     "sync_ac": [],
-
     # Media templates
     "play_media": [],
     "pause_media": [],
@@ -240,25 +266,21 @@ TOOL_VARIABLE_MAPPING: dict[str, list[str]] = {
     "previous_track": [],
     "mute_volume": [],
     "unmute_volume": [],
-
     # Light templates
     "lights_on": [],
     "lights_off": [],
-
     # Phone templates
     "make_call": ["number"],
     "end_call": [],
     "answer_call": [],
     "reject_call": [],
-
     # Weather templates
     "get_weather": ["weather"],
-    #"get_forecast": ["weather"],
+    # "get_forecast": ["weather"],
 }
 
 # Default server URLs for consolidated MCP servers
 # Keys match server names from mapping.SERVER_TO_TOOLS
-
 DEFAULT_SERVER_URLS: dict[str, str] = {
     # port 8001: Navigation + Map + Group Travel
     "nav_server": "http://localhost:8001/mcp",
@@ -288,6 +310,25 @@ DEFAULT_SERVER_URLS: dict[str, str] = {
     "interaction_server": "http://localhost:8013/mcp",
     # port 8014: App Management (standalone)
     "app_server": "http://localhost:8014/mcp",
+}
+
+
+# Port mapping for reference
+SERVER_PORTS: dict[str, int] = {
+    "nav_server": 8001,
+    "vehicle_server": 8002,
+    "ac_server": 8003,
+    "media_server": 8004,
+    "phone_server": 8005,
+    "calendar_server": 8006,
+    "weather_server": 8007,
+    "interior_server": 8008,
+    "hud_server": 8009,
+    "system_server": 8010,
+    "wireless_server": 8011,
+    "camera_server": 8012,
+    "interaction_server": 8013,
+    "app_server": 8014,
 }
 
 # Mapping from agents to their MCP servers

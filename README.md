@@ -14,6 +14,7 @@ This system enables hands-free voice control of vehicle functions including navi
 - **Real-time Streaming**: Supports streaming responses for natural voice interaction
 - **14 Domain Agents**: Covers navigation, HVAC, media, seats, lights, phone, weather, and more
 - **GPS-aware**: Integrates with vehicle GPS for location-based services
+- **Lightweight ReAct Loop**: Optional retry-on-failure mode for robust tool execution
 
 ## Architecture
 
@@ -50,7 +51,7 @@ flowchart TD
 - **Classifier** identifies whether a query is casual chat, task-specific, or meaningless.
 - **Reconstructor** rewrites incomplete user queries using conversation history.
 - **Router** sends task-specific requests to the Agent Executor while sending casual chat to the Qwen chat model.
-- **Agent Executor** loads the matching skill definition (SKILL.md) and calls MCP tools for execution.
+- **Agent Executor** loads the matching skill definition (SKILL.md) and calls MCP tools for execution. Supports two modes: simple (single-pass) and ReAct (one retry on failure).
 - **Redis** stores session history for multi-turn context.
 - **PostgreSQL** persists user preferences and long-term state.
 - Only the `nav_server` is fully implemented; other MCP servers are prototypes.
@@ -179,7 +180,8 @@ socket.on("connected", (data) => {
 // Send voice query
 socket.emit("voice_query", {
   query: "帮我导航到最近的加油站",
-  stream: false
+  stream: false,
+  react_mode: false   // true to enable retry-on-failure loop
 });
 
 // Receive response
@@ -235,11 +237,22 @@ Reconstructs incomplete queries using conversation history:
 
 ### Agent Execution
 
-Each agent performs reasoning and executes tools in a single pass:
+Each agent supports two execution modes:
+
+**Simple mode (default, `react_mode=False`):**
 1. Load skill definition (SKILL.md)
 2. LLM reasons over the query and identifies intent + extracts parameter slots
 3. Call MCP tool with resolved arguments
-4. Return natural language response
+4. Return result immediately
+
+**ReAct mode (`react_mode=True`):**
+1. Load skill definition (SKILL.md)
+2. LLM reasons and selects a tool with arguments
+3. Execute the tool call
+4. If the tool name is invalid OR the result signals failure → retry once with error context
+5. Return result
+
+The retry is controlled by `max_steps` (default `AGENT_MAX_STEPS=3`, giving up to 2 retries). Success is determined by checking the tool result for `success=True`, `status='success'`, or `status=0`.
 
 ## Configuration
 

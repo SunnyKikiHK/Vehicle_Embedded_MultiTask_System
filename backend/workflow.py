@@ -56,6 +56,7 @@ class WorkflowInputSchema(TypedDict):
     history_turns: int
     stream_mode: bool
     metadata: dict | None
+    react_mode: bool
 
 @task
 async def format_history_task(history: list[dict] | None) -> str:
@@ -98,15 +99,28 @@ async def router(reconstructed_query: str) -> dict:
 
 
 @task
-async def run_agent(target_agent: str, query: str, user_id: str, metadata: dict | None = None) -> dict:
+async def run_agent(
+    target_agent: str,
+    query: str,
+    user_id: str,
+    metadata: dict | None = None,
+    react_mode: bool = False,
+) -> dict:
     """
-    Run the ReAct loop for the target agent.
+    Execute the agent with optional ReAct loop.
 
-    Flow:
-    1. Agent loads skill definition (SKILL.md)
-    2. LLM identifies intent + slots
-    3. Call MCP tool with slots
-    4. Return response
+    Simple mode (react_mode=False):
+        1. Agent loads skill definition (SKILL.md)
+        2. LLM identifies intent + slots
+        3. Call MCP tool with slots
+        4. Return response
+
+    ReAct mode (react_mode=True):
+        1. Agent loads skill definition (SKILL.md)
+        2. LLM reasons, picks a tool, and provides args
+        3. Call MCP tool, feed result back into LLM context
+        4. Repeat until LLM returns no tool_name or max_steps reached
+        5. Return all tool results
     """
     executor = get_executor()
 
@@ -115,13 +129,26 @@ async def run_agent(target_agent: str, query: str, user_id: str, metadata: dict 
         return await executor.call_tool(tool_name, slots, user_id, metadata=metadata)
 
     agent = Agent(target_agent)
-    # result should be a dict with success, response, tool_result, etc...
-    tool_decision, tool_result = await agent.run(query, get_llm(ARK_MODEL_LITE, ARK_API_BASE, ARK_API_KEY, AgentToolDecision, extra_body=extra_body_doubao), mcp_call)
+    tool_decision, tool_result_raw = await agent.run(
+        query,
+        get_llm(ARK_MODEL_LITE, ARK_API_BASE, ARK_API_KEY, AgentToolDecision, extra_body=extra_body_doubao),
+        mcp_call,
+        react_mode=react_mode,
+    )
+
+    if react_mode and isinstance(tool_result_raw, list):
+        results = tool_result_raw
+    else:
+        results = [(tool_decision.tool_name, tool_result_raw)]
+
+    first_result = results[0] if results else (None, None)
 
     return {
         "agent": target_agent,
-        "tool_result": tool_result,
-        "tool_name": tool_decision.tool_name,
+        "react_mode": react_mode,
+        "all_tool_results": results,
+        "tool_result": first_result[1],
+        "tool_name": first_result[0],
         "tool_args": tool_decision.tool_args,
     }
 
@@ -187,6 +214,7 @@ async def workflow(
     history_turns = input["history_turns"]
     stream_mode = input.get("stream_mode", False)
     metadata = input.get("metadata", {})
+    react_mode = input.get("react_mode", False)
 
     workflow_start = time.perf_counter()
     logger.info(f"[Workflow] Starting workflow for query: {query}, stream_mode: {stream_mode}")
@@ -242,7 +270,8 @@ async def workflow(
                 router_result["target_agent"],
                 reconstructor_result["reconstructed_query"],
                 user_id,
-                metadata=metadata
+                metadata=metadata,
+                react_mode=react_mode,
             )
             t1 = time.perf_counter()
             logger.info(f"[Timing] run_agent: {(t1-t0)*1000:.2f}ms")
